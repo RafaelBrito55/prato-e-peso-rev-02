@@ -4,7 +4,22 @@
   <meta charset="UTF-8" />
   <title>Prato & Peso – Emagrecimento com comida de verdade</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Prato & Peso: entenda suas calorias, ajuste seu prato brasileiro e acompanhe o peso com comida de verdade, sem dieta maluca." />
+  <meta name="description" content="Prato & Peso: entenda suas c... e acompanhe o peso com comida de verdade, sem dieta maluca." />
+
+  <meta name="google-site-verification" content="COLOQUE_O_CODIGO_DO_SEARCH_CONSOLE_AQUI" />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://SEU-ENDERECO-AQUI/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Prato &amp; Peso – Emagrecimento com comida de verdade, prato brasileiro e meta clara" />
+  <meta property="og:description" content="Prato &amp; Peso: calcule seu gasto calórico (TDEE), monte seu prato brasileiro e acompanhe o peso com comida de verdade, sem dieta maluca." />
+  <meta property="og:url" content="https://SEU-ENDERECO-AQUI/" />
+  <meta property="og:image" content="https://SEU-ENDERECO-AQUI/imagens/capa-prato-e-peso.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Prato &amp; Peso – Emagrecimento com comida de verdade" />
+  <meta name="twitter:description" content="Veja quanto gasta de calorias, ajuste seu prato e acompanhe o peso no dia a dia." />
+  <meta name="twitter:image" content="https://SEU-ENDERECO-AQUI/imagens/capa-prato-e-peso.png" />
 
   <style>
     :root {
@@ -15,11 +30,11 @@
       --accent: #ffb347;
       --accent-soft: #fff3df;
       --text-main: #222222;
-      --text-muted: #666666;
-      --border-soft: #e0e0e0;
+      --text-muted: #4b5563;
+      --border-soft: #e5e7eb;
       --radius-lg: 16px;
       --radius-xl: 22px;
-      --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.08);
+      --shadow-soft: 0 16px 40px rgba(15, 23, 42, 0.12);
       --max-width: 1040px;
     }
 
@@ -47,7 +62,7 @@
     header {
       background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(10px);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
       position: sticky;
       top: 0;
       z-index: 10;
@@ -73,57 +88,74 @@
     .logo-badge {
       width: 34px;
       height: 34px;
-      border-radius: 50%;
+      border-radius: 999px;
       background: var(--accent);
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 700;
       color: #4b2c15;
-      font-size: 0.95rem;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+      font-size: 0.86rem;
+      letter-spacing: 0.04em;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
     }
 
-    .logo-text-main {
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .logo-main {
+      font-size: 1rem;
       font-weight: 700;
-      font-size: 1.05rem;
       letter-spacing: 0.03em;
+      text-transform: uppercase;
     }
 
-    .logo-text-sub {
-      font-size: 0.75rem;
+    .logo-sub {
+      font-size: 0.78rem;
       color: var(--text-muted);
     }
 
     .header-links {
       display: flex;
-      gap: 8px;
       flex-wrap: wrap;
+      gap: 8px;
       justify-content: flex-end;
+      align-items: center;
     }
 
     .header-link {
-      font-size: 0.82rem;
-      padding: 6px 12px;
+      padding: 7px 14px;
       border-radius: 999px;
-      background: var(--primary-soft);
-      color: var(--primary);
-      border: none;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      font-size: 0.82rem;
+      background: #f9fafb;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       cursor: pointer;
-      text-decoration: none;
-      white-space: nowrap;
+      transition: background 0.15s ease, transform 0.08s ease, box-shadow 0.15s ease;
     }
 
-    /* BOTÃO DESTACADO – CLUBE PRATO & PESO */
-    .header-link-clube {
-      background: var(--accent);
-      color: #4b2c15;
-      font-weight: 600;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+    .header-link:hover {
+      background: #e0f3ec;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(22, 101, 52, 0.25);
+      border-color: transparent;
     }
 
-    .header-link-clube:hover {
-      filter: brightness(0.98);
+    .header-link--primary {
+      background: #166534;
+      color: #ffffff;
+      border-color: #14532d;
+      box-shadow: 0 12px 28px rgba(22, 101, 52, 0.4);
+    }
+
+    .header-link--primary:hover {
+      background: #15803d;
+      box-shadow: 0 15px 34px rgba(22, 163, 74, 0.5);
     }
 
     main {
@@ -136,253 +168,340 @@
       margin: 0 auto;
     }
 
-    .tag-trilha {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: var(--primary-soft);
-      color: var(--primary);
-      font-size: 0.8rem;
-      margin-bottom: 18px;
-    }
-
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.2fr);
-      gap: 24px;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: 20px;
       align-items: center;
-      margin-bottom: 24px;
+      margin-bottom: 26px;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #fef3c7;
+      border: 1px solid #fde68a;
+      color: #92400e;
+      font-size: 0.78rem;
+      font-weight: 500;
+      width: fit-content;
+    }
+
+    .hero-pill span {
+      font-size: 0.9rem;
     }
 
     h1 {
-      font-size: 2.3rem;
-      line-height: 1.15;
-      margin-bottom: 8px;
+      font-size: clamp(1.65rem, 3vw, 2rem);
+      line-height: 1.25;
+      margin: 0;
     }
 
     .hero-subtitle {
-      font-size: 0.98rem;
-      color: var(--text-muted);
-      margin-bottom: 16px;
+      font-size: 0.95rem;
+      color: #4b5563;
     }
 
-    .hero-cta {
+    .hero-highlight {
+      font-size: 0.88rem;
+      color: #111827;
+      background: #ecfdf5;
+      border-radius: 12px;
+      padding: 8px 10px;
+      border: 1px solid #bbf7d0;
+    }
+
+    .hero-highlight strong {
+      color: #166534;
+    }
+
+    .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-bottom: 10px;
+      margin-top: 4px;
     }
 
-    .btn-primary-lg {
+    .btn-main {
+      border-radius: 999px;
+      padding: 9px 18px;
       border: none;
       cursor: pointer;
-      border-radius: 999px;
-      padding: 10px 18px;
-      background: var(--primary);
-      color: #fff;
-      font-size: 0.95rem;
-      font-weight: 600;
+      font-size: 0.92rem;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 6px;
-      text-decoration: none;
-      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+      gap: 8px;
+      background: #166534;
+      color: #ffffff;
+      box-shadow: 0 15px 34px rgba(22, 101, 52, 0.5);
+      transition: transform 0.08s ease, box-shadow 0.12s ease, background 0.12s ease;
     }
 
-    .btn-secondary-lg {
+    .btn-main:hover {
+      background: #15803d;
+      transform: translateY(-1px);
+      box-shadow: 0 20px 40px rgba(22, 163, 74, 0.6);
+    }
+
+    .btn-ghost {
       border-radius: 999px;
-      border: 1px solid #d0d0d0;
-      padding: 9px 16px;
-      background: #f5f5f7;
-      font-size: 0.9rem;
+      padding: 8px 14px;
+      border: 1px solid #d1d5db;
       cursor: pointer;
+      font-size: 0.88rem;
+      background: #ffffff;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
       gap: 6px;
-      text-decoration: none;
-      color: #333;
+      color: #111827;
+      box-shadow: 0 6px 16px rgba(148, 163, 184, 0.3);
     }
 
-    .hero-helper {
+    .btn-ghost:hover {
+      background: #f9fafb;
+    }
+
+    .hero-note {
       font-size: 0.8rem;
-      color: var(--text-muted);
+      color: #6b7280;
+    }
+
+    .hero-right {
+      position: relative;
     }
 
     .hero-card {
-      background: var(--bg-alt);
+      background: linear-gradient(135deg, #ffffff 0, #ecfdf5 50%, #fdf2e9 100%);
       border-radius: var(--radius-xl);
-      border: 1px solid var(--border-soft);
       box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(148, 163, 184, 0.4);
       padding: 16px 16px 14px;
-      font-size: 0.88rem;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
-    .hero-card h2 {
-      font-size: 1rem;
-      margin-bottom: 4px;
+    .hero-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
     }
 
-    .hero-card p {
-      font-size: 0.84rem;
-      color: var(--text-muted);
-      margin-bottom: 10px;
+    .hero-card-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .section {
-      margin-top: 16px;
+    .hero-card-pill {
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      background: #eef2ff;
+      color: #3730a3;
+      border: 1px solid #c7d2fe;
     }
 
-    .section h2 {
-      font-size: 1.35rem;
+    .hero-card-body {
+      font-size: 0.8rem;
+      color: #374151;
+    }
+
+    .hero-card-metrics {
+      margin-top: 6px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+      font-size: 0.78rem;
+    }
+
+    .hero-metric {
+      padding: 8px 8px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      backdrop-filter: blur(6px);
+    }
+
+    .hero-metric-label {
+      color: #6b7280;
+      font-size: 0.72rem;
+    }
+
+    .hero-metric-value {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .hero-metric-sub {
+      font-size: 0.72rem;
+      color: #16a34a;
+    }
+
+    .hero-metric-sub.negative {
+      color: #b91c1c;
+    }
+
+    .hero-card-footer {
+      margin-top: 6px;
+      font-size: 0.75rem;
+      color: #4b5563;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #022c22;
+      color: #a7f3d0;
+      font-size: 0.7rem;
+    }
+
+    .sections-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      padding: 16px 14px 14px;
+      margin-bottom: 16px;
+    }
+
+    .card-header {
       margin-bottom: 8px;
     }
 
-    .section p {
-      font-size: 0.92rem;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-    }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 8px;
-    }
-
-    .step-card {
-      background: var(--bg-alt);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-soft);
-      padding: 10px 12px;
-      font-size: 0.86rem;
-    }
-
-    .step-label {
-      font-size: 0.78rem;
-      color: var(--primary);
-      font-weight: 600;
+    .card-label {
+      font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.12em;
+      color: #6b7280;
       margin-bottom: 2px;
     }
 
-    .step-title {
+    .card-title {
+      font-size: 1rem;
       font-weight: 600;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
 
-    /* calculadoras em 1 coluna – uma embaixo da outra */
-    .tools-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 14px;
-      margin-top: 8px;
+    .card-subtitle {
+      font-size: 0.82rem;
+      color: #6b7280;
     }
 
-    .tool-card {
-      background: var(--bg-alt);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-soft);
-      padding: 10px 12px;
+    .card-body {
       font-size: 0.86rem;
+      color: #374151;
     }
 
-    .tool-title {
-      font-weight: 600;
+    .card-list {
+      margin-top: 8px;
+      padding-left: 18px;
+    }
+
+    .card-list li {
       margin-bottom: 4px;
     }
 
-    .tool-card p {
-      font-size: 0.84rem;
-      margin-bottom: 8px;
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
     }
 
-    .tool-link {
-      font-size: 0.8rem;
-      color: var(--primary);
-      text-decoration: underline;
-    }
-
-    .clube-section {
-      margin-top: 18px;
-    }
-
-    .clube-card {
-      background: linear-gradient(135deg, #1e5a4d, #2a7c65);
-      color: #fff;
-      border-radius: var(--radius-xl);
-      padding: 16px 16px 14px;
-      box-shadow: var(--shadow-soft);
-      display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr);
-      gap: 16px;
-      align-items: center;
-    }
-
-    .clube-card h2 {
-      font-size: 1.4rem;
-      margin-bottom: 6px;
-      color: #fff;
-    }
-
-    .clube-card p {
-      font-size: 0.9rem;
-      color: #e9f8f3;
-      margin-bottom: 8px;
-    }
-
-    .clube-list {
-      font-size: 0.85rem;
-      margin-left: 14px;
-      margin-bottom: 10px;
-      color: #f3fffb;
-    }
-
-    .clube-list li {
-      margin-bottom: 4px;
-    }
-
-    .clube-chip {
+    .badge {
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      font-size: 0.74rem;
+      color: #4b5563;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #16a34a;
+    }
+
+    .badge-dot.warn {
+      background: #f97316;
+    }
+
+    .badge-dot.info {
+      background: #3b82f6;
+    }
+
+    .pill-info {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
       padding: 4px 8px;
       border-radius: 999px;
-      background: rgba(0, 0, 0, 0.18);
+      background: #eef2ff;
+      border: 1px solid #c7d2fe;
       font-size: 0.75rem;
+      color: #1d4ed8;
+      margin-top: 6px;
     }
 
-    .clube-right {
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 18px;
-      padding: 10px 12px;
+    .cols-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px 14px;
+      margin-top: 6px;
+    }
+
+    .cols-2 p {
+      font-size: 0.85rem;
+    }
+
+    .highlight-box {
+      margin-top: 8px;
+      padding: 8px 10px;
+      border-radius: 14px;
+      background: #ecfdf5;
+      border: 1px solid #bbf7d0;
       font-size: 0.82rem;
-    }
-
-    .clube-right h3 {
-      font-size: 0.9rem;
-      margin-bottom: 4px;
-    }
-
-    .clube-right p {
-      font-size: 0.8rem;
-      margin-bottom: 6px;
-    }
-
-    .clube-right strong {
-      font-size: 0.88rem;
+      color: #064e3b;
     }
 
     footer {
-      background: #111111;
-      color: #d0d0d0;
-      font-size: 0.78rem;
-      padding: 10px 16px 16px;
+      background: #020617;
+      color: #9ca3af;
+      margin-top: 20px;
+      padding: 14px 16px 18px;
+      font-size: 0.8rem;
     }
 
     .footer-inner {
@@ -393,38 +512,47 @@
       gap: 6px;
     }
 
-    .footer-disclaimer {
-      color: #aaaaaa;
-      line-height: 1.4;
+    .footer-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
     }
 
-    @media (max-width: 880px) {
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 0.78rem;
+    }
+
+    .footer-links a {
+      color: #e5e7eb;
+    }
+
+    .footer-note {
+      font-size: 0.74rem;
+      color: #6b7280;
+    }
+
+    @media (max-width: 900px) {
       .hero {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
       }
-      .clube-card {
-        grid-template-columns: 1fr;
-      }
-      .steps {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+      .sections-grid {
+        grid-template-columns: minmax(0, 1fr);
       }
     }
 
     @media (max-width: 640px) {
-      .header-inner {
-        padding-inline: 10px;
-      }
       main {
         padding-inline: 12px;
       }
-      h1 {
-        font-size: 1.8rem;
-      }
-      .steps {
-        grid-template-columns: 1fr;
-      }
-      .tools-grid {
-        grid-template-columns: 1fr;
+
+      .header-inner {
+        padding-inline: 10px;
       }
     }
   </style>
@@ -434,177 +562,216 @@
     <div class="header-inner">
       <a href="index.html" class="logo">
         <div class="logo-badge">P&amp;P</div>
-        <div>
-          <div class="logo-text-main">Prato &amp; Peso</div>
-          <div class="logo-text-sub">Comida de verdade, meta clara</div>
+        <div class="logo-text">
+          <div class="logo-main">Prato &amp; Peso</div>
+          <div class="logo-sub">Comida de verdade, meta clara</div>
         </div>
       </a>
 
-      <nav class="header-links">
-        <!-- agora só o botão do Clube -->
-        <a href="clube.html" class="header-link header-link-clube">Clube Prato &amp; Peso</a>
-      </nav>
+      <div class="header-links">
+        <button class="header-link" onclick="document.getElementById('sec-ferramentas').scrollIntoView({behavior:'smooth'});">
+          Ver ferramentas
+        </button>
+        <button class="header-link header-link--primary" onclick="window.location.href='clube-login.html';">
+          Entrar no Clube
+        </button>
+      </div>
     </div>
   </header>
 
   <main>
     <div class="main-inner">
-      <div class="tag-trilha">
-        Prato &amp; Peso • Emagrecimento com comida de verdade
-      </div>
-
       <section class="hero">
-        <div>
+        <div class="hero-left">
+          <div class="hero-pill">
+            <span>🍽️</span>
+            <span>Calculadora de calorias + prato brasileiro + histórico de peso</span>
+          </div>
+
           <h1>Entenda suas calorias, ajuste seu prato, siga a meta.</h1>
+
           <p class="hero-subtitle">
-            O Prato &amp; Peso junta três coisas: quanto você gasta de calorias, quanto tem no prato brasileiro
-            que você já come (arroz, feijão, marmita) e para onde o seu peso está indo.
+            O Prato &amp; Peso te ajuda a descobrir quanto gasta de calorias por dia (TDEE),
+            montar um prato brasileiro com comida de verdade e acompanhar a evolução do peso
+            de forma simples.
           </p>
 
-          <div class="hero-cta">
-            <a href="tdee.html" class="btn-primary-lg">Calcular minhas calorias (TDEE)</a>
-            <a href="meta-emagrecimento.html" class="btn-secondary-lg">Definir minha meta</a>
-            <a href="prato.html" class="btn-secondary-lg">Montar um prato brasileiro</a>
+          <div class="hero-highlight">
+            Nada de dieta maluca: você enxerga <strong>números</strong>, faz escolhas mais conscientes
+            e acompanha o impacto disso no peso, no seu tempo.
           </div>
-          <div class="hero-helper">
-            Comece com a calculadora de TDEE, defina uma meta de calorias e depois brinque com o prato.
-            Nada de dieta maluca, só ajuste aos poucos.
+
+          <div class="hero-actions">
+            <button class="btn-main" onclick="window.location.href='clube-login.html';">
+              Começar agora (grátis)
+            </button>
+            <button class="btn-ghost" onclick="document.getElementById('sec-ferramentas').scrollIntoView({behavior:'smooth'});">
+              Ver como funciona
+            </button>
+          </div>
+
+          <div class="hero-note">
+            100% online, focado em prato brasileiro e no que você realmente come no dia a dia.
           </div>
         </div>
 
-        <aside class="hero-card">
-          <h2>Comida normal, conta clara.</h2>
-          <p>
-            Nada de cardápio impossível. Aqui você vê:
-          </p>
-          <ul style="font-size:0.84rem; margin-left:16px; color:var(--text-muted); margin-bottom:10px;">
-            <li>calorias para manter, emagrecer ou ganhar peso;</li>
-            <li>calorias estimadas do seu PF, marmita, feijoada, etc.;</li>
-            <li>peso registrado ao longo dos dias.</li>
-          </ul>
-        </aside>
-      </section>
+        <div class="hero-right">
+          <div class="hero-card">
+            <div class="hero-card-header">
+              <div class="hero-card-title">
+                <span>📊 Relatório simples do Clube</span>
+              </div>
+              <span class="hero-card-pill">Exemplo de como fica</span>
+            </div>
 
-      <section class="section">
-        <h2>Como funciona, na prática</h2>
-        <p>Você não precisa virar atleta ou pesar cada grama da comida. A ideia é ter consciência e ajustar aos poucos.</p>
+            <div class="hero-card-body">
+              Você escolhe um período (por exemplo, os últimos 7 dias) e vê:
+            </div>
 
-        <div class="steps">
-          <article class="step-card">
-            <div class="step-label">Passo 1</div>
-            <div class="step-title">Descubra sua meta de calorias</div>
-            <p>
-              Use a calculadora de <strong>TDEE</strong> para saber quanto você gasta por dia
-              e veja sugestões de déficit para emagrecer com calma.
-            </p>
-          </article>
+            <div class="hero-card-metrics">
+              <div class="hero-metric">
+                <div class="hero-metric-label">Peso médio</div>
+                <div class="hero-metric-value">86,2 kg</div>
+                <div class="hero-metric-sub negative">-1,4 kg no período</div>
+              </div>
+              <div class="hero-metric">
+                <div class="hero-metric-label">Calorias médias</div>
+                <div class="hero-metric-value">1.930 kcal</div>
+                <div class="hero-metric-sub">abaixo do seu TDEE</div>
+              </div>
+              <div class="hero-metric">
+                <div class="hero-metric-label">Proteínas médias</div>
+                <div class="hero-metric-value">117 g</div>
+                <div class="hero-metric-sub">dentro da meta</div>
+              </div>
+            </div>
 
-          <article class="step-card">
-            <div class="step-label">Passo 2</div>
-            <div class="step-title">Monte seu prato brasileiro</div>
-            <p>
-              No montador de prato, você escolhe arroz, feijão, farofa, frango, marmita e vê
-              quantas calorias tem aquilo que você realmente come.
-            </p>
-          </article>
-
-          <article class="step-card">
-            <div class="step-label">Passo 3</div>
-            <div class="step-title">Ajuste e acompanhe o peso</div>
-            <p>
-              Ajuste o tamanho dos pratos e acompanhe a evolução do peso na balança.
-              Se quiser ir além, tem o Clube com histórico e relatórios.
-            </p>
-          </article>
+            <div class="hero-card-footer">
+              <span>Você ainda enxerga a variação de cintura, abdômen e quadril no período.</span>
+              <span class="hero-chip">
+                ✅ Relatório simples, sem frescura
+              </span>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="section">
-        <h2>Ferramentas gratuitas do Prato &amp; Peso</h2>
-        <p>Comece usando só o que já está aberto, sem login e sem cadastro.</p>
-
-        <div class="tools-grid">
-          <article class="tool-card">
-            <div class="tool-title">Calculadora de TDEE</div>
-            <p>
-              Estima seu gasto calórico diário e mostra faixas para manutenção,
-              déficit e superávit calórico.
+      <section id="sec-ferramentas" class="sections-grid">
+        <article class="card">
+          <header class="card-header">
+            <div class="card-label">Ferramentas principais</div>
+            <h2 class="card-title">O que você pode fazer no Prato &amp; Peso</h2>
+            <p class="card-subtitle">
+              Tudo pensado para quem quer emagrecer ou manter o peso com comida de verdade,
+              sem precisar virar atleta ou nutricionista.
             </p>
-            <a href="tdee.html" class="tool-link">Abrir calculadora de TDEE →</a>
-          </article>
+          </header>
 
-          <article class="tool-card">
-            <div class="tool-title">Meta de emagrecimento</div>
-            <p>
-              Defina peso atual, peso desejado e tempo. Veja um déficit sugerido
-              e se a meta está razoável ou agressiva demais.
-            </p>
-            <a href="meta-emagrecimento.html" class="tool-link">Calcular meta de emagrecimento →</a>
-          </article>
-
-          <article class="tool-card">
-            <div class="tool-title">Montador de prato brasileiro</div>
-            <p>
-              Monte um PF, uma marmita ou um prato de feijoada com porções simples
-              e veja a estimativa de calorias do prato.
-            </p>
-            <a href="prato.html" class="tool-link">Montar um prato agora →</a>
-          </article>
-        </div>
-      </section>
-
-      <section class="clube-section">
-        <div class="clube-card">
-          <div>
-            <div class="clube-chip">Opcional • Para quem quiser dar o próximo passo</div>
-            <h2>Clube Prato &amp; Peso: histórico, pratos e relatórios.</h2>
-            <p>
-              Se você curtir as ferramentas gratuitas e quiser organizar melhor seu processo, o Clube Prato &amp; Peso
-              te ajuda a juntar <strong>peso</strong>, <strong>pratos</strong> e <strong>relatórios simples</strong> em um só lugar.
-            </p>
-            <ul class="clube-list">
-              <li>📊 Histórico de peso e metas.</li>
-              <li>🍽️ Diário de pratos e marmitas favoritos.</li>
-              <li>📈 Relatórios semanais/mensais básicos.</li>
-              <li>📎 Materiais extras para organizar marmitas e hábitos.</li>
+          <div class="card-body">
+            <ul class="card-list">
+              <li>
+                <strong>Calcular seu TDEE</strong> (gasto calórico diário aproximado), escolhendo nível de atividade
+                e definindo uma meta de calorias realista para emagrecer ou manter.
+              </li>
+              <li>
+                <strong>Montar um prato brasileiro</strong>: arroz, feijão, carne, ovo, salada, marmita, PF, etc.
+                Você monta em gramas e vê as calorias aproximadas do prato.
+              </li>
+              <li>
+                <strong>Registrar o que comeu no dia</strong> (calorias totais), para alimentar o histórico do Clube
+                e enxergar padrões ao longo da semana.
+              </li>
+              <li>
+                <strong>Registrar peso e medidas corporais</strong> (cintura, abdômen, quadril, entre outras) de forma simples.
+              </li>
+              <li>
+                <strong>Gerar um relatório simples</strong> escolhendo um período (por exemplo, 7 ou 30 dias) para ver peso,
+                calorias, proteínas e medidas no mesmo lugar.
+              </li>
             </ul>
-            <a href="clube.html" class="btn-primary-lg" style="background:#ffcc73;color:#4b2c15;box-shadow:none;">
-              Conhecer o Clube Prato &amp; Peso
-            </a>
-          </div>
 
-          <div class="clube-right">
-            <h3>O que o Clube NÃO é</h3>
-            <p>
-              Não é dieta milagrosa, não é consultório de nutrição e não promete “-10 kg em 10 dias”.
-            </p>
-            <h3>E o que ele é</h3>
-            <p>
-              Uma ferramenta de <strong>consciência e organização</strong>:
-              você vê <strong>quanto come</strong>, <strong>quanto pesa</strong> e
-              <strong>para onde está indo</strong>. A mudança vem do ajuste diário.
-            </p>
+            <div class="badge-row">
+              <div class="badge">
+                <span class="badge-dot"></span>
+                Pensado para prato brasileiro, marmita e refeição de verdade
+              </div>
+              <div class="badge">
+                <span class="badge-dot info"></span>
+                Você não precisa saber tudo sobre nutrição
+              </div>
+              <div class="badge">
+                <span class="badge-dot warn"></span>
+                Não substitui acompanhamento profissional
+              </div>
+            </div>
+
+            <div class="pill-info">
+              📌 Tudo começa com o TDEE: primeiro você entende quanto gasta, depois ajusta o prato
+              e acompanha se está perto da meta.
+            </div>
           </div>
-        </div>
+        </article>
+
+        <article class="card">
+          <header class="card-header">
+            <div class="card-label">Como usar na prática</div>
+            <h2 class="card-title">Um jeito simples de colocar em prática</h2>
+          </header>
+
+          <div class="card-body">
+            <div class="cols-2">
+              <p>
+                <strong>1. Calcule seu TDEE</strong><br />
+                Você informa altura, peso, idade e nível de atividade. O Prato &amp; Peso estima
+                seu gasto calórico diário e sugere uma meta de calorias para emagrecimento ou manutenção.
+              </p>
+              <p>
+                <strong>2. Monte seu prato brasileiro</strong><br />
+                Use o montador de prato para montar as refeições do dia, em gramas, com arroz, feijão,
+                carnes, ovos, saladas, PFs de marmita e até alguns lanches típicos.
+              </p>
+              <p>
+                <strong>3. Some as calorias do dia</strong><br />
+                Some o que comeu (ou só use o montador de prato das principais refeições)
+                e registre o total diário no Clube.
+              </p>
+              <p>
+                <strong>4. Registre peso e medidas</strong><br />
+                De tempos em tempos, registre seu peso, cintura, abdômen e quadril
+                para acompanhar de forma visual se está indo na direção certa.
+              </p>
+            </div>
+
+            <div class="highlight-box">
+              <strong>Importante:</strong> o objetivo não é ser a calculadora perfeita, mas sim
+              te dar um <strong>painel simples</strong> para juntar três coisas que importam:
+              <em>calorias, peso e medidas</em>. Assim você consegue ajustar a rota sem ficar perdido.
+            </div>
+          </div>
+        </article>
       </section>
     </div>
   </main>
 
   <footer>
     <div class="footer-inner">
-      <div class="footer-disclaimer">
-        <strong>Aviso:</strong> o Prato &amp; Peso é um ambiente educativo e de organização.
-        Ele não substitui acompanhamento individual com nutricionista, médico ou outros profissionais de saúde.
+      <div class="footer-top">
+        <div>© <span id="anoAtual"></span> Prato &amp; Peso – Emagrecimento com comida de verdade.</div>
+        <div class="footer-links">
+          <a href="clube-login.html">Entrar no Clube</a>
+          <span>•</span>
+          <a href="#sec-ferramentas">Como funciona</a>
+        </div>
       </div>
-      <div style="font-size:0.75rem; color:#888888;">
-        © <span id="ano-atual"></span> Prato &amp; Peso. Todos os direitos reservados.
+      <div class="footer-note">
+        Este site é apenas informativo e não substitui orientação personalizada de nutricionistas, médicos
+        ou educadores físicos. Use como apoio para enxergar números e tendências, não como verdade absoluta.
       </div>
     </div>
   </footer>
 
   <script>
-    // Atualiza ano automaticamente no rodapé
-    document.getElementById("ano-atual").textContent = new Date().getFullYear();
+    document.getElementById("anoAtual").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
