@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Prato & Peso – Emagrecimento com comida de verdade</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Prato & Peso: entenda suas calorias, ajuste seu prato brasileiro e acompanhe o peso com comida de verdade, sem dieta maluca." />
+
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --bg-alt: #ffffff;
+      --primary: #1e5a4d;
+      --primary-soft: #e0f3ec;
+      --accent: #ffb347;
+      --accent-soft: #fff3df;
+      --text-main: #222222;
+      --text-muted: #666666;
+      --border-soft: #e0e0e0;
+      --radius-lg: 16px;
+      --radius-xl: 22px;
+      --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.08);
+      --max-width: 1040px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #fdf5ea 0, #f5f5f7 45%, #f0f2f5 100%);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #4b2c15;
+      font-size: 0.95rem;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+    }
+
+    .logo-text-main {
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 0.03em;
+    }
+
+    .logo-text-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .header-links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .header-link {
+      font-size: 0.82rem;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    /* BOTÃO DESTACADO – CLUBE PRATO & PESO */
+    .header-link-clube {
+      background: var(--accent);
+      color: #4b2c15;
+      font-weight: 600;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+    }
+
+    .header-link-clube:hover {
+      filter: brightness(0.98);
+    }
+
+    main {
+      flex: 1;
+      padding: 24px 16px 40px;
+    }
+
+    .main-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .tag-trilha {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 0.8rem;
+      margin-bottom: 18px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.2fr);
+      gap: 24px;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 2.3rem;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .hero-subtitle {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .btn-primary-lg {
+      border: none;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 10px 18px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+    }
+
+    .btn-secondary-lg {
+      border-radius: 999px;
+      border: 1px solid #d0d0d0;
+      padding: 9px 16px;
+      background: #f5f5f7;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+      color: #333;
+    }
+
+    .hero-helper {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .hero-card {
+      background: var(--bg-alt);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 16px 16px 14px;
+      font-size: 0.88rem;
+    }
+
+    .hero-card h2 {
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .hero-card p {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .section {
+      margin-top: 16px;
+    }
+
+    .section h2 {
+      font-size: 1.35rem;
+      margin-bottom: 8px;
+    }
+
+    .section p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .step-card {
+      background: var(--bg-alt);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      padding: 10px 12px;
+      font-size: 0.86rem;
+    }
+
+    .step-label {
+      font-size: 0.78rem;
+      color: var(--primary);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 2px;
+    }
+
+    .step-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    /* calculadoras em 1 coluna – uma embaixo da outra */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .tool-card {
+      background: var(--bg-alt);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      padding: 10px 12px;
+      font-size: 0.86rem;
+    }
+
+    .tool-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .tool-card p {
+      font-size: 0.84rem;
+      margin-bottom: 8px;
+    }
+
+    .tool-link {
+      font-size: 0.8rem;
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    .clube-section {
+      margin-top: 18px;
+    }
+
+    .clube-card {
+      background: linear-gradient(135deg, #1e5a4d, #2a7c65);
+      color: #fff;
+      border-radius: var(--radius-xl);
+      padding: 16px 16px 14px;
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr);
+      gap: 16px;
+      align-items: center;
+    }
+
+    .clube-card h2 {
+      font-size: 1.4rem;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+
+    .clube-card p {
+      font-size: 0.9rem;
+      color: #e9f8f3;
+      margin-bottom: 8px;
+    }
+
+    .clube-list {
+      font-size: 0.85rem;
+      margin-left: 14px;
+      margin-bottom: 10px;
+      color: #f3fffb;
+    }
+
+    .clube-list li {
+      margin-bottom: 4px;
+    }
+
+    .clube-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.18);
+      font-size: 0.75rem;
+    }
+
+    .clube-right {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 10px 12px;
+      font-size: 0.82rem;
+    }
+
+    .clube-right h3 {
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .clube-right p {
+      font-size: 0.8rem;
+      margin-bottom: 6px;
+    }
+
+    .clube-right strong {
+      font-size: 0.88rem;
+    }
+
+    footer {
+      background: #111111;
+      color: #d0d0d0;
+      font-size: 0.78rem;
+      padding: 10px 16px 16px;
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .footer-disclaimer {
+      color: #aaaaaa;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 880px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      .clube-card {
+        grid-template-columns: 1fr;
+      }
+      .steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .header-inner {
+        padding-inline: 10px;
+      }
+      main {
+        padding-inline: 12px;
+      }
+      h1 {
+        font-size: 1.8rem;
+      }
+      .steps {
+        grid-template-columns: 1fr;
+      }
+      .tools-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-badge">P&amp;P</div>
+        <div>
+          <div class="logo-text-main">Prato &amp; Peso</div>
+          <div class="logo-text-sub">Comida de verdade, meta clara</div>
+        </div>
+      </a>
+
+      <nav class="header-links">
+        <!-- agora só o botão do Clube -->
+        <a href="clube.html" class="header-link header-link-clube">Clube Prato &amp; Peso</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="main-inner">
+      <div class="tag-trilha">
+        Prato &amp; Peso • Emagrecimento com comida de verdade
+      </div>
+
+      <section class="hero">
+        <div>
+          <h1>Entenda suas calorias, ajuste seu prato, siga a meta.</h1>
+          <p class="hero-subtitle">
+            O Prato &amp; Peso junta três coisas: quanto você gasta de calorias, quanto tem no prato brasileiro
+            que você já come (arroz, feijão, marmita) e para onde o seu peso está indo.
+          </p>
+
+          <div class="hero-cta">
+            <a href="tdee.html" class="btn-primary-lg">Calcular minhas calorias (TDEE)</a>
+            <a href="meta-emagrecimento.html" class="btn-secondary-lg">Definir minha meta</a>
+            <a href="prato.html" class="btn-secondary-lg">Montar um prato brasileiro</a>
+          </div>
+          <div class="hero-helper">
+            Comece com a calculadora de TDEE, defina uma meta de calorias e depois brinque com o prato.
+            Nada de dieta maluca, só ajuste aos poucos.
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <h2>Comida normal, conta clara.</h2>
+          <p>
+            Nada de cardápio impossível. Aqui você vê:
+          </p>
+          <ul style="font-size:0.84rem; margin-left:16px; color:var(--text-muted); margin-bottom:10px;">
+            <li>calorias para manter, emagrecer ou ganhar peso;</li>
+            <li>calorias estimadas do seu PF, marmita, feijoada, etc.;</li>
+            <li>peso registrado ao longo dos dias.</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="section">
+        <h2>Como funciona, na prática</h2>
+        <p>Você não precisa virar atleta ou pesar cada grama da comida. A ideia é ter consciência e ajustar aos poucos.</p>
+
+        <div class="steps">
+          <article class="step-card">
+            <div class="step-label">Passo 1</div>
+            <div class="step-title">Descubra sua meta de calorias</div>
+            <p>
+              Use a calculadora de <strong>TDEE</strong> para saber quanto você gasta por dia
+              e veja sugestões de déficit para emagrecer com calma.
+            </p>
+          </article>
+
+          <article class="step-card">
+            <div class="step-label">Passo 2</div>
+            <div class="step-title">Monte seu prato brasileiro</div>
+            <p>
+              No montador de prato, você escolhe arroz, feijão, farofa, frango, marmita e vê
+              quantas calorias tem aquilo que você realmente come.
+            </p>
+          </article>
+
+          <article class="step-card">
+            <div class="step-label">Passo 3</div>
+            <div class="step-title">Ajuste e acompanhe o peso</div>
+            <p>
+              Ajuste o tamanho dos pratos e acompanhe a evolução do peso na balança.
+              Se quiser ir além, tem o Clube com histórico e relatórios.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Ferramentas gratuitas do Prato &amp; Peso</h2>
+        <p>Comece usando só o que já está aberto, sem login e sem cadastro.</p>
+
+        <div class="tools-grid">
+          <article class="tool-card">
+            <div class="tool-title">Calculadora de TDEE</div>
+            <p>
+              Estima seu gasto calórico diário e mostra faixas para manutenção,
+              déficit e superávit calórico.
+            </p>
+            <a href="tdee.html" class="tool-link">Abrir calculadora de TDEE →</a>
+          </article>
+
+          <article class="tool-card">
+            <div class="tool-title">Meta de emagrecimento</div>
+            <p>
+              Defina peso atual, peso desejado e tempo. Veja um déficit sugerido
+              e se a meta está razoável ou agressiva demais.
+            </p>
+            <a href="meta-emagrecimento.html" class="tool-link">Calcular meta de emagrecimento →</a>
+          </article>
+
+          <article class="tool-card">
+            <div class="tool-title">Montador de prato brasileiro</div>
+            <p>
+              Monte um PF, uma marmita ou um prato de feijoada com porções simples
+              e veja a estimativa de calorias do prato.
+            </p>
+            <a href="prato.html" class="tool-link">Montar um prato agora →</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="clube-section">
+        <div class="clube-card">
+          <div>
+            <div class="clube-chip">Opcional • Para quem quiser dar o próximo passo</div>
+            <h2>Clube Prato &amp; Peso: histórico, pratos e relatórios.</h2>
+            <p>
+              Se você curtir as ferramentas gratuitas e quiser organizar melhor seu processo, o Clube Prato &amp; Peso
+              te ajuda a juntar <strong>peso</strong>, <strong>pratos</strong> e <strong>relatórios simples</strong> em um só lugar.
+            </p>
+            <ul class="clube-list">
+              <li>📊 Histórico de peso e metas.</li>
+              <li>🍽️ Diário de pratos e marmitas favoritos.</li>
+              <li>📈 Relatórios semanais/mensais básicos.</li>
+              <li>📎 Materiais extras para organizar marmitas e hábitos.</li>
+            </ul>
+            <a href="clube.html" class="btn-primary-lg" style="background:#ffcc73;color:#4b2c15;box-shadow:none;">
+              Conhecer o Clube Prato &amp; Peso
+            </a>
+          </div>
+
+          <div class="clube-right">
+            <h3>O que o Clube NÃO é</h3>
+            <p>
+              Não é dieta milagrosa, não é consultório de nutrição e não promete “-10 kg em 10 dias”.
+            </p>
+            <h3>E o que ele é</h3>
+            <p>
+              Uma ferramenta de <strong>consciência e organização</strong>:
+              você vê <strong>quanto come</strong>, <strong>quanto pesa</strong> e
+              <strong>para onde está indo</strong>. A mudança vem do ajuste diário.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-disclaimer">
+        <strong>Aviso:</strong> o Prato &amp; Peso é um ambiente educativo e de organização.
+        Ele não substitui acompanhamento individual com nutricionista, médico ou outros profissionais de saúde.
+      </div>
+      <div style="font-size:0.75rem; color:#888888;">
+        © <span id="ano-atual"></span> Prato &amp; Peso. Todos os direitos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Atualiza ano automaticamente no rodapé
+    document.getElementById("ano-atual").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

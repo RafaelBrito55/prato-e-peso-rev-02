@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Meta de Emagrecimento – Prato & Peso</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Defina sua meta de emagrecimento a partir do seu peso atual, peso desejado e calorias de manutenção. Veja o déficit diário, tempo estimado e classificação da meta (leve, moderada, agressiva). Descubra se as calorias finais estão em uma faixa segura e use isso como bússola para organizar seu dia a dia com comida de verdade." />
+
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --bg-alt: #ffffff;
+      --primary: #1e5a4d;
+      --primary-soft: #e0f3ec;
+      --accent: #ffb347;
+      --accent-soft: #fff3df;
+      --text-main: #222222;
+      --text-muted: #666666;
+      --border-soft: #e0e0e0;
+      --radius-lg: 16px;
+      --radius-xl: 22px;
+      --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.08);
+      --max-width: 1040px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #fdf5ea 0, #f5f5f7 45%, #f0f2f5 100%);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-circle {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #4b2c15;
+      font-size: 0.9rem;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .logo-text-main {
+      font-weight: 700;
+      font-size: 0.98rem;
+      letter-spacing: 0.03em;
+    }
+
+    .logo-text-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .header-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .header-link {
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .header-link-clube {
+      background: var(--accent);
+      color: #4b2c15;
+      font-weight: 600;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+    }
+
+    main {
+      min-height: calc(100vh - 140px);
+    }
+
+    .hero {
+      padding: 22px 16px 8px;
+    }
+
+    .hero-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .hero-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+    }
+
+    .hero-text {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 640px;
+    }
+
+    .hero-highlight {
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .layout {
+      padding: 0 16px 32px;
+    }
+
+    .layout-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .grid-main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .card {
+      background: var(--bg-alt);
+      border-radius: var(--radius-xl);
+      padding: 18px 18px 18px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(17, 24, 39, 0.03);
+    }
+
+    .card h2 {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .card-results {
+      background: radial-gradient(circle at top, #fff7ec, #ffffff);
+      border-radius: var(--radius-xl);
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(148, 98, 33, 0.12);
+      position: sticky;
+      top: 14px;
+    }
+
+    .results-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .results-title::before {
+      content: "";
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #ffb347, #ff8547);
+      box-shadow: 0 0 0 2px rgba(255, 179, 71, 0.3);
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .result-card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 14px;
+      padding: 10px 12px;
+      border: 1px solid rgba(148, 98, 33, 0.12);
+    }
+
+    .result-label {
+      font-size: 0.78rem;
+      color: #7c5b32;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 2px;
+    }
+
+    .result-value {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #4b2c14;
+    }
+
+    .result-note {
+      font-size: 0.8rem;
+      color: #7c5b32;
+      margin-top: 3px;
+    }
+
+    .alert {
+      display: none;
+      margin-top: 10px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+      font-size: 0.82rem;
+    }
+
+    .alert.visible {
+      display: block;
+    }
+
+    .summary-note {
+      margin-top: 10px;
+      font-size: 0.82rem;
+      color: #4b2c14;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 12px 10px;
+      margin-top: 8px;
+      margin-bottom: 10px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.86rem;
+    }
+
+    label {
+      font-weight: 500;
+    }
+
+    .hint {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+
+    input[type="number"],
+    select {
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border-soft);
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+      background: #fff;
+    }
+
+    input[type="number"]:focus,
+    select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px var(--primary-soft);
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    .mode-select {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.86rem;
+    }
+
+    .mode-select select {
+      width: 100%;
+    }
+
+    .mode-extra {
+      margin-top: 4px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .mode-extra strong {
+      font-weight: 600;
+    }
+
+    .secondary-note {
+      margin-top: 12px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .secondary-note strong {
+      color: var(--primary);
+    }
+
+    .btn-row {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(135deg, #1e5a4d, #19413a);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+    }
+
+    .btn-secondary {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      cursor: pointer;
+      background: #ffffff;
+      color: var(--text-main);
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .error-msg {
+      margin-top: 10px;
+      font-size: 0.82rem;
+      color: #b91c1c;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      display: none;
+    }
+
+    footer {
+      background: #111111;
+      color: #d0d0d0;
+      font-size: 0.78rem;
+      padding: 14px 16px 18px;
+      margin-top: auto;
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-disclaimer {
+      color: #aaaaaa;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 780px) {
+      .grid-main {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .card-results {
+        position: static;
+      }
+
+      .header-inner {
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .form-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .next-step {
+      margin-top: 10px;
+      display: none; /* só aparece depois de calcular */
+    }
+
+    .btn-next {
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: none;
+      background: var(--accent);
+      color: #4b2c15;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+    }
+
+    .btn-next:hover {
+      filter: brightness(1.03);
+      transform: translateY(-1px);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="logo-area">
+        <div class="logo-circle">P&amp;P</div>
+        <div class="logo-text">
+          <span class="logo-text-main">Prato &amp; Peso</span>
+          <span class="logo-text-sub">Comida de verdade, meta clara</span>
+        </div>
+      </a>
+
+      <nav class="header-links">
+        <a href="clube.html" class="header-link header-link-clube">Clube Prato &amp; Peso</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-badge">
+          🌱 Organize sua meta com calma
+        </div>
+        <h1 class="hero-title">Defina sua meta de emagrecimento com mais clareza</h1>
+        <p class="hero-text">
+          Aqui você transforma o seu objetivo de peso em um <span class="hero-highlight">plano calórico diário</span>, com estimativa de
+          tempo, perda semanal e um alerta se as calorias ficarem baixas demais.
+        </p>
+      </div>
+    </section>
+
+    <section class="layout">
+      <div class="layout-inner">
+        <div class="grid-main">
+          <div class="card">
+            <h2>1. Seus dados principais</h2>
+            <p>Use o valor da calculadora TDEE como base para montar a meta.</p>
+
+            <div class="form-grid" style="margin-top:10px;">
+              <div class="form-group">
+                <label for="peso-atual">Peso atual</label>
+                <input type="number" id="peso-atual" placeholder="Ex.: 96,5" step="0.1" />
+                <div class="hint">Em kg (ex.: 96,5)</div>
+              </div>
+
+              <div class="form-group">
+                <label for="peso-desejado">Peso desejado</label>
+                <input type="number" id="peso-desejado" placeholder="Ex.: 85" step="0.1" />
+                <div class="hint">Em kg (ex.: 85)</div>
+              </div>
+
+              <div class="form-group full-width">
+                <label for="tdee">Calorias de manutenção (TDEE)</label>
+                <input type="number" id="tdee" placeholder="Ex.: 2.200" step="1" />
+                <div class="hint">Use o valor da calculadora TDEE (ex.: 2.200 kcal/dia). É a base pra criar a meta.</div>
+              </div>
+            </div>
+
+            <h2 style="margin-top:18px;">2. Como você quer definir a meta?</h2>
+
+            <div class="mode-select" style="margin-top:6px;">
+              <label for="tipo-meta">Escolha o tipo de meta</label>
+              <select id="tipo-meta">
+                <option value="semanas">Definir em quantas semanas quero chegar</option>
+                <option value="deficit">Definir pelo déficit calórico diário</option>
+              </select>
+              <div class="mode-extra" id="texto-tipo-meta">
+                Você pode pensar em “quero chegar lá em X semanas” ou “quero um déficit de X kcal/dia”.
+              </div>
+            </div>
+
+            <div id="bloco-meta-semanas" style="margin-top:10px;">
+              <div class="form-grid">
+                <div class="form-group full-width">
+                  <label for="semanas">Em quantas semanas você quer chegar no peso desejado?</label>
+                  <input type="number" id="semanas" placeholder="Ex.: 24" />
+                  <div class="hint">Ex.: 24 semanas ≈ 6 meses. Metas muito rápidas exigem atenção (e podem ficar muito restritivas).</div>
+                </div>
+              </div>
+            </div>
+
+            <div id="bloco-meta-deficit" style="margin-top:10px; display:none;">
+              <div class="form-grid">
+                <div class="form-group full-width">
+                  <label for="deficit-diario">Qual déficit diário você tem em mente?</label>
+                  <input type="number" id="deficit-diario" placeholder="Ex.: 500" />
+                  <div class="hint">Ex.: 300 a 500 kcal/dia costuma ser um intervalo comum em metas moderadas.</div>
+                </div>
+              </div>
+            </div>
+
+            <p class="secondary-note">
+              Lembre que <strong>quanto maior o déficit</strong>, mais rápido tende a ser o emagrecimento — mas mais difícil fica de manter no dia a dia.
+            </p>
+
+            <div class="btn-row">
+              <button class="btn-primary" id="calcular-meta">Calcular meta</button>
+              <button class="btn-secondary" id="limpar-meta">Limpar dados</button>
+            </div>
+
+            <div class="error-msg" id="erro-meta"></div>
+          </div>
+
+          <aside class="card-results">
+            <div class="results-title">
+              📊 Resultado da sua meta
+            </div>
+
+            <p style="font-size:0.86rem; color:#7c5b32; margin-bottom:8px;" id="texto-intro-meta">
+              Preencha seus dados, escolha o tipo de meta e clique em <strong>“Calcular meta”</strong>. Aqui você vai ver o déficit diário, a perda por semana e o tempo estimado até a meta.
+            </p>
+
+            <div class="results-grid" id="bloco-resultados-meta" style="display:none;">
+              <div class="result-card">
+                <div class="result-label">Déficit diário estimado</div>
+                <div class="result-value" id="resultado-deficit">–</div>
+                <div class="result-note" id="resultado-deficit-legenda"></div>
+              </div>
+
+              <div class="result-card">
+                <div class="result-label">Perda média por semana</div>
+                <div class="result-value" id="resultado-perda-semanal">–</div>
+                <div class="result-note">
+                  Estimativa aproximada com base em 7.700 kcal ≈ 1 kg de gordura.
+                </div>
+              </div>
+
+              <div class="result-card">
+                <div class="result-label">Tempo estimado até a meta</div>
+                <div class="result-value" id="resultado-tempo">–</div>
+                <div class="result-note" id="resultado-tempo-legenda"></div>
+              </div>
+
+              <div class="result-card">
+                <div class="result-label">Calorias diárias sugeridas</div>
+                <div class="result-value" id="resultado-kcal-final">–</div>
+                <div class="result-note" id="resultado-kcal-legenda"></div>
+              </div>
+
+              <div class="result-card">
+                <div class="result-label">Classificação da meta</div>
+                <div class="result-value" id="resultado-classificacao">–</div>
+                <div class="result-note" id="resultado-classificacao-legenda"></div>
+              </div>
+            </div>
+
+            <div class="alert" id="alerta-kcal-baixa">
+              As calorias finais ficaram muito baixas. Em geral, metas com calorias muito baixas são difíceis de manter e podem não ser seguras sem acompanhamento profissional. Considere aumentar o tempo de meta ou reduzir o déficit.
+            </div>
+
+            <p class="summary-note" id="resumo-meta" style="display:none;">
+              Use essas informações como <strong>bússola</strong>, não como prisão. Ajuste a meta conforme seu corpo responde, seu bem-estar e sua rotina.
+            </p>
+
+            <div class="next-step" id="cta-prato">
+              <button type="button" class="btn-next" id="btn-ir-prato">
+                Montar prato brasileiro com essa meta
+              </button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-disclaimer">
+        <strong>Aviso importante:</strong><br />
+        Esta ferramenta tem caráter educativo e fornece estimativas aproximadas para metas de emagrecimento.
+        Ela não substitui avaliação individual com nutricionista, médico ou outros profissionais de saúde.
+        Nunca faça mudanças drásticas na alimentação ou no peso apenas com base em calculadoras on-line,
+        principalmente se você tiver condições de saúde pré-existentes.
+      </div>
+      <div style="font-size:0.75rem; color:#888888;">
+        © <span id="ano-atual"></span> Prato &amp; Peso. Todos os direitos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("ano-atual").textContent = new Date().getFullYear();
+
+    const pesoAtualInput = document.getElementById("peso-atual");
+    const pesoDesejadoInput = document.getElementById("peso-desejado");
+    const tdeeInput = document.getElementById("tdee");
+    const tipoMetaSelect = document.getElementById("tipo-meta");
+    const semanasInput = document.getElementById("semanas");
+    const deficitDiarioInput = document.getElementById("deficit-diario");
+
+    const blocoMetaSemanas = document.getElementById("bloco-meta-semanas");
+    const blocoMetaDeficit = document.getElementById("bloco-meta-deficit");
+    const textoTipoMeta = document.getElementById("texto-tipo-meta");
+
+    const btnCalcularMeta = document.getElementById("calcular-meta");
+    const btnLimparMeta = document.getElementById("limpar-meta");
+
+    const erroMeta = document.getElementById("erro-meta");
+
+    const blocoResultadosMeta = document.getElementById("bloco-resultados-meta");
+    const textoIntroMeta = document.getElementById("texto-intro-meta");
+    const resumoMeta = document.getElementById("resumo-meta");
+    const alertaKcalBaixa = document.getElementById("alerta-kcal-baixa");
+
+    const resultadoDeficit = document.getElementById("resultado-deficit");
+    const resultadoDeficitLegenda = document.getElementById("resultado-deficit-legenda");
+    const resultadoPerdaSemanal = document.getElementById("resultado-perda-semanal");
+    const resultadoTempo = document.getElementById("resultado-tempo");
+    const resultadoTempoLegenda = document.getElementById("resultado-tempo-legenda");
+    const resultadoKcalFinal = document.getElementById("resultado-kcal-final");
+    const resultadoKcalLegenda = document.getElementById("resultado-kcal-legenda");
+    const resultadoClassificacao = document.getElementById("resultado-classificacao");
+    const resultadoClassificacaoLegenda = document.getElementById("resultado-classificacao-legenda");
+
+    const ctaPrato = document.getElementById("cta-prato");
+    const btnIrPrato = document.getElementById("btn-ir-prato");
+
+    let ultimoResultadoMeta = null;
+
+    tipoMetaSelect.addEventListener("change", function () {
+      const tipo = tipoMetaSelect.value;
+
+      if (tipo === "semanas") {
+        blocoMetaSemanas.style.display = "block";
+        blocoMetaDeficit.style.display = "none";
+        textoTipoMeta.textContent =
+          "Você pode pensar em “quero chegar lá em X semanas” e a calculadora resolve o déficit diário pra você.";
+      } else {
+        blocoMetaSemanas.style.display = "none";
+        blocoMetaDeficit.style.display = "block";
+        textoTipoMeta.textContent =
+          "Aqui você parte de um déficit diário em kcal e a calculadora estima o tempo até a meta.";
+      }
+    });
+
+    function formatarNumeroBrasil(valor, casasDecimais) {
+      return valor.toLocaleString("pt-BR", {
+        minimumFractionDigits: casasDecimais,
+        maximumFractionDigits: casasDecimais,
+      });
+    }
+
+    function validarCamposBasicos(pesoAtual, pesoDesejado, tdee) {
+      if (
+        isNaN(pesoAtual) ||
+        isNaN(pesoDesejado) ||
+        isNaN(tdee) ||
+        pesoAtual <= 0 ||
+        pesoDesejado <= 0 ||
+        tdee <= 0
+      ) {
+        erroMeta.textContent =
+          "Preencha peso atual, peso desejado e calorias de manutenção (TDEE) com valores válidos.";
+        erroMeta.style.display = "block";
+        return false;
+      }
+
+      if (pesoDesejado >= pesoAtual) {
+        erroMeta.textContent =
+          "O peso desejado precisa ser menor que o peso atual para uma meta de emagrecimento.";
+        erroMeta.style.display = "block";
+        return false;
+      }
+
+      if (pesoAtual < 40 || pesoAtual > 250 || pesoDesejado < 35 || pesoDesejado > 250) {
+        erroMeta.textContent =
+          "Confira se os pesos informados estão em uma faixa realista antes de continuar.";
+        erroMeta.style.display = "block";
+        return false;
+      }
+
+      erroMeta.style.display = "none";
+      return true;
+    }
+
+    function classificarMeta(deficitDiario) {
+      if (deficitDiario < 250) {
+        return {
+          nivel: "Muito leve",
+          texto:
+            "Déficit bem suave. Pode ser uma boa porta de entrada pra quem está começando ou tem muita dificuldade em manter dietas.",
+        };
+      } else if (deficitDiario < 500) {
+        return {
+          nivel: "Leve",
+          texto:
+            "Déficit leve, geralmente mais sustentável no dia a dia, com perda de peso mais gradual.",
+        };
+      } else if (deficitDiario < 800) {
+        return {
+          nivel: "Moderada",
+          texto:
+            "Déficit moderado. Pode trazer resultados mais rápidos, mas já exige mais atenção com fome, energia e treino.",
+        };
+      } else {
+        return {
+          nivel: "Agressiva",
+          texto:
+            "Déficit alto. Costuma ser difícil de manter e pode não ser adequado pra todo mundo. Avalie com cuidado e, se possível, converse com um profissional.",
+        };
+      }
+    }
+
+    function avaliarFaixaCaloricaFinal(kcalFinal, tdee) {
+      if (kcalFinal <= 0) {
+        return {
+          texto: "As calorias finais ficaram zeradas ou negativas. Algo está inconsistente nos dados.",
+          muitoBaixa: true,
+        };
+      }
+
+      const proporcao = kcalFinal / tdee;
+
+      if (proporcao < 0.6) {
+        return {
+          texto:
+            "As calorias finais ficaram < 60% do seu TDEE. Em geral é uma faixa bem baixa e difícil de manter no longo prazo.",
+          muitoBaixa: true,
+        };
+      } else if (proporcao < 0.75) {
+        return {
+          texto:
+            "As calorias finais ficaram entre 60% e 75% do seu TDEE. É uma faixa mais agressiva, que exige bastante cuidado.",
+          muitoBaixa: false,
+        };
+      } else if (proporcao < 0.9) {
+        return {
+          texto:
+            "As calorias finais ficaram entre 75% e 90% do seu TDEE. Em muitos casos é uma zona mais confortável de trabalhar.",
+          muitoBaixa: false,
+        };
+      } else {
+        return {
+          texto:
+            "As calorias finais ficaram bem próximas do seu TDEE. O emagrecimento tende a ser mais lento, mas com mais conforto no dia a dia.",
+          muitoBaixa: false,
+        };
+      }
+    }
+
+    function calcularMeta() {
+      const pesoAtual = parseFloat(pesoAtualInput.value.replace(",", "."));
+      const pesoDesejado = parseFloat(pesoDesejadoInput.value.replace(",", "."));
+      const tdee = parseFloat(tdeeInput.value.replace(",", "."));
+
+      if (!validarCamposBasicos(pesoAtual, pesoDesejado, tdee)) {
+        blocoResultadosMeta.style.display = "none";
+        resumoMeta.style.display = "none";
+        alertaKcalBaixa.classList.remove("visible");
+        textoIntroMeta.style.display = "block";
+        ctaPrato.style.display = "none";
+        ultimoResultadoMeta = null;
+        return;
+      }
+
+      const tipoMeta = tipoMetaSelect.value;
+      let deficitDiario;
+      let semanasEstimadas;
+
+      const diferencaPeso = pesoAtual - pesoDesejado;
+      const totalKcalParaMeta = diferencaPeso * 7700;
+
+      if (tipoMeta === "semanas") {
+        semanasEstimadas = parseFloat(semanasInput.value.replace(",", "."));
+        if (isNaN(semanasEstimadas) || semanasEstimadas <= 0) {
+          erroMeta.textContent =
+            "Informe em quantas semanas você gostaria de chegar ao peso desejado.";
+          erroMeta.style.display = "block";
+          blocoResultadosMeta.style.display = "none";
+          resumoMeta.style.display = "none";
+          alertaKcalBaixa.classList.remove("visible");
+          textoIntroMeta.style.display = "block";
+          ctaPrato.style.display = "none";
+          ultimoResultadoMeta = null;
+          return;
+        }
+
+        const diasTotais = semanasEstimadas * 7;
+        deficitDiario = totalKcalParaMeta / diasTotais;
+      } else {
+        deficitDiario = parseFloat(deficitDiarioInput.value.replace(",", "."));
+        if (isNaN(deficitDiario) || deficitDiario <= 0) {
+          erroMeta.textContent =
+            "Informe um déficit calórico diário válido (em kcal) para calcular a meta.";
+          erroMeta.style.display = "block";
+          blocoResultadosMeta.style.display = "none";
+          resumoMeta.style.display = "none";
+          alertaKcalBaixa.classList.remove("visible");
+          textoIntroMeta.style.display = "block";
+          ctaPrato.style.display = "none";
+          ultimoResultadoMeta = null;
+          return;
+        }
+
+        semanasEstimadas = totalKcalParaMeta / (deficitDiario * 7);
+      }
+
+      erroMeta.style.display = "none";
+
+      const perdaPorSemana = deficitDiario * 7 / 7700;
+      const semanas = semanasEstimadas;
+      const kcalFinal = tdee - deficitDiario;
+
+      const classificacao = classificarMeta(deficitDiario);
+      const avaliacaoKcal = avaliarFaixaCaloricaFinal(kcalFinal, tdee);
+
+      resultadoDeficit.textContent =
+        formatarNumeroBrasil(deficitDiario, 0) + " kcal/dia";
+      resultadoDeficitLegenda.textContent =
+        "Diferença entre suas calorias de manutenção e as calorias da meta.";
+
+      resultadoPerdaSemanal.textContent =
+        formatarNumeroBrasil(perdaPorSemana, 2) + " kg/semana";
+
+      const anos = Math.floor(semanas / 52);
+      const mesesRestantes = Math.floor((semanas % 52) / 4);
+
+      let tempoFrase = "";
+      if (anos > 0) tempoFrase += anos + (anos === 1 ? " ano" : " anos");
+      if (mesesRestantes > 0) {
+        if (tempoFrase) tempoFrase += " e ";
+        tempoFrase += mesesRestantes + (mesesRestantes === 1 ? " mês" : " meses");
+      }
+      if (!tempoFrase) {
+        tempoFrase =
+          semanas < 1
+            ? "menos de 1 semana"
+            : formatarNumeroBrasil(semanas, 1) + " semana(s)";
+      }
+
+      resultadoTempo.textContent = tempoFrase;
+      resultadoTempoLegenda.textContent =
+        "Estimativa aproximada com base no déficit informado. O ritmo real pode variar.";
+
+      resultadoKcalFinal.textContent =
+        formatarNumeroBrasil(kcalFinal, 0) + " kcal/dia";
+      resultadoKcalLegenda.textContent = avaliacaoKcal.texto;
+
+      resultadoClassificacao.textContent = classificacao.nivel;
+      resultadoClassificacaoLegenda.textContent = classificacao.texto;
+
+      blocoResultadosMeta.style.display = "grid";
+      resumoMeta.style.display = "block";
+      textoIntroMeta.style.display = "none";
+
+      if (avaliacaoKcal.muitoBaixa) {
+        alertaKcalBaixa.classList.add("visible");
+      } else {
+        alertaKcalBaixa.classList.remove("visible");
+      }
+
+      ctaPrato.style.display = "block";
+
+      ultimoResultadoMeta = {
+        pesoAtual,
+        pesoDesejado,
+        tdee,
+        tipoMeta,
+        semanasEstimadas: semanas,
+        deficitDiario,
+        perdaPorSemana,
+        kcalFinal,
+        classificacao: classificacao.nivel,
+      };
+    }
+
+    btnCalcularMeta.addEventListener("click", function (event) {
+      event.preventDefault();
+      calcularMeta();
+    });
+
+    btnLimparMeta.addEventListener("click", function (event) {
+      event.preventDefault();
+
+      pesoAtualInput.value = "";
+      pesoDesejadoInput.value = "";
+      tdeeInput.value = "";
+      semanasInput.value = "";
+      deficitDiarioInput.value = "";
+      tipoMetaSelect.value = "semanas";
+
+      blocoMetaSemanas.style.display = "block";
+      blocoMetaDeficit.style.display = "none";
+      textoTipoMeta.textContent =
+        "Você pode pensar em “quero chegar lá em X semanas” ou “quero um déficit de X kcal/dia”.";
+
+      blocoResultadosMeta.style.display = "none";
+      resumoMeta.style.display = "none";
+      alertaKcalBaixa.classList.remove("visible");
+      textoIntroMeta.style.display = "block";
+      erroMeta.style.display = "none";
+      ctaPrato.style.display = "none";
+      ultimoResultadoMeta = null;
+    });
+
+    // clique para ir montar prato brasileiro
+    btnIrPrato.addEventListener("click", function () {
+      window.location.href = "prato.html";
+    });
+  </script>
+</body>
+</html>
