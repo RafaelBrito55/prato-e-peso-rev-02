@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rafaelbrito55.github.io/prato-e-peso-rev-02/sitemap.xml
