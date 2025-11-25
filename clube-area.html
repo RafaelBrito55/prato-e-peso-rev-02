@@ -7,19 +7,19 @@
 
   <style>
     :root {
-      --bg: #f5f5f7;
+      --bg: #f3f4f6;
       --bg-alt: #ffffff;
-      --primary: #1e5a4d;
-      --primary-soft: #e0f3ec;
-      --accent: #ffb347;
-      --accent-soft: #fff3df;
-      --text-main: #222222;
-      --text-muted: #666666;
-      --border-soft: #e0e0e0;
-      --radius-lg: 16px;
+      --primary: #145a32;
+      --primary-soft: #e0f2f1;
+      --accent: #facc15;
+      --accent-text: #78350f;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --border-soft: #e5e7eb;
+      --radius-lg: 18px;
       --radius-xl: 22px;
-      --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.08);
-      --max-width: 1040px;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.12);
+      --max-width: 1120px;
     }
 
     * {
@@ -30,11 +30,9 @@
 
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #fdf5ea 0, #f5f5f7 45%, #f0f2f5 100%);
+      background: radial-gradient(circle at top, #fdf5dd 0, #f3f4f6 45%, #e5e7eb 100%);
       color: var(--text-main);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
 
     a {
@@ -42,96 +40,68 @@
       text-decoration: none;
     }
 
+    /* HEADER SUPERIOR */
     header {
       background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      backdrop-filter: blur(12px);
       position: sticky;
       top: 0;
       z-index: 10;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
     }
 
-    .header-inner {
+    .topbar-inner {
       max-width: var(--max-width);
       margin: 0 auto;
       padding: 10px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
+      gap: 12px;
     }
 
-    .logo {
+    .brand {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .logo-badge {
-      width: 30px;
-      height: 30px;
+    .brand-badge {
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       background: var(--accent);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 700;
-      color: #4b2c15;
+      font-weight: 800;
       font-size: 0.9rem;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+      color: var(--accent-text);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
     }
 
-    .logo-text {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .logo-text-main {
+    .brand-name {
       font-weight: 700;
-      font-size: 0.98rem;
       letter-spacing: 0.03em;
+      font-size: 1rem;
     }
 
-    .logo-text-sub {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .user-greeting {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    .header-pill {
-      font-size: 0.8rem;
-      padding: 6px 12px;
+    .goal-pill {
       border-radius: 999px;
-      border: 1px solid var(--border-soft);
-      background: #f5f5f7;
-      cursor: pointer;
+      padding: 8px 18px;
+      border: none;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: default;
+      box-shadow: 0 12px 26px rgba(21, 128, 61, 0.5);
       white-space: nowrap;
     }
 
-    .header-pill-primary {
-      background: var(--primary);
-      color: #fff;
-      border-color: transparent;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
-    }
-
+    /* CONTEÚDO PRINCIPAL */
     main {
-      flex: 1;
-      padding: 24px 16px 40px;
+      padding: 24px 16px 36px;
     }
 
     .main-inner {
@@ -139,437 +109,450 @@
       margin: 0 auto;
     }
 
+    .hero {
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .hero p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    /* GRID DE CARDS */
+    .cards-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    @media (min-width: 720px) {
+      .cards-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
     .card {
       background: var(--bg-alt);
       border-radius: var(--radius-xl);
       box-shadow: var(--shadow-soft);
       border: 1px solid var(--border-soft);
-      padding: 18px 16px;
-      margin-bottom: 18px;
+      padding: 16px 16px 18px;
+    }
+
+    .card-full {
+      grid-column: 1 / -1;
     }
 
     .card h2 {
-      font-size: 1.1rem;
-      margin-bottom: 4px;
-    }
-
-    .card small {
-      color: var(--text-muted);
-      font-size: 0.8rem;
-    }
-
-    .highlight {
-      background: #ffedd5;
-      color: #7c2d12;
-      padding: 2px 6px;
-      border-radius: 999px;
-      font-size: 0.75rem;
-    }
-
-    .resumo-lista {
-      list-style: none;
-      margin-top: 8px;
-      padding-left: 0;
-      font-size: 0.9rem;
-    }
-
-    .resumo-lista li + li {
-      margin-top: 4px;
-    }
-
-    .resumo-lista span {
-      color: var(--text-muted);
-    }
-
-    label {
-      display: block;
-      font-size: 0.85rem;
-      margin-top: 12px;
-      margin-bottom: 4px;
-    }
-
-    input[type="date"],
-    input[type="number"],
-    input[type="text"],
-    input[type="email"] {
-      width: 100%;
-      padding: 8px 10px;
-      border-radius: 10px;
-      border: 1px solid #d1d5db;
-      font-size: 0.9rem;
-      box-sizing: border-box;
-      background: #f9fafb;
-    }
-
-    input:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 1px var(--primary-soft);
-      background: #ffffff;
-    }
-
-    button.primary {
-      margin-top: 14px;
-      background: var(--primary);
-      color: #ffffff;
-      border: none;
-      border-radius: 999px;
-      padding: 8px 16px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
-    }
-
-    button.secondary {
-      margin-top: 12px;
-      background: #e5e7eb;
-      color: #111827;
-      border: none;
-      border-radius: 6px;
-      padding: 8px 14px;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-
-    button.danger {
-      margin-top: 12px;
-      background: #dc2626;
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      padding: 8px 14px;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-
-    button:disabled {
-      opacity: 0.6;
-      cursor: default;
-    }
-
-    .row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 8px;
-    }
-
-    .col {
-      flex: 1;
-      min-width: 140px;
-    }
-
-    .message {
-      margin-top: 8px;
-      font-size: 0.8rem;
-      display: none;
-    }
-
-    .message.ok {
-      color: #15803d;
-    }
-
-    .message.error {
-      color: #b91c1c;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      font-size: 0.85rem;
-    }
-
-    th,
-    td {
-      border-bottom: 1px solid rgba(148, 163, 184, 0.3);
-      padding: 6px 4px;
-      text-align: left;
-    }
-
-    th {
-      font-weight: 600;
-      color: #4b5563;
-    }
-
-    td {
-      color: #111827;
-    }
-
-    tfoot td {
-      border-top: 1px solid rgba(148, 163, 184, 0.7);
-      font-weight: 600;
-    }
-
-    footer {
-      background: #111111;
-      color: #d0d0d0;
-      font-size: 0.78rem;
-      padding: 12px 16px 16px;
-      margin-top: 12px;
-    }
-
-    .footer-inner {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      text-align: center;
-    }
-
-    .footer-note {
-      color: #aaaaaa;
-      line-height: 1.5;
-    }
-
-    /* MODAL do perfil */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.45);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 30;
-    }
-
-    .modal-overlay.visible {
-      display: flex;
-    }
-
-    .modal {
-      background: var(--bg-alt);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow-soft);
-      border: 1px solid var(--border-soft);
-      max-width: 480px;
-      width: calc(100% - 32px);
-      padding: 18px 16px 20px;
-      position: relative;
-    }
-
-    .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
+      font-size: 1rem;
       margin-bottom: 6px;
     }
 
-    .modal-header h2 {
-      font-size: 1.1rem;
-    }
-
-    .modal-close {
-      border: none;
-      background: transparent;
-      font-size: 1.4rem;
-      line-height: 1;
-      cursor: pointer;
-      color: var(--text-muted);
-    }
-
-    /* GRID das medidas corporais (2 em 2 cards) */
-    .medidas-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 10px;
-      margin-top: 8px;
-    }
-
-    .medida-item {
-      background: #f9fafb;
-      border-radius: var(--radius-lg);
-      border: 1px solid #e5e7eb;
-      padding: 8px 10px;
+    .card-subtitle {
       font-size: 0.85rem;
-    }
-
-    .medida-label {
-      font-size: 0.78rem;
       color: var(--text-muted);
-      display: block;
-      margin-bottom: 2px;
+      margin-bottom: 12px;
     }
 
-    .medida-item strong {
-      font-size: 1rem;
+    .metrics {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 14px;
     }
 
-    @media (max-width: 640px) {
-      .header-inner {
-        padding-inline: 10px;
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+
+    .metric-label {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .metric-value {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .metric-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: none;
+      padding: 8px 14px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 10px 22px rgba(21, 128, 61, 0.5);
+    }
+
+    .btn-ghost {
+      background: #e5efe9;
+      color: var(--primary);
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .help-text {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    footer {
+      padding: 10px 16px 18px;
+      font-size: 0.78rem;
+      color: #9ca3af;
+      text-align: center;
+    }
+
+    /* ========= PESO & PROGRESSO ========= */
+
+    .peso-wrapper {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .peso-main {
+      min-width: 120px;
+    }
+
+    .peso-valor {
+      font-size: 1.4rem;
+      font-weight: 800;
+    }
+
+    .peso-legend {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .peso-chart-container {
+      flex: 1;
+      min-width: 160px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .peso-chart-mini-wrapper {
+      border-radius: 16px;
+      background: radial-gradient(circle at top, #dcfce7 0, #ffffff 45%, #f9fafb 100%);
+      border: 1px solid rgba(74, 222, 128, 0.5);
+      padding: 6px;
+      height: 130px;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .peso-chart-mini-wrapper canvas {
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      background: #ffffff;
+    }
+
+    .peso-chart-mini-caption {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-align: right;
+    }
+
+    /* TAGS MEDIDAS */
+    .tags-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag-pill {
+      background: #f3f4ff;
+      color: #1e293b;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .tag-pill strong {
+      font-size: 0.83rem;
+    }
+
+    /* LISTA TREINO */
+    .list-simple {
+      list-style: none;
+      font-size: 0.88rem;
+      margin-bottom: 8px;
+    }
+
+    .list-simple li + li {
+      margin-top: 3px;
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 1.6rem;
       }
-
+      .topbar-inner {
+        padding-inline: 12px;
+      }
       main {
         padding-inline: 12px;
+      }
+      .peso-wrapper {
+        flex-direction: column;
+      }
+      .peso-chart-mini-caption {
+        text-align: left;
       }
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="header-inner">
-      <!-- Logo -->
-      <a href="index.html" class="logo">
-        <div class="logo-badge">P&amp;P</div>
-        <div class="logo-text">
-          <div class="logo-text-main">Prato &amp; Peso</div>
-          <div class="logo-text-sub">Comida de verdade, meta clara</div>
-        </div>
-      </a>
-
-      <!-- Ordem: Olá usuário • Perfil • Sair -->
-      <div class="header-right">
-        <span id="userGreeting" class="user-greeting">Carregando...</span>
-        <button id="btnOpenPerfil" class="header-pill">Perfil</button>
-        <button id="btnLogout" class="header-pill header-pill-primary">Sair</button>
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-badge">PaP</div>
+        <span class="brand-name">Prato &amp; Peso</span>
       </div>
+      <button class="goal-pill">Emagrecer 10 kg</button>
     </div>
   </header>
 
   <main>
     <div class="main-inner">
-      <!-- RESUMO RÁPIDO -->
-      <section class="card" id="cardResumo">
-        <h2>Resumo rápido</h2>
-        <div id="resumoConteudo">
-          <small>Buscando seus dados...</small>
-        </div>
+      <!-- Saudação -->
+      <section class="hero">
+        <h1>Olá, Rafael</h1>
+        <p>Você vem adiantando a meta nos últimos 7 dias.</p>
       </section>
 
-      <!-- MEU PESO -->
-      <section class="card" id="cardPeso">
-        <h2>Meu peso</h2>
-        <small>Registre seu peso e acompanhe a evolução ao longo do tempo.</small>
+      <!-- Cards -->
+      <section class="cards-grid">
+        <!-- Resumo de hoje -->
+        <article class="card" id="card-resumo-hoje">
+          <h2>Resumo de hoje</h2>
+          <p class="card-subtitle">Visão rápida do seu dia em calorias.</p>
 
-        <div class="row">
-          <div class="col">
-            <label for="pesoData">Data</label>
-            <input type="date" id="pesoData" />
+          <div class="metrics">
+            <div class="metric-row">
+              <span class="metric-label">Gasto estimado hoje</span>
+              <span class="metric-value"><strong>2.300 kcal</strong></span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-label">Ingeriu hoje</span>
+              <span class="metric-value"><strong>1.450 kcal</strong></span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-label">Saldo do dia</span>
+              <span class="metric-value" style="color:#16a34a;"><strong>–850 kcal</strong></span>
+            </div>
           </div>
-          <div class="col">
-            <label for="pesoValor">Peso (kg)</label>
-            <input type="number" id="pesoValor" step="0.1" min="0" />
+        </article>
+
+        <!-- Peso & progresso -->
+        <article class="card" id="card-peso-progresso">
+          <h2>Peso &amp; progresso</h2>
+          <p class="card-subtitle">Seu peso atual e a tendência da meta.</p>
+
+          <div class="peso-wrapper">
+            <div class="peso-main">
+              <div class="peso-valor" id="peso-atual">--,-- kg</div>
+              <!-- AGORA SÓ UMA LEGENDA: VARIAÇÃO NOS ÚLTIMOS 7 REGISTROS -->
+              <div class="peso-legend" id="peso-variacao7-text">
+                Carregando dados de peso...
+              </div>
+            </div>
+
+            <div class="peso-chart-container">
+              <div class="peso-chart-mini-wrapper">
+                <canvas id="graficoPesoMini"></canvas>
+              </div>
+              <div class="peso-chart-mini-caption">Últimos 7 registros</div>
+            </div>
           </div>
-        </div>
 
-        <button class="primary" id="btnSalvarPeso">Salvar peso</button>
-        <div id="pesoMessage" class="message"></div>
+          <button
+            class="btn btn-primary"
+            type="button"
+            onclick="window.location.href='clube-peso.html'"
+          >
+            Ver e registrar peso
+          </button>
+        </article>
 
-        <table id="tabelaPesos">
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Peso (kg)</th>
-            </tr>
-          </thead>
-          <tbody id="listaPesos"></tbody>
-        </table>
-      </section>
+        <!-- Meu TDEE & Meta -->
+        <article class="card" id="card-tdee-meta">
+          <h2>Meu TDEE &amp; Meta</h2>
+          <p class="card-subtitle">Resumo do gasto calórico diário e da meta.</p>
 
-      <!-- MEU TDEE (CLUBE) -->
-      <section class="card" id="cardTDEE">
-        <h2>Meu TDEE</h2>
-        <small>Resumo do seu gasto calórico diário estimado e da meta de emagrecimento.</small>
+          <div class="metrics">
+            <div class="metric-row">
+              <span class="metric-label">TDEE atual</span>
+              <span class="metric-value"><strong>2.325 kcal/dia</strong></span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-label">Objetivo</span>
+              <span class="metric-value"><strong>Emagrecer / meta 1.800 kcal/dia</strong></span>
+            </div>
+            <span class="metric-badge">Consumo total hoje: 252 kcal</span>
+          </div>
 
-        <div id="tdeeConteudo" style="margin-top:8px;">
-          <small>Buscando seu TDEE...</small>
-        </div>
+          <button class="btn btn-primary" type="button"
+                  onclick="window.location.href='clube-tdee.html'">
+            Ver detalhes da meta
+          </button>
+        </article>
 
-        <button class="secondary" type="button" onclick="window.location.href='clube-tdee.html'">
-          Abrir calculadora de TDEE do Clube
-        </button>
-      </section>
+        <!-- Minhas medidas corporais -->
+        <article class="card" id="card-medidas">
+          <h2>Minhas medidas corporais</h2>
+          <p class="card-subtitle">Acompanhe força e evolução por exercício.</p>
 
-      <!-- MINHAS MEDIDAS CORPORAIS (CLUBE) -->
-      <section class="card" id="cardMedidas">
-        <h2>Minhas medidas corporais</h2>
-        <small>Acompanhe as principais medidas do seu corpo, como cintura, abdômen, braços e pernas.</small>
+          <div class="tags-grid">
+            <div class="tag-pill">
+              <span>Supino</span>
+              <strong>60 kg</strong>
+            </div>
+            <div class="tag-pill">
+              <span>Supino reto</span>
+              <strong>62 kg</strong>
+            </div>
+            <div class="tag-pill">
+              <span>Leg press</span>
+              <strong>200 kg</strong>
+            </div>
+            <div class="tag-pill">
+              <span>Jantar</span>
+              <strong>480 kcal</strong>
+            </div>
+            <div class="tag-pill">
+              <span>Coxa</span>
+              <strong>200 kg</strong>
+            </div>
+          </div>
 
-        <div id="medidasConteudo" style="margin-top:8px;">
-          <small>Buscando suas medidas...</small>
-        </div>
+          <button class="btn btn-primary" style="margin-top:10px;" type="button"
+                  onclick="window.location.href='clube-medidas.html'">
+            Registrar / atualizar medidas
+          </button>
+        </article>
 
-        <button class="secondary" type="button" onclick="window.location.href='clube-medidas.html'">
-          Registrar / atualizar medidas (Clube)
-        </button>
-      </section>
+        <!-- Montar prato brasileiro -->
+        <article class="card" id="card-prato">
+          <h2>Montar prato brasileiro</h2>
+          <p class="card-subtitle" id="card-prato-subtitle">(hoje)</p>
 
-      <!-- MONTAR PRATO BRASILEIRO (CLUBE) -->
-      <section class="card" id="cardPratoBrasileiro">
-        <h2>Montar prato brasileiro</h2>
-        <small>Veja um resumo do último prato cadastrado e das calorias do dia.</small>
+          <div class="metrics">
+            <div class="metric-row">
+              <span class="metric-label">Último prato registrado em</span>
+              <span class="metric-value">
+                <strong id="prato-data">—</strong>
+              </span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-label">Consumo total hoje</span>
+              <span class="metric-value">
+                <strong id="prato-calorias">—</strong>
+              </span>
+            </div>
+          </div>
 
-        <div id="pratoConteudo" style="margin-top:8px;">
-          <small>Buscando seus pratos...</small>
-        </div>
+          <button
+            class="btn btn-primary"
+            type="button"
+            onclick="window.location.href='clube-prato.html'"
+          >
+            Montar / atualizar prato de hoje
+          </button>
+        </article>
 
-        <button class="secondary" type="button" onclick="window.location.href='clube-prato.html'">
-          Montar um novo prato (Clube)
-        </button>
-      </section>
+        <!-- Treino de hoje / Academia (por enquanto estático) -->
+        <article class="card" id="card-treino">
+          <h2>Treino de hoje / Academia</h2>
+          <p class="card-subtitle">Últimos pesos para você lembrar na próxima sessão.</p>
 
-      <!-- RELATÓRIO -->
-      <section class="card" id="cardRelatorio">
-        <h2>Relatório simples</h2>
-        <small>Gere um relatório organizado usando os dados do Clube.</small>
+          <ul class="list-simple">
+            <li><strong>Último treino:</strong> 24/11/2025 – Treino A (Peito/Tríceps)</li>
+            <li><strong>Supino reto:</strong> 60 kg</li>
+            <li><strong>Leg press:</strong> 200 kg</li>
+          </ul>
 
-        <p style="margin-top:8px; font-size:0.9rem; color:var(--text-muted);">
-          Você pode escolher um período e ver um resumo da evolução de peso, medidas e das calorias.
-          O relatório abre em outra tela, exclusiva para membros do Clube.
-        </p>
+          <button class="btn btn-primary" type="button">
+            Registrar treino de hoje
+          </button>
+        </article>
 
-        <button class="primary" type="button" onclick="window.location.href='relatorio.html'">
-          Abrir relatório do meu período
-        </button>
+        <!-- Relatório simples do Clube -->
+        <article class="card card-full" id="card-relatorio">
+          <h2>Relatório simples do Clube</h2>
+          <p class="card-subtitle">
+            Gere um relatório com peso, calorias, pratos e treinos para um período específico.
+          </p>
+
+          <p class="help-text">
+            Escolha um intervalo de datas e veja um PDF simples com a evolução da sua meta.
+          </p>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" type="button" onclick="window.location.href='relatorio.html'">
+              Abrir relatório simples
+            </button>
+            <button class="btn-ghost" type="button">
+              Escolher período
+            </button>
+          </div>
+        </article>
       </section>
     </div>
   </main>
 
-  <!-- MODAL PERFIL -->
-  <div id="perfilModal" class="modal-overlay">
-    <div class="modal">
-      <div class="modal-header">
-        <h2>Meu perfil</h2>
-        <button id="btnFecharPerfil" class="modal-close" aria-label="Fechar">×</button>
-      </div>
-      <small>Atualize seus dados básicos e gerencie sua conta.</small>
-
-      <label for="perfilNome">Nome</label>
-      <input type="text" id="perfilNome" placeholder="Seu nome" />
-
-      <label for="perfilEmail">E-mail (não editável)</label>
-      <input type="email" id="perfilEmail" disabled />
-
-      <label for="perfilDataNascimento">Data de nascimento</label>
-      <input type="date" id="perfilDataNascimento" />
-
-      <button class="primary" id="btnSalvarPerfil">Salvar alterações</button>
-      <div id="perfilMessage" class="message"></div>
-
-      <hr style="margin: 16px 0;" />
-
-      <h3 style="margin-bottom:6px; font-size:1rem; color:#b91c1c;">Excluir minha conta</h3>
-      <small style="display:block; margin-bottom:8px; color:var(--text-muted);">
-        Essa ação é <strong>definitiva</strong>. Seus dados de pesos, pratos e acesso ao Clube serão apagados.
-      </small>
-      <button class="danger" id="btnExcluirConta">Excluir minha conta</button>
-      <div id="excluirMessage" class="message"></div>
-    </div>
-  </div>
-
   <footer>
-    <div class="footer-inner">
-      <div class="footer-note">
-        Dados do Clube armazenados com carinho para você acompanhar sua evolução.
-      </div>
-      <div style="font-size:0.75rem; color:#888888;">
-        © <span id="anoAtual"></span> Prato &amp; Peso. Todos os direitos reservados.
-      </div>
-    </div>
+    © 2025 Prato &amp; Peso – Área do Clube.
   </footer>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <!-- Firebase v8 -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -588,812 +571,252 @@
 
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
-    const db = firebase.firestore();
+    const db   = firebase.firestore();
 
-    const userGreeting = document.getElementById("userGreeting");
-    const btnLogout = document.getElementById("btnLogout");
-    const btnOpenPerfil = document.getElementById("btnOpenPerfil");
-    const perfilModal = document.getElementById("perfilModal");
-    const btnFecharPerfil = document.getElementById("btnFecharPerfil");
-
-    const pesoDataInput = document.getElementById("pesoData");
-    const pesoValorInput = document.getElementById("pesoValor");
-    const btnSalvarPeso = document.getElementById("btnSalvarPeso");
-    const pesoMessage = document.getElementById("pesoMessage");
-    const listaPesos = document.getElementById("listaPesos");
-    const resumoConteudo = document.getElementById("resumoConteudo");
-
-    const perfilNomeInput = document.getElementById("perfilNome");
-    const perfilEmailInput = document.getElementById("perfilEmail");
-    const perfilDataNascimentoInput = document.getElementById("perfilDataNascimento");
-    const btnSalvarPerfil = document.getElementById("btnSalvarPerfil");
-    const perfilMessage = document.getElementById("perfilMessage");
-
-    const btnExcluirConta = document.getElementById("btnExcluirConta");
-    const excluirMessage = document.getElementById("excluirMessage");
-
-    const tdeeConteudo = document.getElementById("tdeeConteudo");
-    const pratoConteudo = document.getElementById("pratoConteudo");
-    const medidasConteudo = document.getElementById("medidasConteudo");
-
-    let currentUser = null;
     let currentUid = null;
 
-    function setHojeNoCampoPeso() {
-      const hoje = new Date();
-      const yyyy = hoje.getFullYear();
-      const mm = String(hoje.getMonth() + 1).padStart(2, "0");
-      const dd = String(hoje.getDate()).padStart(2, "0");
-      pesoDataInput.value = `${yyyy}-${mm}-${dd}`;
-    }
+    // --- elementos prato ---
+    const pratoDataSpan     = document.getElementById("prato-data");
+    const pratoCaloriasSpan = document.getElementById("prato-calorias");
+    const pratoSubtitle     = document.getElementById("card-prato-subtitle");
 
-    function mostrarMensagem(el, texto, tipo) {
-      if (!el) return;
-      el.style.display = texto ? "block" : "none";
-      el.textContent = texto || "";
-      el.classList.remove("ok", "error");
-      if (tipo === "ok") el.classList.add("ok");
-      if (tipo === "error") el.classList.add("error");
-    }
+    // --- elementos peso ---
+    const pesoAtualSpan      = document.getElementById("peso-atual");
+    const pesoVariacao7Text  = document.getElementById("peso-variacao7-text");
 
-    function limparLocalStorageClube() {
-      try {
-        localStorage.removeItem("pp_user_uid");
-        localStorage.removeItem("pp_user_email");
-        localStorage.removeItem("pp_user_nome");
-        localStorage.removeItem("pp_plano_codigo");
-        localStorage.removeItem("pp_plano_nome");
-      } catch (e) {
-        console.warn("Não foi possível limpar localStorage do Clube:", e);
-      }
-    }
-
-    // ===== PESOS & RESUMO =====
-    async function carregarPesos(uid) {
-      listaPesos.innerHTML = "";
-      resumoConteudo.innerHTML = "<small>Buscando seus dados...</small>";
-
-      try {
-        const snapshot = await db
-          .collection("pesos")
-          .where("uid", "==", uid)
-          .get();
-
-        if (snapshot.empty) {
-          resumoConteudo.innerHTML = `
-            <p>Ainda não há registros de peso.</p>
-            <small>Comece registrando seu primeiro peso no card <span class="highlight">Meu peso</span>.</small>
-          `;
-          return;
-        }
-
-        const docs = snapshot.docs.slice();
-
-        // ordena manualmente pela data (string "AAAA-MM-DD") desc
-        docs.sort((a, b) => {
-          const da = (a.data().data || "");
-          const dbb = (b.data().data || "");
-          if (da < dbb) return 1;
-          if (da > dbb) return -1;
-          return 0;
-        });
-
-        const limitados = docs.slice(0, 30);
-        let ultimoPesoDoc = null;
-
-        limitados.forEach((doc, index) => {
-          const dados = doc.data();
-          adicionarLinhaPeso(dados.data, dados.peso);
-          if (index === 0) ultimoPesoDoc = doc;
-        });
-
-        await montarResumoGeral(uid, docs, ultimoPesoDoc);
-      } catch (err) {
-        console.error("Erro ao carregar pesos:", err);
-        resumoConteudo.innerHTML = `
-          <p>Não foi possível carregar seu histórico de peso.</p>
-          <small>Tente novamente em alguns instantes.</small>
-        `;
-      }
-    }
-
-    function adicionarLinhaPeso(dataISO, peso) {
-      const tr = document.createElement("tr");
-      const tdData = document.createElement("td");
-      const tdPeso = document.createElement("td");
-
-      const dataFormatada = formatarDataBR(dataISO);
-
-      tdData.textContent = dataFormatada;
-      tdPeso.textContent = Number(peso).toLocaleString("pt-BR", {
-        minimumFractionDigits: 1,
-        maximumFractionDigits: 1
-      });
-
-      tr.appendChild(tdData);
-      tr.appendChild(tdPeso);
-      listaPesos.appendChild(tr);
-    }
-
-    function calcularMediaPesoUltimos7Dias(docsPesos) {
-      const hoje = new Date();
-      const hojeSemHora = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
-      const seteDiasAtras = new Date(hojeSemHora);
-      seteDiasAtras.setDate(seteDiasAtras.getDate() - 6);
-
-      let somaPesos = 0;
-      let qtdRegistros = 0;
-
-      docsPesos.forEach((doc) => {
-        const dados = doc.data();
-        const dataISO = dados.data;
-        const peso = Number(dados.peso);
-        if (!dataISO || isNaN(peso)) return;
-
-        const dataRegistro = new Date(dataISO + "T00:00:00");
-        if (dataRegistro >= seteDiasAtras && dataRegistro <= hojeSemHora) {
-          somaPesos += peso;
-          qtdRegistros++;
-        }
-      });
-
-      return {
-        mediaPeso7d: qtdRegistros > 0 ? somaPesos / qtdRegistros : null,
-        qtdRegistrosPesos7d: qtdRegistros
-      };
-    }
-
-    async function carregarCaloriasParaResumo(uid) {
-      let mediaCalorias7d = null;
-      let qtdDiasCalorias7d = 0;
-
-      try {
-        const hoje = new Date();
-        const hojeSemHora = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
-        const seteDiasAtras = new Date(hojeSemHora);
-        seteDiasAtras.setDate(seteDiasAtras.getDate() - 6);
-
-        const snapshot = await db
-          .collection("consumosDiarios") // >>> TROCAR NOME DA COLEÇÃO SE PRECISAR
-          .where("uid", "==", uid)
-          .get();
-
-        if (snapshot.empty) {
-          return { mediaCalorias7d: null, qtdDiasCalorias7d: 0 };
-        }
-
-        let somaCalorias = 0;
-        let diasComRegistro = 0;
-
-        snapshot.forEach((doc) => {
-          const dados = doc.data();
-          const dataISO = dados.data;
-          const calorias = Number(dados.caloriasTotais || dados.calorias);
-          if (!dataISO || isNaN(calorias)) return;
-
-          const dataRegistro = new Date(dataISO + "T00:00:00");
-          if (dataRegistro >= seteDiasAtras && dataRegistro <= hojeSemHora) {
-            somaCalorias += calorias;
-            diasComRegistro++;
-          }
-        });
-
-        if (diasComRegistro > 0) {
-          mediaCalorias7d = somaCalorias / diasComRegistro;
-          qtdDiasCalorias7d = diasComRegistro;
-        }
-      } catch (err) {
-        console.error("Erro ao carregar calorias para resumo:", err);
-      }
-
-      return { mediaCalorias7d, qtdDiasCalorias7d };
-    }
-
-    async function montarResumoGeral(uid, docsPesos, ultimoPesoDoc) {
-      const { mediaPeso7d, qtdRegistrosPesos7d } = calcularMediaPesoUltimos7Dias(docsPesos);
-      const { mediaCalorias7d, qtdDiasCalorias7d } = await carregarCaloriasParaResumo(uid);
-
-      atualizarResumo(ultimoPesoDoc, mediaPeso7d, mediaCalorias7d, qtdRegistrosPesos7d, qtdDiasCalorias7d);
-    }
-
-    function atualizarResumo(
-      ultimoPesoDoc,
-      mediaPeso7d,
-      mediaCalorias7d,
-      qtdRegistrosPesos7d,
-      qtdDiasCalorias7d
-    ) {
-      if (!ultimoPesoDoc && mediaPeso7d === null && mediaCalorias7d === null) {
-        resumoConteudo.innerHTML = `
-          <p>Ainda não há dados suficientes para o resumo.</p>
-          <small>Comece registrando seu peso, suas medidas e montando seus pratos para ver o resumo dos últimos 7 dias.</small>
-        `;
-        return;
-      }
-
-      let linhaPeso = "";
-      if (mediaPeso7d !== null) {
-        const pesoFormatado = mediaPeso7d.toLocaleString("pt-BR", {
-          minimumFractionDigits: 1,
-          maximumFractionDigits: 1
-        });
-        linhaPeso = `
-          <li>
-            <span>Peso médio (últimos 7 dias): </span>
-            <strong>${pesoFormatado} kg</strong>
-            <small style="color: var(--text-muted);"> (${qtdRegistrosPesos7d} registro(s))</small>
-          </li>
-        `;
-      } else {
-        linhaPeso = `
-          <li>
-            <span>Peso médio (últimos 7 dias): </span>
-            <strong>—</strong>
-            <small style="color: var(--text-muted);"> Sem registros no período</small>
-          </li>
-        `;
-      }
-
-      let linhaCalorias = "";
-      if (mediaCalorias7d !== null) {
-        const caloriasFormatadas = Math.round(mediaCalorias7d).toLocaleString("pt-BR");
-        linhaCalorias = `
-          <li>
-            <span>Consumo médio de calorias (últimos 7 dias): </span>
-            <strong>${caloriasFormatadas} kcal/dia</strong>
-            <small style="color: var(--text-muted);"> (${qtdDiasCalorias7d} dia(s) com registro)</small>
-          </li>
-        `;
-      } else {
-        linhaCalorias = `
-          <li>
-            <span>Consumo médio de calorias (últimos 7 dias): </span>
-            <strong>—</strong>
-            <small style="color: var(--text-muted);"> Sem registros no período</small>
-          </li>
-        `;
-      }
-
-      let blocoUltimoPeso = "";
-      if (ultimoPesoDoc) {
-        const dados = ultimoPesoDoc.data();
-        const dataISO = dados.data;
-        const peso = dados.peso;
-
-        const dataBR = formatarDataBR(dataISO);
-        const pesoFormatado = Number(peso).toLocaleString("pt-BR", {
-          minimumFractionDigits: 1,
-          maximumFractionDigits: 1
-        });
-
-        blocoUltimoPeso = `
-          <p style="margin-top:10px;">
-            Último registro em <strong>${dataBR}</strong> com <strong>${pesoFormatado} kg</strong>.
-          </p>
-          <small>Continue registrando seu peso para ver a evolução ao longo das semanas.</small>
-        `;
-      }
-
-      resumoConteudo.innerHTML = `
-        <p style="margin-bottom:6px;"><strong>Resumo dos últimos 7 dias</strong></p>
-        <ul class="resumo-lista">
-          ${linhaPeso}
-          ${linhaCalorias}
-        </ul>
-        ${blocoUltimoPeso}
-      `;
-    }
+    let graficoPesoMini = null;
 
     function formatarDataBR(dataISO) {
       if (!dataISO) return "";
-      const [ano, mes, dia] = dataISO.split("-");
-      return `${dia}/${mes}/${ano}`;
+      const partes = dataISO.split("-");
+      if (partes.length !== 3) return dataISO;
+      const [ano, mes, dia] = partes;
+      return `${dia}/${mes}`;
     }
 
-    async function salvarPeso() {
-      mostrarMensagem(pesoMessage, "");
-
-      const data = pesoDataInput.value;
-      const peso = parseFloat(pesoValorInput.value);
-
-      if (!data || isNaN(peso)) {
-        mostrarMensagem(pesoMessage, "Preencha a data e o peso.", "error");
-        return;
-      }
-
-      if (!currentUid) {
-        mostrarMensagem(
-          pesoMessage,
-          "Não foi possível identificar sua conta. Tente sair e entrar novamente.",
-          "error"
-        );
-        return;
-      }
-
-      btnSalvarPeso.disabled = true;
-      mostrarMensagem(pesoMessage, "Salvando...", "ok");
-
-      try {
-        const docId = `${currentUid}_${data}`;
-        await db.collection("pesos").doc(docId).set({
-          uid: currentUid,
-          data,
-          peso
-        });
-
-        mostrarMensagem(pesoMessage, "Peso salvo com sucesso!", "ok");
-        await carregarPesos(currentUid);
-      } catch (err) {
-        console.error("Erro ao salvar peso:", err);
-        mostrarMensagem(pesoMessage, "Erro ao salvar peso. Tente novamente.", "error");
-      } finally {
-        btnSalvarPeso.disabled = false;
-      }
-    }
-
-    // ===== PERFIL & CONTA =====
-    async function carregarPerfil(uid, user) {
-      perfilMessage.style.display = "none";
-
-      try {
-        const docRef = db.collection("perfis").doc(uid);
-        const docSnap = await docRef.get();
-
-        if (docSnap.exists) {
-          const dados = docSnap.data();
-          perfilNomeInput.value = dados.nome || user.displayName || "";
-          perfilEmailInput.value = user.email || "";
-          perfilDataNascimentoInput.value = dados.dataNascimento || "";
-        } else {
-          perfilNomeInput.value = user.displayName || "";
-          perfilEmailInput.value = user.email || "";
-          perfilDataNascimentoInput.value = "";
-        }
-      } catch (err) {
-        console.error("Erro ao carregar perfil:", err);
-        perfilMessage.style.display = "block";
-        perfilMessage.textContent = "Não foi possível carregar seu perfil.";
-      }
-    }
-
-    async function salvarPerfil() {
-      perfilMessage.style.display = "none";
-
-      const nome = perfilNomeInput.value.trim();
-      const dataNascimento = perfilDataNascimentoInput.value;
-
-      if (!currentUid || !currentUser) {
-        perfilMessage.style.display = "block";
-        perfilMessage.textContent = "Não foi possível identificar sua conta.";
-        return;
-      }
-
-      btnSalvarPerfil.disabled = true;
-      perfilMessage.style.display = "block";
-      perfilMessage.textContent = "Salvando...";
-
-      try {
-        await db.collection("perfis").doc(currentUid).set(
-          {
-            nome,
-            dataNascimento,
-            email: currentUser.email || ""
-          },
-          { merge: true }
-        );
-
-        try {
-          if (nome) {
-            await currentUser.updateProfile({ displayName: nome });
-            localStorage.setItem("pp_user_nome", nome);
-          }
-        } catch (e) {
-          console.warn("Não foi possível atualizar displayName:", e);
-        }
-
-        perfilMessage.textContent = "Perfil atualizado com sucesso!";
-      } catch (err) {
-        console.error("Erro ao salvar perfil:", err);
-        perfilMessage.textContent = "Erro ao salvar perfil. Tente novamente.";
-      } finally {
-        btnSalvarPerfil.disabled = false;
-      }
-    }
-
-    async function excluirConta() {
-      if (!currentUid || !currentUser) {
-        mostrarMensagem(excluirMessage, "Não foi possível identificar sua conta.", "error");
-        return;
-      }
-
-      const confirma = confirm(
-        "Tem certeza que deseja excluir sua conta? Essa ação é definitiva e não poderá ser desfeita."
-      );
-      if (!confirma) return;
-
-      btnExcluirConta.disabled = true;
-      mostrarMensagem(excluirMessage, "Excluindo sua conta e dados...", "ok");
-
-      try {
-        const pesosSnap = await db
-          .collection("pesos")
-          .where("uid", "==", currentUid)
-          .get();
-        const batch = db.batch();
-        pesosSnap.forEach((doc) => batch.delete(doc.ref));
-        await batch.commit();
-
-        await db.collection("perfis").doc(currentUid).delete().catch(() => {});
-
-        const planoCodigo = localStorage.getItem("pp_plano_codigo");
-        if (planoCodigo) {
-          const refPlano = db.collection("planos").doc(planoCodigo);
-          await refPlano.set(
-            {
-              ultimoUidRemovido: currentUid,
-              updatedAt: new Date().toISOString()
-            },
-            { merge: true }
-          );
-        }
-
-        await currentUser.delete().catch((err) => {
-          console.warn("Erro ao deletar usuário do Auth:", err);
-        });
-
-        limparLocalStorageClube();
-        mostrarMensagem(
-          excluirMessage,
-          "Conta excluída com sucesso. Obrigado por ter feito parte do Clube. ❤️",
-          "ok"
-        );
-
-        setTimeout(() => {
-          window.location.href = "clube-login.html";
-        }, 2000);
-      } catch (err) {
-        console.error("Erro ao excluir conta:", err);
-        mostrarMensagem(excluirMessage, "Erro ao excluir conta. Tente novamente mais tarde.", "error");
-        btnExcluirConta.disabled = false;
-      }
-    }
-
-    function fazerLogout() {
-      auth.signOut().finally(() => {
-        limparLocalStorageClube();
-        window.location.href = "clube-login.html";
+    function formatarNumero(valor, casas) {
+      if (valor === null || valor === undefined || isNaN(valor)) return "—";
+      return Number(valor).toLocaleString("pt-BR", {
+        minimumFractionDigits: casas,
+        maximumFractionDigits: casas
       });
     }
 
-    function abrirPerfil() {
-      perfilModal.classList.add("visible");
-    }
+    /* ====== MONTAR PRATO BRASILEIRO (card) ====== */
+    async function carregarResumoPrato(uid) {
+      if (!pratoDataSpan || !pratoCaloriasSpan) return;
 
-    function fecharPerfil() {
-      perfilModal.classList.remove("visible");
-    }
-
-    // ===== TDEE (CLUBE) =====
-    async function carregarTDEE(uid) {
-      if (!tdeeConteudo) return;
-
-      tdeeConteudo.innerHTML = "<small>Buscando seu TDEE...</small>";
+      pratoDataSpan.textContent = "carregando...";
+      pratoCaloriasSpan.textContent = "carregando...";
 
       try {
         const snapshot = await db
-          .collection("tdee") // >>> TROCAR NOME DA COLEÇÃO SE PRECISAR
+          .collection("consumosDiarios")
           .where("uid", "==", uid)
           .get();
 
         if (snapshot.empty) {
-          tdeeConteudo.innerHTML = `
-            <p>Você ainda não registrou um cálculo de TDEE dentro do Clube.</p>
-            <small>Use a calculadora do Clube para salvar seu gasto diário e meta de emagrecimento.</small>
-          `;
+          pratoDataSpan.textContent = "—";
+          pratoCaloriasSpan.textContent = "—";
+          if (pratoSubtitle) {
+            pratoSubtitle.textContent = "Você ainda não registrou um prato no Clube.";
+          }
           return;
         }
 
         const docs = snapshot.docs.slice();
-
-        // ordena por dataCalculo desc (timestamp ou string)
         docs.sort((a, b) => {
-          const da = a.data().dataCalculo;
-          const dbb = b.data().dataCalculo;
-
-          const va = da && da.toDate
-            ? da.toDate().getTime()
-            : (typeof da === "string" ? Date.parse(da) || 0 : 0);
-
-          const vb = dbb && dbb.toDate
-            ? dbb.toDate().getTime()
-            : (typeof dbb === "string" ? Date.parse(dbb) || 0 : 0);
-
-          return vb - va;
-        });
-
-        const doc = docs[0];
-        const dados = doc.data();
-
-        const tdeeValor   = dados.tdee;
-        const gastoBasal  = dados.gastoBasal || dados.basal;
-        const metodo      = dados.metodo || "Método padrão";
-        const atividade   = dados.nivelAtividade || dados.atividade || "";
-
-        const metaTipo       = dados.metaTipo || dados.objetivo || null;
-        const metaCalorias   = dados.metaCalorias || null;
-        const metaDeficitDia = dados.metaDeficitDia || null;
-        const metaKgSemana   = dados.metaKgSemana || null;
-
-        const tdeeFormatado =
-          tdeeValor != null ? Math.round(tdeeValor).toLocaleString("pt-BR") : "—";
-        const basalFormatado =
-          gastoBasal != null ? Math.round(gastoBasal).toLocaleString("pt-BR") : "—";
-
-        let metaHTML = "";
-        if (metaCalorias != null) {
-          const metaCaloriasFmt = Math.round(metaCalorias).toLocaleString("pt-BR");
-          const deficitFmt =
-            metaDeficitDia != null
-              ? Math.round(metaDeficitDia).toLocaleString("pt-BR") + " kcal/dia"
-              : null;
-          const kgSemanaFmt =
-            metaKgSemana != null
-              ? metaKgSemana.toLocaleString("pt-BR", {
-                  minimumFractionDigits: 1,
-                  maximumFractionDigits: 1
-                }) + " kg/sem"
-              : null;
-
-          metaHTML = `
-            <p style="margin-top:6px;">
-              <span style="font-size:0.84rem; color:var(--text-muted);">Meta de emagrecimento (Clube):</span><br/>
-              Calorias alvo: <strong>${metaCaloriasFmt} kcal/dia</strong><br/>
-              ${deficitFmt ? `Déficit estimado: <strong>${deficitFmt}</strong><br/>` : ""}
-              ${kgSemanaFmt ? `Velocidade prevista: <strong>${kgSemanaFmt}</strong>` : ""}
-              ${
-                metaTipo
-                  ? `<br/><span style="font-size:0.8rem; color:var(--text-muted);">Objetivo: <strong>${metaTipo}</strong></span>`
-                  : ""
-              }
-            </p>
-          `;
-        }
-
-        tdeeConteudo.innerHTML = `
-          <p><strong>${tdeeFormatado} kcal/dia</strong> é seu TDEE atual.</p>
-          <p style="margin-top:4px; font-size:0.85rem; color:var(--text-muted);">
-            Gasto basal estimado: <strong>${basalFormatado} kcal</strong><br/>
-            Método: <strong>${metodo}</strong>${atividade ? ` • Atividade: <strong>${atividade}</strong>` : ""}
-          </p>
-          ${metaHTML}
-        `;
-      } catch (err) {
-        console.error("Erro ao carregar TDEE:", err);
-        tdeeConteudo.innerHTML = `
-          <p>Não foi possível carregar seu TDEE.</p>
-          <small>Tente novamente em alguns instantes.</small>
-        `;
-      }
-    }
-
-    // ===== PRATO BRASILEIRO (CLUBE) =====
-    async function carregarUltimoPrato(uid) {
-      if (!pratoConteudo) return;
-
-      pratoConteudo.innerHTML = "<small>Buscando seus pratos...</small>";
-
-      try {
-        const snapshot = await db
-          .collection("consumosDiarios") // >>> TROCAR NOME DA COLEÇÃO SE PRECISAR
-          .where("uid", "==", uid)
-          .get();
-
-        if (snapshot.empty) {
-          pratoConteudo.innerHTML = `
-            <p>Você ainda não registrou um prato dentro do Clube.</p>
-            <small>Monte seu prato brasileiro na versão do Clube para ver um resumo aqui.</small>
-          `;
-          return;
-        }
-
-        const docs = snapshot.docs.slice();
-
-        docs.sort((a, b) => {
-          const da = (a.data().data || "");
-          const dbb = (b.data().data || "");
+          const da = a.data().data || "";
+          const dbb = b.data().data || "";
           if (da < dbb) return 1;
           if (da > dbb) return -1;
           return 0;
         });
 
-        const doc = docs[0];
-        const dados = doc.data();
-
+        const dados = docs[0].data();
         const dataISO = dados.data;
-        const dataBR = formatarDataBR(dataISO);
+        const dataBR  = formatarDataBR(dataISO);
 
-        const calorias = Number(dados.caloriasTotais || dados.calorias);
-        const caloriasFormatadas =
-          !isNaN(calorias) && calorias > 0
-            ? Math.round(calorias).toLocaleString("pt-BR")
+        const caloriasRaw = Number(dados.caloriasTotais || dados.calorias);
+        const caloriasFmt =
+          !isNaN(caloriasRaw) && caloriasRaw > 0
+            ? Math.round(caloriasRaw).toLocaleString("pt-BR") + " kcal"
             : "—";
 
-        const proteinas = typeof dados.proteinas === "number" ? dados.proteinas : null;
-        const carbo = typeof dados.carboidratos === "number" ? dados.carboidratos : null;
-        const gorduras = typeof dados.gorduras === "number" ? dados.gorduras : null;
+        pratoDataSpan.textContent = dataBR || "—";
+        pratoCaloriasSpan.textContent = caloriasFmt;
 
-        let macrosHTML = "";
-        const partesMacros = [];
-        if (proteinas !== null) partesMacros.push(`<strong>${proteinas} g</strong> de proteína`);
-        if (carbo !== null) partesMacros.push(`<strong>${carbo} g</strong> de carboidratos`);
-        if (gorduras !== null) partesMacros.push(`<strong>${gorduras} g</strong> de gorduras`);
-
-        if (partesMacros.length) {
-          macrosHTML = `
-            <p style="margin-top:4px; font-size:0.85rem; color:var(--text-muted);">
-              ${partesMacros.join(" • ")}
-            </p>
-          `;
+        if (pratoSubtitle) {
+          pratoSubtitle.textContent = "Resumo do último prato registrado no Clube.";
         }
-
-        pratoConteudo.innerHTML = `
-          <p>Último prato em <strong>${dataBR || "-"}</strong>.</p>
-          <p style="margin-top:4px;">
-            Consumo total do dia: <strong>${caloriasFormatadas} kcal</strong>.
-          </p>
-          ${macrosHTML}
-        `;
       } catch (err) {
         console.error("Erro ao carregar dados de prato:", err);
-        pratoConteudo.innerHTML = `
-          <p>Não foi possível carregar seus dados de prato.</p>
-          <small>Tente novamente em alguns instantes.</small>
-        `;
+        pratoDataSpan.textContent = "—";
+        pratoCaloriasSpan.textContent = "—";
+        if (pratoSubtitle) {
+          pratoSubtitle.textContent = "Não foi possível carregar seus pratos agora.";
+        }
       }
     }
 
-    // ===== MEDIDAS CORPORAIS (CLUBE) =====
-    async function carregarMedidas(uid) {
-      if (!medidasConteudo) return;
+    /* ====== DESENHO DO MINI GRÁFICO DE PESO (Chart.js, VERDE) ====== */
+    function desenharGraficoPesoMini(labels, dados) {
+      const canvas = document.getElementById("graficoPesoMini");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
 
-      medidasConteudo.innerHTML = "<small>Buscando suas medidas...</small>";
+      if (graficoPesoMini) {
+        graficoPesoMini.destroy();
+        graficoPesoMini = null;
+      }
+
+      graficoPesoMini = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels,
+          datasets: [
+            {
+              label: "Peso (kg)",
+              data: dados,
+              borderColor: "rgba(22,163,74,1)",
+              backgroundColor: "rgba(187,247,208,0.45)",
+              tension: 0.3,
+              borderWidth: 2,
+              pointRadius: 3,
+              pointHoverRadius: 4,
+              pointBackgroundColor: "rgba(22,163,74,1)",
+              pointBorderColor: "#ffffff",
+              fill: true
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => {
+                  const valor = ctx.parsed.y;
+                  return `Peso: ${formatarNumero(valor, 1)} kg`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: { font: { size: 9 } },
+              grid: { display: false }
+            },
+            y: {
+              ticks: { font: { size: 9 } },
+              grid: {
+                color: "rgba(209, 250, 229, 0.9)",
+                lineWidth: 0.8
+              }
+            }
+          }
+        }
+      });
+    }
+
+    /* ====== PESO & PROGRESSO (texto + gráfico) ====== */
+    async function carregarPesoEProgresso(uid) {
+      if (!pesoAtualSpan || !pesoVariacao7Text) return;
+
+      pesoAtualSpan.textContent = "--,-- kg";
+      pesoVariacao7Text.textContent = "Carregando dados de peso...";
+      pesoVariacao7Text.style.color = "#6b7280";
+      desenharGraficoPesoMini([], []);
 
       try {
         const snapshot = await db
-          .collection("medidasCorporais") // >>> TROCAR NOME DA COLEÇÃO SE VOCÊ QUISER OUTRO
+          .collection("pesos")
           .where("uid", "==", uid)
           .get();
 
         if (snapshot.empty) {
-          medidasConteudo.innerHTML = `
-            <p>Você ainda não registrou suas medidas corporais dentro do Clube.</p>
-            <small>Use o botão abaixo para registrar medidas como cintura, abdômen, braços e pernas.</small>
-          `;
+          pesoVariacao7Text.textContent = "Você ainda não registrou seu peso no Clube.";
           return;
         }
 
         const docs = snapshot.docs.slice();
-
-        // assume que cada doc tem campo "data" (AAAA-MM-DD) da avaliação
         docs.sort((a, b) => {
           const da = (a.data().data || "");
           const dbb = (b.data().data || "");
-          if (da < dbb) return 1;
-          if (da > dbb) return -1;
+          if (da < dbb) return -1;
+          if (da > dbb) return 1;
           return 0;
         });
 
-        const doc = docs[0];
-        const m = doc.data();
+        const registros = docs.map(d => {
+          const dados = d.data();
+          const peso = Number(
+            dados.pesoKg ??
+            dados.peso ??
+            dados.pesoAtual
+          );
+          return { data: dados.data, peso };
+        }).filter(r => !isNaN(r.peso));
 
-        const dataBR = formatarDataBR(m.data);
-
-        // valores em cm (podem vir como number ou string)
-        function fmtMedida(v) {
-          if (v === undefined || v === null || v === "") return "—";
-          const n = Number(v);
-          if (isNaN(n)) return "—";
-          return n.toLocaleString("pt-BR", {
-            minimumFractionDigits: 1,
-            maximumFractionDigits: 1
-          }) + " cm";
-        }
-
-        const cards = [
-          { label: "Pescoço", valor: fmtMedida(m.pescoco) },
-          { label: "Ombro", valor: fmtMedida(m.ombro) },
-          { label: "Peito", valor: fmtMedida(m.peito) },
-          { label: "Cintura", valor: fmtMedida(m.cintura) },
-          { label: "Abdômen superior", valor: fmtMedida(m.abdomenSuperior) },
-          { label: "Abdômen inferior", valor: fmtMedida(m.abdomenInferior) },
-          { label: "Braço (esquerdo)", valor: fmtMedida(m.bracoEsquerdo) },
-          { label: "Braço (direito)", valor: fmtMedida(m.bracoDireito) },
-          { label: "Antebraço (esquerdo)", valor: fmtMedida(m.antebracoEsquerdo) },
-          { label: "Antebraço (direito)", valor: fmtMedida(m.antebracoDireito) },
-          { label: "Coxa (esquerda)", valor: fmtMedida(m.coxaEsquerda) },
-          { label: "Coxa (direita)", valor: fmtMedida(m.coxaDireita) },
-          { label: "Panturrilha (esquerda)", valor: fmtMedida(m.panturrilhaEsquerda) },
-          { label: "Panturrilha (direita)", valor: fmtMedida(m.panturrilhaDireita) },
-          { label: "Quadril", valor: fmtMedida(m.quadril) }
-        ];
-
-        const cardsHTML = cards
-          .map(
-            (c) => `
-          <div class="medida-item">
-            <span class="medida-label">${c.label}</span>
-            <strong>${c.valor}</strong>
-          </div>
-        `
-          )
-          .join("");
-
-        medidasConteudo.innerHTML = `
-          <p style="margin-bottom:6px;">
-            Última avaliação registrada em <strong>${dataBR || "-"}</strong>.
-          </p>
-          <div class="medidas-grid">
-            ${cardsHTML}
-          </div>
-        `;
-      } catch (err) {
-        console.error("Erro ao carregar medidas corporais:", err);
-        medidasConteudo.innerHTML = `
-          <p>Não foi possível carregar suas medidas corporais.</p>
-          <small>Tente novamente em alguns instantes.</small>
-        `;
-      }
-    }
-
-    // ===== INICIALIZAÇÃO =====
-    document.addEventListener("DOMContentLoaded", () => {
-      const anoAtualSpan = document.getElementById("anoAtual");
-      anoAtualSpan.textContent = new Date().getFullYear();
-
-      setHojeNoCampoPeso();
-
-      btnLogout.addEventListener("click", fazerLogout);
-      btnSalvarPeso.addEventListener("click", salvarPeso);
-      btnSalvarPerfil.addEventListener("click", salvarPerfil);
-      btnExcluirConta.addEventListener("click", excluirConta);
-
-      btnOpenPerfil.addEventListener("click", abrirPerfil);
-      btnFecharPerfil.addEventListener("click", fecharPerfil);
-      perfilModal.addEventListener("click", (e) => {
-        if (e.target === perfilModal) fecharPerfil();
-      });
-
-      auth.onAuthStateChanged(async (user) => {
-        if (!user) {
-          window.location.href = "clube-login.html";
+        if (!registros.length) {
+          pesoVariacao7Text.textContent = "Nenhum peso válido encontrado.";
           return;
         }
 
-        currentUser = user;
-        currentUid = user.uid;
+        // Últimos 7 registros (é a base pra gráfico e variação)
+        const ultimos7 = registros.slice(-7);
+        const ultimo = ultimos7[ultimos7.length - 1];
 
-        try {
-          localStorage.setItem("pp_user_uid", user.uid);
-          localStorage.setItem("pp_user_email", user.email || "");
-          if (user.displayName) {
-            localStorage.setItem("pp_user_nome", user.displayName);
+        const pesoAtualFmt = formatarNumero(ultimo.peso, 1);
+        pesoAtualSpan.textContent = `${pesoAtualFmt} kg`;
+
+        if (ultimos7.length >= 2) {
+          const primeiro7 = ultimos7[0];
+          const diff7 = ultimo.peso - primeiro7.peso;
+          const diffAbsFmt = formatarNumero(Math.abs(diff7), 1);
+
+          if (diff7 < 0) {
+            pesoVariacao7Text.textContent =
+              `Nos últimos ${ultimos7.length} registros: — ${diffAbsFmt} kg`;
+            pesoVariacao7Text.style.color = "#16a34a";
+          } else if (diff7 > 0) {
+            pesoVariacao7Text.textContent =
+              `Nos últimos ${ultimos7.length} registros: + ${diffAbsFmt} kg`;
+            pesoVariacao7Text.style.color = "#b91c1c";
+          } else {
+            pesoVariacao7Text.textContent =
+              `Nos últimos ${ultimos7.length} registros: 0,0 kg de variação`;
+            pesoVariacao7Text.style.color = "#6b7280";
           }
-        } catch (e) {
-          console.warn("Não foi possível atualizar localStorage com dados do usuário:", e);
-        }
-
-        if (user.displayName) {
-          userGreeting.textContent = `Olá, ${user.displayName}! 👋`;
         } else {
-          userGreeting.textContent = "Olá! 👋";
+          pesoVariacao7Text.textContent =
+            "Aguardando mais registros para calcular a variação.";
+          pesoVariacao7Text.style.color = "#6b7280";
         }
 
-        await carregarPerfil(currentUid, user);
-        await carregarPesos(currentUid);
-        await carregarTDEE(currentUid);
-        await carregarUltimoPrato(currentUid);
-        await carregarMedidas(currentUid);
-      });
+        const labels = ultimos7.map(r => formatarDataBR(r.data || ""));
+        const dados = ultimos7.map(r => r.peso);
+
+        desenharGraficoPesoMini(labels, dados);
+      } catch (err) {
+        console.error("Erro ao carregar pesos:", err);
+        pesoVariacao7Text.textContent =
+          "Não foi possível carregar seus pesos agora.";
+        pesoVariacao7Text.style.color = "#b91c1c";
+      }
+    }
+
+    /* ====== LOGIN / CARGA INICIAL ====== */
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = "clube-login.html";
+        return;
+      }
+      currentUid = user.uid;
+      carregarResumoPrato(currentUid);
+      carregarPesoEProgresso(currentUid);
     });
   </script>
 </body>
