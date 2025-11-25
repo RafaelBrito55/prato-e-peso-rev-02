@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Clube Prato & Peso – Meu peso</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --bg-alt: #ffffff;
+      --primary: #1e5a4d;
+      --primary-soft: #e0f3ec;
+      --accent: #ffb347;
+      --accent-soft: #fff3df;
+      --text-main: #222222;
+      --text-muted: #555555;
+      --border-soft: #e0e0e0;
+      --radius: 16px;
+      --shadow-soft: 0 10px 26px rgba(15, 23, 42, 0.12);
+      --max-width: 960px;
+    }
+
+    * {
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #fdfaf5 0%, #f5f5f7 40%, #eceff1 100%);
+      color:var(--text-main);
+      min-height:100vh;
+    }
+
+    a {
+      color:inherit;
+      text-decoration:none;
+    }
+
+    header {
+      background:rgba(255,255,255,0.96);
+      backdrop-filter:blur(12px);
+      box-shadow:0 2px 8px rgba(15,23,42,0.08);
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+
+    .topbar {
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:10px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .logo {
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .logo-badge {
+      width:30px; height:30px;
+      border-radius:50%;
+      background:var(--accent);
+      display:flex; align-items:center; justify-content:center;
+      font-weight:700; color:#4b2c15; font-size:0.9rem;
+      box-shadow:0 6px 14px rgba(0,0,0,0.1);
+    }
+
+    .logo-text-main {
+      font-weight:700;
+      font-size:0.98rem;
+      letter-spacing:0.03em;
+    }
+
+    .logo-text-sub {
+      font-size:0.75rem;
+      color:var(--text-muted);
+    }
+
+    .logo-text {
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+
+    .btn-link {
+      border-radius:999px;
+      padding:7px 14px;
+      border:none;
+      background:var(--primary-soft);
+      color:var(--primary);
+      font-size:0.85rem;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    main {
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:22px 16px 32px;
+    }
+
+    h1 {
+      font-size:1.5rem;
+      margin-bottom:4px;
+    }
+
+    .lead {
+      font-size:0.9rem;
+      color:var(--text-muted);
+      margin-bottom:16px;
+    }
+
+    .card {
+      background:var(--bg-alt);
+      border-radius:var(--radius);
+      padding:18px 18px 20px;
+      box-shadow:var(--shadow-soft);
+      border:1px solid var(--border-soft);
+      margin-bottom:18px;
+    }
+
+    .card h2 {
+      font-size:1.1rem;
+      margin-bottom:4px;
+    }
+
+    .card small {
+      color:var(--text-muted);
+      font-size:0.8rem;
+    }
+
+    .form-row {
+      display:flex;
+      gap:10px;
+      margin-top:12px;
+      margin-bottom:10px;
+    }
+
+    .col {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+
+    label {
+      font-size:0.85rem;
+      color:var(--text-muted);
+    }
+
+    input[type="date"],
+    input[type="number"] {
+      border-radius:10px;
+      border:1px solid var(--border-soft);
+      padding:7px 9px;
+      font-size:0.9rem;
+      outline:none;
+    }
+
+    input:focus {
+      border-color:var(--primary);
+      box-shadow:0 0 0 1px rgba(21,128,61,0.20);
+    }
+
+    .btn-primary {
+      background:var(--primary);
+      color:#fff;
+      border:none;
+      border-radius:999px;
+      padding:8px 16px;
+      font-size:0.9rem;
+      font-weight:600;
+      cursor:pointer;
+      box-shadow:0 10px 22px rgba(21,128,61,0.5);
+    }
+
+    .message {
+      margin-top:8px;
+      font-size:0.82rem;
+      display:none;
+    }
+    .message.ok { color:#15803d; }
+    .message.error { color:#b91c1c; }
+
+    table {
+      width:100%;
+      border-collapse:collapse;
+      margin-top:14px;
+      font-size:0.9rem;
+    }
+
+    th, td {
+      padding:6px 8px;
+      border-bottom:1px solid #e5e7eb;
+      text-align:left;
+    }
+
+    th {
+      font-size:0.78rem;
+      text-transform:uppercase;
+      letter-spacing:0.02em;
+      color:var(--text-muted);
+    }
+
+    tbody tr:last-child td {
+      border-bottom:none;
+    }
+
+    @media (max-width:540px) {
+      .form-row { flex-direction:column; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="topbar">
+      <a href="clube-area.html" class="logo">
+        <div class="logo-badge">PaP</div>
+        <div class="logo-text">
+          <span class="logo-text-main">Prato &amp; Peso</span>
+          <span class="logo-text-sub">Clube – Meu peso</span>
+        </div>
+      </a>
+      <button class="btn-link" type="button" onclick="window.location.href='clube-area.html'">
+        Voltar para o painel
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <h1>Meu peso</h1>
+    <p class="lead">Registre seu peso e acompanhe a evolução ao longo do tempo. Esses dados serão usados no painel e no relatório.</p>
+
+    <section class="card">
+      <h2>Registrar peso</h2>
+      <small>Salve sempre que tiver uma nova pesagem.</small>
+
+      <div class="form-row">
+        <div class="col">
+          <label for="pesoData">Data</label>
+          <input type="date" id="pesoData" />
+        </div>
+        <div class="col">
+          <label for="pesoValor">Peso (kg)</label>
+          <input type="number" id="pesoValor" step="0.1" min="0" />
+        </div>
+      </div>
+
+      <button class="btn-primary" id="btnSalvarPeso" type="button">Salvar peso</button>
+      <div id="pesoMessage" class="message"></div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Peso (kg)</th>
+          </tr>
+        </thead>
+        <tbody id="listaPesos"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyABfAWUAW6a6g93B9QKooTKd5Mj645G3vE",
+      authDomain: "prato-e-peso-77b5a.firebaseapp.com",
+      projectId: "prato-e-peso-77b5a",
+      storageBucket: "prato-e-peso-77b5a.firebasestorage.app",
+      messagingSenderId: "432109202072",
+      appId: "1:432109202072:web:1c8636db0c161318ddfeed"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db   = firebase.firestore();
+
+    const pesoDataInput = document.getElementById("pesoData");
+    const pesoValorInput = document.getElementById("pesoValor");
+    const btnSalvarPeso = document.getElementById("btnSalvarPeso");
+    const pesoMessage = document.getElementById("pesoMessage");
+    const listaPesos = document.getElementById("listaPesos");
+
+    let currentUid = null;
+
+    function mostrarMensagem(el, texto, tipo) {
+      if (!el) return;
+      if (!texto) {
+        el.style.display = "none";
+        el.textContent = "";
+        el.className = "message";
+        return;
+      }
+      el.style.display = "block";
+      el.textContent = texto;
+      el.className = "message " + (tipo === "error" ? "error" : "ok");
+    }
+
+    function formatarDataBR(dataISO) {
+      if (!dataISO) return "";
+      const [ano, mes, dia] = dataISO.split("-");
+      return `${dia}/${mes}/${ano}`;
+    }
+
+    async function carregarPesos(uid) {
+      listaPesos.innerHTML = "";
+      mostrarMensagem(pesoMessage, "", "");
+
+      try {
+        const snapshot = await db
+          .collection("pesos")
+          .where("uid", "==", uid)
+          .get();
+
+        if (snapshot.empty) {
+          return;
+        }
+
+        const docs = snapshot.docs.slice();
+        docs.sort((a, b) => {
+          const da = (a.data().data || "");
+          const dbb = (b.data().data || "");
+          if (da < dbb) return 1;
+          if (da > dbb) return -1;
+          return 0;
+        });
+
+        const limitados = docs.slice(0, 60);
+        limitados.forEach(doc => {
+          const dados = doc.data();
+          adicionarLinhaPeso(dados.data, dados.peso);
+        });
+      } catch (err) {
+        console.error("Erro ao carregar pesos:", err);
+        mostrarMensagem(pesoMessage, "Não foi possível carregar seus pesos agora.", "error");
+      }
+    }
+
+    function adicionarLinhaPeso(dataISO, peso) {
+      const tr = document.createElement("tr");
+      const tdData = document.createElement("td");
+      const tdPeso = document.createElement("td");
+
+      tdData.textContent = formatarDataBR(dataISO);
+      tdPeso.textContent = Number(peso).toLocaleString("pt-BR", {
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1
+      });
+
+      tr.appendChild(tdData);
+      tr.appendChild(tdPeso);
+      listaPesos.appendChild(tr);
+    }
+
+    async function salvarPeso() {
+      mostrarMensagem(pesoMessage, "", "");
+
+      const data = pesoDataInput.value;
+      const peso = parseFloat(pesoValorInput.value);
+
+      if (!data || isNaN(peso)) {
+        mostrarMensagem(pesoMessage, "Preencha a data e o peso.", "error");
+        return;
+      }
+
+      if (!currentUid) {
+        mostrarMensagem(
+          pesoMessage,
+          "Não foi possível identificar sua conta. Tente sair e entrar novamente.",
+          "error"
+        );
+        return;
+      }
+
+      btnSalvarPeso.disabled = true;
+      mostrarMensagem(pesoMessage, "Salvando...", "ok");
+
+      try {
+        const docId = `${currentUid}_${data}`;
+        await db.collection("pesos").doc(docId).set({
+          uid: currentUid,
+          data,
+          peso
+        });
+
+        mostrarMensagem(pesoMessage, "Peso salvo com sucesso!", "ok");
+        await carregarPesos(currentUid);
+      } catch (err) {
+        console.error("Erro ao salvar peso:", err);
+        mostrarMensagem(pesoMessage, "Erro ao salvar peso. Tente novamente.", "error");
+      } finally {
+        btnSalvarPeso.disabled = false;
+      }
+    }
+
+    btnSalvarPeso.addEventListener("click", salvarPeso);
+
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = "clube-login.html";
+        return;
+      }
+      currentUid = user.uid;
+      carregarPesos(currentUid);
+    });
+  </script>
+</body>
+</html>
