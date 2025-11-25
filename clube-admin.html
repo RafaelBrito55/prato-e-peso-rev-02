@@ -20,8 +20,8 @@
       --radius-lg: 18px;
       --radius-xl: 22px;
       --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.08);
-      /* Aumentei um pouco a largura máxima para dar mais espaço à tabela */
-      --max-width: 1240px;
+      /* aumentei um pouco a largura máxima */
+      --max-width: 1360px;
     }
 
     * {
@@ -188,8 +188,8 @@
 
     .layout-main {
       display: grid;
-      /* Deixei a coluna da direita (lista) maior que o formulário */
-      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      /* coluna da direita MUITO maior que a esquerda */
+      grid-template-columns: minmax(0, 0.4fr) minmax(0, 1.6fr);
       gap: 16px;
       align-items: flex-start;
     }
@@ -308,7 +308,6 @@
       margin-top: 10px;
       border-radius: 16px;
       border: 1px solid var(--border-soft);
-      /* Agora permite rolagem horizontal se a tabela ficar grande demais */
       overflow-x: auto;
       overflow-y: hidden;
       background: #ffffff;
@@ -316,7 +315,7 @@
 
     table {
       width: 100%;
-      min-width: 700px; /* garante espaço para todas as colunas */
+      min-width: 700px;
       border-collapse: collapse;
       font-size: 0.8rem;
     }
@@ -723,8 +722,7 @@
     //
     // =====================================================================
     const ADMIN_PASSWORD = "PAINEL@2025";
-    // ======================
-    // Configuração do Firebase (mesma do restante do site)
+
     const firebaseConfig = {
       apiKey: "AIzaSyABfAWUAW6a6g93B9QKooTKd5Mj645G3vE",
       authDomain: "prato-e-peso-77b5a.firebaseapp.com",
@@ -741,7 +739,6 @@
       }
       db = firebase.firestore();
     }
-    // ======================
 
     const ADMIN_LOGGED_KEY = "pp_admin_logado";
     const CLIENTES_KEY = "pp_admin_clientes";
@@ -783,7 +780,6 @@
 
     let clientes = [];
 
-    // Carrega apenas os clientes salvos manualmente no navegador
     function carregarClientes() {
       const raw = localStorage.getItem(CLIENTES_KEY);
       if (!raw) {
@@ -798,8 +794,6 @@
       }
     }
 
-    // Carrega também os usuários cadastrados no Firebase (coleção "usuarios")
-    // Não salva no localStorage: sempre puxa a lista mais recente da nuvem.
     async function carregarUsuariosFirestore() {
       if (!db) {
         console.warn("Firebase/Firestore não inicializado no painel admin.");
@@ -809,7 +803,6 @@
       try {
         const snap = await db.collection("usuarios").get();
 
-        // Mapa para evitar duplicar clientes que você já cadastrou manualmente com o mesmo e-mail
         const indicePorEmail = {};
         clientes.forEach((c, idx) => {
           if (c.email) {
@@ -823,7 +816,6 @@
           const nome = data.nome || data.nomeCompleto || "";
           let createdAtDate = null;
 
-          // converte Timestamp do Firestore, se existir
           if (data.createdAt && typeof data.createdAt.toDate === "function") {
             createdAtDate = data.createdAt.toDate();
           }
@@ -853,8 +845,6 @@
           };
 
           if (email && indicePorEmail[email] != null) {
-            // Já existe um cliente manual com esse e-mail:
-            // apenas enriquecemos alguns campos sem sobrescrever tudo.
             const idx = indicePorEmail[email];
             const c = clientes[idx];
 
@@ -866,7 +856,6 @@
             if (!c.firestoreId) c.firestoreId = doc.id;
             c.fromFirestore = true;
           } else {
-            // Novo cliente vindo do Firestore
             clientes.push(baseCliente);
           }
         });
@@ -1034,7 +1023,6 @@
       tbodyClientes.innerHTML = linhas.join("");
     }
 
-    // Ações
     formCliente.addEventListener("submit", function (e) {
       e.preventDefault();
       formErro.textContent = "";
@@ -1099,7 +1087,6 @@
       renderTabela();
     });
 
-    // Funções globais para usar nos botões da tabela
     window.editarCliente = function (id) {
       const cliente = clientes.find(c => c.id === id);
       if (!cliente) return;
@@ -1145,7 +1132,6 @@
       const confirmar = window.confirm(`Tem certeza de que deseja excluir ${nome}? Essa ação não poderá ser desfeita.`);
       if (!confirmar) return;
 
-      // Se veio do Firestore, tenta remover também da coleção "usuarios"
       if (cliente.fromFirestore && cliente.firestoreId && db) {
         try {
           await db.collection("usuarios").doc(cliente.firestoreId).delete();
@@ -1161,7 +1147,6 @@
       renderTabela();
     };
 
-    // Modal admin
     function abrirModalAdmin() {
       modalAdmin.style.display = "flex";
       adminErro.textContent = "";
@@ -1195,18 +1180,12 @@
     });
 
     async function iniciarPainel() {
-      // Primeiro carrega os clientes que você já cadastrou manualmente
       carregarClientes();
-
-      // Depois traz também os usuários cadastrados no Firebase (coleção "usuarios")
       await carregarUsuariosFirestore();
-
-      // Atualiza os indicadores e a tabela com a junção de tudo
       atualizarKpis();
       renderTabela();
     }
 
-    // Verifica se já está logado como admin
     document.addEventListener("DOMContentLoaded", function () {
       const logado = localStorage.getItem(ADMIN_LOGGED_KEY) === "true";
       if (!logado) {
