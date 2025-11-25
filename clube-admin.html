@@ -20,7 +20,8 @@
       --radius-lg: 18px;
       --radius-xl: 22px;
       --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.08);
-      --max-width: 1120px;
+      /* Aumentei um pouco a largura máxima para dar mais espaço à tabela */
+      --max-width: 1240px;
     }
 
     * {
@@ -187,7 +188,8 @@
 
     .layout-main {
       display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      /* Deixei a coluna da direita (lista) maior que o formulário */
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
       gap: 16px;
       align-items: flex-start;
     }
@@ -306,12 +308,15 @@
       margin-top: 10px;
       border-radius: 16px;
       border: 1px solid var(--border-soft);
-      overflow: hidden;
+      /* Agora permite rolagem horizontal se a tabela ficar grande demais */
+      overflow-x: auto;
+      overflow-y: hidden;
       background: #ffffff;
     }
 
     table {
       width: 100%;
+      min-width: 700px; /* garante espaço para todas as colunas */
       border-collapse: collapse;
       font-size: 0.8rem;
     }
@@ -836,11 +841,12 @@
             diaPagamento: null,
             valorMensal: null,
             formaPagamento: null,
-            statusPagamento: "Em dia",
+            statusPagamento: "em-dia",
             observacoes: data.planoNome ? "Plano: " + data.planoNome : "",
             ativo: true,
             origem: data.origem || "clube",
             codigoAcesso: data.codigoAcesso || null,
+            firestoreId: doc.id,
             createdAt: createdAtDate ? createdAtDate.toISOString() : null,
             dataAtualizacao: createdAtDate ? createdAtDate.toISOString() : null,
             fromFirestore: true
@@ -856,6 +862,8 @@
             if (!c.dataInicio && dataInicioStr) c.dataInicio = dataInicioStr;
             if (!c.origem && baseCliente.origem) c.origem = baseCliente.origem;
             if (!c.codigoAcesso && baseCliente.codigoAcesso) c.codigoAcesso = baseCliente.codigoAcesso;
+            if (!c.createdAt && baseCliente.createdAt) c.createdAt = baseCliente.createdAt;
+            if (!c.firestoreId) c.firestoreId = doc.id;
             c.fromFirestore = true;
           } else {
             // Novo cliente vindo do Firestore
@@ -966,9 +974,13 @@
 
         const obs = cliente.observacoes ? cliente.observacoes : "—";
 
-        const dtAtualizacao = cliente.dataAtualizacao
-          ? new Date(cliente.dataAtualizacao).toLocaleDateString("pt-BR")
+        const dtCriacao = cliente.createdAt
+          ? new Date(cliente.createdAt).toLocaleDateString("pt-BR")
           : "—";
+
+        const dtUltAtividade = cliente.dataAtualizacao
+          ? new Date(cliente.dataAtualizacao).toLocaleDateString("pt-BR")
+          : dtCriacao;
 
         const statusTexto = cliente.ativo === false ? "Inativo" : "Ativo";
         const statusClasse = cliente.ativo === false ? "inativo" : "ativo";
@@ -1000,7 +1012,8 @@
                 <span class="tag-pagamento">${textoStatusPag}</span>
               </div>
               <div style="font-size:0.7rem; color:#999; margin-top:3px;">
-                Atualizado: ${dtAtualizacao}
+                Cadastrado: ${dtCriacao}<br/>
+                Última atividade: ${dtUltAtividade}
               </div>
             </td>
             <td style="font-size:0.75rem;">${obs}</td>
@@ -1011,6 +1024,7 @@
                   ${cliente.ativo === false ? "Reativar" : "Desativar"}
                 </button>
                 <button type="button" onclick="duplicarCliente('${cliente.id}')">Duplicar</button>
+                <button type="button" onclick="excluirCliente('${cliente.id}')">Excluir</button>
               </div>
             </td>
           </tr>
@@ -1035,6 +1049,14 @@
       const idExistente = inputId.value || null;
       const hojeIso = new Date().toISOString();
 
+      let createdAt = hojeIso;
+      if (idExistente) {
+        const idxExistente = clientes.findIndex(c => c.id === idExistente);
+        if (idxExistente !== -1 && clientes[idxExistente].createdAt) {
+          createdAt = clientes[idxExistente].createdAt;
+        }
+      }
+
       const clienteDados = {
         id: idExistente || "cli_" + Date.now(),
         nome: nome,
@@ -1045,6 +1067,7 @@
         statusPagamento: selectStatusPag.value || "em-dia",
         observacoes: inputObs.value || "",
         ativo: true,
+        createdAt: createdAt,
         dataAtualizacao: hojeIso
       };
 
@@ -1098,13 +1121,41 @@
     window.duplicarCliente = function (id) {
       const cliente = clientes.find(c => c.id === id);
       if (!cliente) return;
+      const agoraIso = new Date().toISOString();
       const copia = {
         ...cliente,
         id: "cli_" + Date.now(),
-        nome: cliente.nome + " (cópia)",
-        dataAtualizacao: new Date().toISOString()
+        nome: (cliente.nome || "(sem nome)") + " (cópia)",
+        createdAt: agoraIso,
+        dataAtualizacao: agoraIso
       };
       clientes.push(copia);
+      salvarClientes();
+      atualizarKpis();
+      renderTabela();
+    };
+
+    window.excluirCliente = async function (id) {
+      const idx = clientes.findIndex(c => c.id === id);
+      if (idx === -1) return;
+
+      const cliente = clientes[idx];
+      const nome = cliente.nome || "este cliente";
+
+      const confirmar = window.confirm(`Tem certeza de que deseja excluir ${nome}? Essa ação não poderá ser desfeita.`);
+      if (!confirmar) return;
+
+      // Se veio do Firestore, tenta remover também da coleção "usuarios"
+      if (cliente.fromFirestore && cliente.firestoreId && db) {
+        try {
+          await db.collection("usuarios").doc(cliente.firestoreId).delete();
+        } catch (erro) {
+          console.error("Erro ao excluir cliente no Firestore:", erro);
+          alert("Cliente removido do painel, mas houve um erro ao excluir no Firebase. Verifique depois no console do Firebase.");
+        }
+      }
+
+      clientes.splice(idx, 1);
       salvarClientes();
       atualizarKpis();
       renderTabela();
