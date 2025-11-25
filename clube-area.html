@@ -304,7 +304,7 @@
     }
 
     .tag-pill {
-      background: #f3f4ff;
+      background: #eef2ff;
       color: #1e293b;
       border-radius: 999px;
       padding: 6px 10px;
@@ -445,16 +445,60 @@
 
           <div class="tags-grid" id="medidas-resumo">
             <div class="tag-pill">
-              <span>Braço</span>
-              <strong id="medida-braco">-- cm</strong>
+              <span>Pescoço</span>
+              <strong id="medida-pescoco">-- cm</strong>
+            </div>
+            <div class="tag-pill">
+              <span>Ombro</span>
+              <strong id="medida-ombro">-- cm</strong>
+            </div>
+            <div class="tag-pill">
+              <span>Peito</span>
+              <strong id="medida-peito">-- cm</strong>
             </div>
             <div class="tag-pill">
               <span>Cintura</span>
               <strong id="medida-cintura">-- cm</strong>
             </div>
             <div class="tag-pill">
-              <span>Coxa</span>
-              <strong id="medida-coxa">-- cm</strong>
+              <span>Abd. sup.</span>
+              <strong id="medida-abd-sup">-- cm</strong>
+            </div>
+            <div class="tag-pill">
+              <span>Abd. inf.</span>
+              <strong id="medida-abd-inf">-- cm</strong>
+            </div>
+            <div class="tag-pill">
+              <span>Braço esq.</span>
+              <strong id="medida-braco-e">-- cm</strong>
+            </div>
+            <div class="tag-pill">
+              <span>Braço dir.</span>
+              <strong id="medida-braco-d">-- cm</strong>
+            </div>
+            <div class="tag-pill">
+              <span>Antebraço esq.</span>
+              <strong id="medida-antebraco-e">-- cm</strong>
+            </div>
+            <div class="tag-pill">
+              <span>Antebraço dir.</span>
+              <strong id="medida-antebraco-d">-- cm</strong>
+            </div>
+            <div class="tag-pill">
+              <span>Coxa esq.</span>
+              <strong id="medida-coxa-e">-- cm</strong>
+            </div>
+            <div class="tag-pill">
+              <span>Coxa dir.</span>
+              <strong id="medida-coxa-d">-- cm</strong>
+            </div>
+            <div class="tag-pill">
+              <span>Pant. esq.</span>
+              <strong id="medida-pant-e">-- cm</strong>
+            </div>
+            <div class="tag-pill">
+              <span>Pant. dir.</span>
+              <strong id="medida-pant-d">-- cm</strong>
             </div>
             <div class="tag-pill">
               <span>Quadril</span>
@@ -563,7 +607,6 @@
       appId: "1:432109202072:web:1c8636db0c161318ddfeed"
     };
 
-    // Evita erro se outra página já tiver inicializado (não deve, mas por segurança)
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
@@ -589,11 +632,22 @@
     const pillMeta             = document.getElementById("pill-meta");
 
     // --- elementos Medidas corporais ---
-    const medidaBracoSpan    = document.getElementById("medida-braco");
-    const medidaCinturaSpan  = document.getElementById("medida-cintura");
-    const medidaCoxaSpan     = document.getElementById("medida-coxa");
-    const medidaQuadrilSpan  = document.getElementById("medida-quadril");
-    const medidasLegenda     = document.getElementById("medidas-legenda");
+    const medidaPescocoSpan    = document.getElementById("medida-pescoco");
+    const medidaOmbroSpan      = document.getElementById("medida-ombro");
+    const medidaPeitoSpan      = document.getElementById("medida-peito");
+    const medidaCinturaSpan    = document.getElementById("medida-cintura");
+    const medidaAbdSupSpan     = document.getElementById("medida-abd-sup");
+    const medidaAbdInfSpan     = document.getElementById("medida-abd-inf");
+    const medidaBracoESpan     = document.getElementById("medida-braco-e");
+    const medidaBracoDSpan     = document.getElementById("medida-braco-d");
+    const medidaAntebracoESpan = document.getElementById("medida-antebraco-e");
+    const medidaAntebracoDSpan = document.getElementById("medida-antebraco-d");
+    const medidaCoxaESpan      = document.getElementById("medida-coxa-e");
+    const medidaCoxaDSpan      = document.getElementById("medida-coxa-d");
+    const medidaPantESpan      = document.getElementById("medida-pant-e");
+    const medidaPantDSpan      = document.getElementById("medida-pant-d");
+    const medidaQuadrilSpan    = document.getElementById("medida-quadril");
+    const medidasLegenda       = document.getElementById("medidas-legenda");
 
     let graficoPesoMini = null;
     let consumoTotalHojeFmt = "— kcal";
@@ -864,7 +918,7 @@
         const tdee = Number(dados.tdee);
         const metaCalorias = Number(dados.metaCalorias);
         const metaTipo = dados.metaTipo || "Meta";
-        const objetivoKg = dados.objetivoKg; // pode ter vindo da tela TDEE
+        const objetivoKg = dados.objetivoKg; // se estiver salvo na tela TDEE
 
         const tdeeFmt = !isNaN(tdee)
           ? Math.round(tdee).toLocaleString("pt-BR") + " kcal/dia"
@@ -887,13 +941,18 @@
 
     /* ====== RESUMO MEDIDAS CORPORAIS ====== */
     async function carregarResumoMedidas(uid) {
-      if (!medidaBracoSpan || !medidaCinturaSpan || !medidaCoxaSpan || !medidaQuadrilSpan) return;
+      const spans = [
+        medidaPescocoSpan, medidaOmbroSpan, medidaPeitoSpan,
+        medidaCinturaSpan, medidaAbdSupSpan, medidaAbdInfSpan,
+        medidaBracoESpan, medidaBracoDSpan,
+        medidaAntebracoESpan, medidaAntebracoDSpan,
+        medidaCoxaESpan, medidaCoxaDSpan,
+        medidaPantESpan, medidaPantDSpan,
+        medidaQuadrilSpan
+      ];
 
       const reset = () => {
-        medidaBracoSpan.textContent   = "-- cm";
-        medidaCinturaSpan.textContent = "-- cm";
-        medidaCoxaSpan.textContent    = "-- cm";
-        medidaQuadrilSpan.textContent = "-- cm";
+        spans.forEach(s => { if (s) s.textContent = "-- cm"; });
       };
 
       reset();
@@ -935,15 +994,21 @@
           }) + " cm";
         };
 
-        const braco  = ultimo.bracoDireito  ?? ultimo.bracoEsquerdo;
-        const coxa   = ultimo.coxaDireita   ?? ultimo.coxaEsquerda;
-        const cintura= ultimo.cintura;
-        const quadril= ultimo.quadril;
-
-        medidaBracoSpan.textContent   = fmtCm(braco);
-        medidaCinturaSpan.textContent = fmtCm(cintura);
-        medidaCoxaSpan.textContent    = fmtCm(coxa);
-        medidaQuadrilSpan.textContent = fmtCm(quadril);
+        if (medidaPescocoSpan)    medidaPescocoSpan.textContent    = fmtCm(ultimo.pescoco);
+        if (medidaOmbroSpan)      medidaOmbroSpan.textContent      = fmtCm(ultimo.ombro);
+        if (medidaPeitoSpan)      medidaPeitoSpan.textContent      = fmtCm(ultimo.peito);
+        if (medidaCinturaSpan)    medidaCinturaSpan.textContent    = fmtCm(ultimo.cintura);
+        if (medidaAbdSupSpan)     medidaAbdSupSpan.textContent     = fmtCm(ultimo.abdomenSuperior);
+        if (medidaAbdInfSpan)     medidaAbdInfSpan.textContent     = fmtCm(ultimo.abdomenInferior);
+        if (medidaBracoESpan)     medidaBracoESpan.textContent     = fmtCm(ultimo.bracoEsquerdo);
+        if (medidaBracoDSpan)     medidaBracoDSpan.textContent     = fmtCm(ultimo.bracoDireito);
+        if (medidaAntebracoESpan) medidaAntebracoESpan.textContent = fmtCm(ultimo.antebracoEsquerdo);
+        if (medidaAntebracoDSpan) medidaAntebracoDSpan.textContent = fmtCm(ultimo.antebracoDireito);
+        if (medidaCoxaESpan)      medidaCoxaESpan.textContent      = fmtCm(ultimo.coxaEsquerda);
+        if (medidaCoxaDSpan)      medidaCoxaDSpan.textContent      = fmtCm(ultimo.coxaDireita);
+        if (medidaPantESpan)      medidaPantESpan.textContent      = fmtCm(ultimo.panturrilhaEsquerda);
+        if (medidaPantDSpan)      medidaPantDSpan.textContent      = fmtCm(ultimo.panturrilhaDireita);
+        if (medidaQuadrilSpan)    medidaQuadrilSpan.textContent    = fmtCm(ultimo.quadril);
 
         if (medidasLegenda) {
           const dataTxt = ultimo.data ? formatarDataBR(ultimo.data) : "";
