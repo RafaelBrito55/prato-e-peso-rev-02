@@ -398,7 +398,6 @@
           <div class="peso-wrapper">
             <div class="peso-main">
               <div class="peso-valor" id="peso-atual">--,-- kg</div>
-              <!-- AGORA SÓ UMA LEGENDA: VARIAÇÃO NOS ÚLTIMOS 7 REGISTROS -->
               <div class="peso-legend" id="peso-variacao7-text">
                 Carregando dados de peso...
               </div>
@@ -429,13 +428,19 @@
           <div class="metrics">
             <div class="metric-row">
               <span class="metric-label">TDEE atual</span>
-              <span class="metric-value"><strong>2.325 kcal/dia</strong></span>
+              <span class="metric-value">
+                <strong id="tdee-atual">-- kcal/dia</strong>
+              </span>
             </div>
             <div class="metric-row">
               <span class="metric-label">Objetivo</span>
-              <span class="metric-value"><strong>Emagrecer / meta 1.800 kcal/dia</strong></span>
+              <span class="metric-value">
+                <strong id="tdee-meta-descricao">Nenhum cálculo salvo ainda.</strong>
+              </span>
             </div>
-            <span class="metric-badge">Consumo total hoje: 252 kcal</span>
+            <span class="metric-badge" id="tdee-consumo-resumo">
+              Consumo total hoje: — kcal
+            </span>
           </div>
 
           <button class="btn btn-primary" type="button"
@@ -581,10 +586,16 @@
     const pratoSubtitle     = document.getElementById("card-prato-subtitle");
 
     // --- elementos peso ---
-    const pesoAtualSpan      = document.getElementById("peso-atual");
-    const pesoVariacao7Text  = document.getElementById("peso-variacao7-text");
+    const pesoAtualSpan     = document.getElementById("peso-atual");
+    const pesoVariacao7Text = document.getElementById("peso-variacao7-text");
+
+    // --- elementos TDEE ---
+    const tdeeAtualSpan        = document.getElementById("tdee-atual");
+    const tdeeMetaDescricao    = document.getElementById("tdee-meta-descricao");
+    const tdeeConsumoResumo    = document.getElementById("tdee-consumo-resumo");
 
     let graficoPesoMini = null;
+    let consumoTotalHojeFmt = "— kcal";
 
     function formatarDataBR(dataISO) {
       if (!dataISO) return "";
@@ -602,12 +613,20 @@
       });
     }
 
+    function atualizarTdeeConsumoResumo() {
+      if (tdeeConsumoResumo) {
+        tdeeConsumoResumo.textContent = "Consumo total hoje: " + consumoTotalHojeFmt;
+      }
+    }
+
     /* ====== MONTAR PRATO BRASILEIRO (card) ====== */
     async function carregarResumoPrato(uid) {
       if (!pratoDataSpan || !pratoCaloriasSpan) return;
 
       pratoDataSpan.textContent = "carregando...";
       pratoCaloriasSpan.textContent = "carregando...";
+      consumoTotalHojeFmt = "— kcal";
+      atualizarTdeeConsumoResumo();
 
       try {
         const snapshot = await db
@@ -618,6 +637,8 @@
         if (snapshot.empty) {
           pratoDataSpan.textContent = "—";
           pratoCaloriasSpan.textContent = "—";
+          consumoTotalHojeFmt = "— kcal";
+          atualizarTdeeConsumoResumo();
           if (pratoSubtitle) {
             pratoSubtitle.textContent = "Você ainda não registrou um prato no Clube.";
           }
@@ -646,6 +667,9 @@
         pratoDataSpan.textContent = dataBR || "—";
         pratoCaloriasSpan.textContent = caloriasFmt;
 
+        consumoTotalHojeFmt = caloriasFmt;
+        atualizarTdeeConsumoResumo();
+
         if (pratoSubtitle) {
           pratoSubtitle.textContent = "Resumo do último prato registrado no Clube.";
         }
@@ -653,6 +677,8 @@
         console.error("Erro ao carregar dados de prato:", err);
         pratoDataSpan.textContent = "—";
         pratoCaloriasSpan.textContent = "—";
+        consumoTotalHojeFmt = "— kcal";
+        atualizarTdeeConsumoResumo();
         if (pratoSubtitle) {
           pratoSubtitle.textContent = "Não foi possível carregar seus pratos agora.";
         }
@@ -765,7 +791,6 @@
           return;
         }
 
-        // Últimos 7 registros (é a base pra gráfico e variação)
         const ultimos7 = registros.slice(-7);
         const ultimo = ultimos7[ultimos7.length - 1];
 
@@ -808,6 +833,52 @@
       }
     }
 
+    /* ====== RESUMO TDEE & META ====== */
+    async function carregarResumoTdee(uid) {
+      if (!tdeeAtualSpan || !tdeeMetaDescricao) return;
+
+      tdeeAtualSpan.textContent     = "-- kcal/dia";
+      tdeeMetaDescricao.textContent = "Carregando dados da meta...";
+
+      try {
+        const snapshot = await db
+          .collection("tdee")
+          .where("uid", "==", uid)
+          .get();
+
+        if (snapshot.empty) {
+          tdeeMetaDescricao.textContent = "Nenhum cálculo salvo ainda.";
+          return;
+        }
+
+        const docs = snapshot.docs.slice();
+        const getMillis = (doc) => {
+          const v = doc.data().dataCalculo;
+          if (!v || typeof v.toMillis !== "function") return 0;
+          return v.toMillis();
+        };
+        docs.sort((a, b) => getMillis(b) - getMillis(a));
+
+        const dados = docs[0].data();
+        const tdee = Number(dados.tdee);
+        const metaCalorias = Number(dados.metaCalorias);
+        const metaTipo = dados.metaTipo || "Meta";
+
+        const tdeeFmt = !isNaN(tdee)
+          ? Math.round(tdee).toLocaleString("pt-BR") + " kcal/dia"
+          : "-- kcal/dia";
+        const metaFmt = !isNaN(metaCalorias)
+          ? Math.round(metaCalorias).toLocaleString("pt-BR") + " kcal/dia"
+          : "— kcal/dia";
+
+        tdeeAtualSpan.textContent = tdeeFmt;
+        tdeeMetaDescricao.textContent = `${metaTipo} – meta ${metaFmt}`;
+      } catch (err) {
+        console.error("Erro ao carregar resumo de TDEE:", err);
+        tdeeMetaDescricao.textContent = "Não foi possível carregar seu TDEE agora.";
+      }
+    }
+
     /* ====== LOGIN / CARGA INICIAL ====== */
     auth.onAuthStateChanged((user) => {
       if (!user) {
@@ -817,6 +888,7 @@
       currentUid = user.uid;
       carregarResumoPrato(currentUid);
       carregarPesoEProgresso(currentUid);
+      carregarResumoTdee(currentUid);
     });
   </script>
 </body>
