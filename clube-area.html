@@ -296,7 +296,7 @@
       text-align: right;
     }
 
-    /* TAGS MEDIDAS */
+    /* TAGS MEDIDAS – chips */
     .tags-grid {
       display: flex;
       flex-wrap: wrap;
@@ -316,17 +316,6 @@
 
     .tag-pill strong {
       font-size: 0.83rem;
-    }
-
-    /* LISTA TREINO */
-    .list-simple {
-      list-style: none;
-      font-size: 0.88rem;
-      margin-bottom: 8px;
-    }
-
-    .list-simple li + li {
-      margin-top: 3px;
     }
 
     @media (max-width: 480px) {
@@ -355,7 +344,7 @@
         <div class="brand-badge">PaP</div>
         <span class="brand-name">Prato &amp; Peso</span>
       </div>
-      <button class="goal-pill">Emagrecer 10 kg</button>
+      <button class="goal-pill" id="pill-meta">Emagrecer 10 kg</button>
     </div>
   </header>
 
@@ -369,7 +358,7 @@
 
       <!-- Cards -->
       <section class="cards-grid">
-        <!-- Resumo de hoje -->
+        <!-- Resumo de hoje (ainda estático) -->
         <article class="card" id="card-resumo-hoje">
           <h2>Resumo de hoje</h2>
           <p class="card-subtitle">Visão rápida do seu dia em calorias.</p>
@@ -452,32 +441,32 @@
         <!-- Minhas medidas corporais -->
         <article class="card" id="card-medidas">
           <h2>Minhas medidas corporais</h2>
-          <p class="card-subtitle">Acompanhe força e evolução por exercício.</p>
+          <p class="card-subtitle">Acompanhe as principais medidas do seu corpo.</p>
 
-          <div class="tags-grid">
+          <div class="tags-grid" id="medidas-resumo">
             <div class="tag-pill">
-              <span>Supino</span>
-              <strong>60 kg</strong>
+              <span>Braço</span>
+              <strong id="medida-braco">-- cm</strong>
             </div>
             <div class="tag-pill">
-              <span>Supino reto</span>
-              <strong>62 kg</strong>
-            </div>
-            <div class="tag-pill">
-              <span>Leg press</span>
-              <strong>200 kg</strong>
-            </div>
-            <div class="tag-pill">
-              <span>Jantar</span>
-              <strong>480 kcal</strong>
+              <span>Cintura</span>
+              <strong id="medida-cintura">-- cm</strong>
             </div>
             <div class="tag-pill">
               <span>Coxa</span>
-              <strong>200 kg</strong>
+              <strong id="medida-coxa">-- cm</strong>
+            </div>
+            <div class="tag-pill">
+              <span>Quadril</span>
+              <strong id="medida-quadril">-- cm</strong>
             </div>
           </div>
 
-          <button class="btn btn-primary" style="margin-top:10px;" type="button"
+          <p class="help-text" id="medidas-legenda">
+            Carregando últimas medidas...
+          </p>
+
+          <button class="btn btn-primary" style="margin-top:8px;" type="button"
                   onclick="window.location.href='clube-medidas.html'">
             Registrar / atualizar medidas
           </button>
@@ -574,7 +563,11 @@
       appId: "1:432109202072:web:1c8636db0c161318ddfeed"
     };
 
-    firebase.initializeApp(firebaseConfig);
+    // Evita erro se outra página já tiver inicializado (não deve, mas por segurança)
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
     const auth = firebase.auth();
     const db   = firebase.firestore();
 
@@ -593,6 +586,14 @@
     const tdeeAtualSpan        = document.getElementById("tdee-atual");
     const tdeeMetaDescricao    = document.getElementById("tdee-meta-descricao");
     const tdeeConsumoResumo    = document.getElementById("tdee-consumo-resumo");
+    const pillMeta             = document.getElementById("pill-meta");
+
+    // --- elementos Medidas corporais ---
+    const medidaBracoSpan    = document.getElementById("medida-braco");
+    const medidaCinturaSpan  = document.getElementById("medida-cintura");
+    const medidaCoxaSpan     = document.getElementById("medida-coxa");
+    const medidaQuadrilSpan  = document.getElementById("medida-quadril");
+    const medidasLegenda     = document.getElementById("medidas-legenda");
 
     let graficoPesoMini = null;
     let consumoTotalHojeFmt = "— kcal";
@@ -863,6 +864,7 @@
         const tdee = Number(dados.tdee);
         const metaCalorias = Number(dados.metaCalorias);
         const metaTipo = dados.metaTipo || "Meta";
+        const objetivoKg = dados.objetivoKg; // pode ter vindo da tela TDEE
 
         const tdeeFmt = !isNaN(tdee)
           ? Math.round(tdee).toLocaleString("pt-BR") + " kcal/dia"
@@ -873,9 +875,89 @@
 
         tdeeAtualSpan.textContent = tdeeFmt;
         tdeeMetaDescricao.textContent = `${metaTipo} – meta ${metaFmt}`;
+
+        if (objetivoKg && pillMeta) {
+          pillMeta.textContent = `Emagrecer ${objetivoKg} kg`;
+        }
       } catch (err) {
         console.error("Erro ao carregar resumo de TDEE:", err);
         tdeeMetaDescricao.textContent = "Não foi possível carregar seu TDEE agora.";
+      }
+    }
+
+    /* ====== RESUMO MEDIDAS CORPORAIS ====== */
+    async function carregarResumoMedidas(uid) {
+      if (!medidaBracoSpan || !medidaCinturaSpan || !medidaCoxaSpan || !medidaQuadrilSpan) return;
+
+      const reset = () => {
+        medidaBracoSpan.textContent   = "-- cm";
+        medidaCinturaSpan.textContent = "-- cm";
+        medidaCoxaSpan.textContent    = "-- cm";
+        medidaQuadrilSpan.textContent = "-- cm";
+      };
+
+      reset();
+      if (medidasLegenda) {
+        medidasLegenda.textContent = "Carregando últimas medidas...";
+        medidasLegenda.style.color = "#6b7280";
+      }
+
+      try {
+        const snapshot = await db
+          .collection("medidasCorporais")
+          .where("uid", "==", uid)
+          .get();
+
+        if (snapshot.empty) {
+          reset();
+          if (medidasLegenda) {
+            medidasLegenda.textContent = "Você ainda não registrou suas medidas corporais.";
+          }
+          return;
+        }
+
+        const docs = snapshot.docs.slice();
+        docs.sort((a, b) => {
+          const da = a.data().data || "";
+          const dbb = b.data().data || "";
+          if (da < dbb) return -1;
+          if (da > dbb) return 1;
+          return 0;
+        });
+
+        const ultimo = docs[docs.length - 1].data();
+
+        const fmtCm = (v) => {
+          if (v === undefined || v === null || isNaN(v)) return "— cm";
+          return Number(v).toLocaleString("pt-BR", {
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 1
+          }) + " cm";
+        };
+
+        const braco  = ultimo.bracoDireito  ?? ultimo.bracoEsquerdo;
+        const coxa   = ultimo.coxaDireita   ?? ultimo.coxaEsquerda;
+        const cintura= ultimo.cintura;
+        const quadril= ultimo.quadril;
+
+        medidaBracoSpan.textContent   = fmtCm(braco);
+        medidaCinturaSpan.textContent = fmtCm(cintura);
+        medidaCoxaSpan.textContent    = fmtCm(coxa);
+        medidaQuadrilSpan.textContent = fmtCm(quadril);
+
+        if (medidasLegenda) {
+          const dataTxt = ultimo.data ? formatarDataBR(ultimo.data) : "";
+          medidasLegenda.textContent = dataTxt
+            ? `Última avaliação em ${dataTxt}.`
+            : "Última avaliação registrada.";
+        }
+      } catch (err) {
+        console.error("Erro ao carregar resumo de medidas:", err);
+        reset();
+        if (medidasLegenda) {
+          medidasLegenda.textContent = "Não foi possível carregar suas medidas agora.";
+          medidasLegenda.style.color = "#b91c1c";
+        }
       }
     }
 
@@ -889,6 +971,7 @@
       carregarResumoPrato(currentUid);
       carregarPesoEProgresso(currentUid);
       carregarResumoTdee(currentUid);
+      carregarResumoMedidas(currentUid);
     });
   </script>
 </body>
