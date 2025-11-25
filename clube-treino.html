@@ -309,15 +309,57 @@
       justify-content: space-between;
       gap: 8px;
       margin-bottom: 4px;
+      align-items: center;
     }
 
     .treino-item-data {
       font-weight: 600;
     }
 
+    .treino-actions {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
     .treino-item-tipo {
       font-size: 0.8rem;
       color: #047857;
+    }
+
+    .treino-btn {
+      border: none;
+      background: transparent;
+      font-size: 0.78rem;
+      cursor: pointer;
+      padding: 3px 8px;
+      border-radius: 999px;
+    }
+
+    .treino-btn.usar {
+      color: #047857;
+    }
+
+    .treino-btn.usar:hover {
+      background: #dcfce7;
+    }
+
+    .treino-btn.editar {
+      color: #1d4ed8;
+    }
+
+    .treino-btn.editar:hover {
+      background: #dbeafe;
+    }
+
+    .treino-btn.excluir {
+      color: #b91c1c;
+    }
+
+    .treino-btn.excluir:hover {
+      background: #fee2e2;
     }
 
     .treino-item-exs {
@@ -419,7 +461,7 @@
       <section class="card">
         <h2>Últimos treinos cadastrados</h2>
         <p class="card-subtitle">
-          Veja um resumo dos últimos treinos salvos no Clube. Em breve isso será usado no relatório para mostrar sua progressão de carga.
+          Veja um resumo dos últimos treinos salvos no Clube. Use <strong>Usar</strong> para carregar o treino e salvar como novo, ou <strong>Editar</strong> para corrigir um treino já salvo.
         </p>
 
         <div class="treinos-lista" id="listaUltimosTreinos">
@@ -456,18 +498,19 @@
     const db   = firebase.firestore();
 
     // ====== ELEMENTOS ======
-    const anoAtualSpan   = document.getElementById("anoAtual");
-    const dataTreinoInput = document.getElementById("dataTreino");
-    const tipoTreinoSelect = document.getElementById("tipoTreino");
-    const nomeTreinoInput = document.getElementById("nomeTreinoPersonalizado");
-    const listaExerciciosDiv = document.getElementById("listaExercicios");
-    const msgDiv = document.getElementById("msg");
+    const anoAtualSpan        = document.getElementById("anoAtual");
+    const dataTreinoInput     = document.getElementById("dataTreino");
+    const tipoTreinoSelect    = document.getElementById("tipoTreino");
+    const nomeTreinoInput     = document.getElementById("nomeTreinoPersonalizado");
+    const listaExerciciosDiv  = document.getElementById("listaExercicios");
+    const msgDiv              = document.getElementById("msg");
     const btnAdicionarExercicio = document.getElementById("btnAdicionarExercicio");
-    const btnSalvarTreino = document.getElementById("btnSalvarTreino");
-    const resumoUltimoTreino = document.getElementById("resumoUltimoTreino");
+    const btnSalvarTreino     = document.getElementById("btnSalvarTreino");
+    const resumoUltimoTreino  = document.getElementById("resumoUltimoTreino");
     const listaUltimosTreinos = document.getElementById("listaUltimosTreinos");
 
     let currentUid = null;
+    let treinoEditandoId = null; // se não for null, estamos editando esse treino
 
     anoAtualSpan.textContent = new Date().getFullYear();
 
@@ -541,7 +584,17 @@
       listaExerciciosDiv.appendChild(criarLinhaExercicio());
     });
 
-    // ====== SALVAR TREINO ======
+    function limparFormularioTreino() {
+      setHoje();
+      tipoTreinoSelect.value = "";
+      nomeTreinoInput.value = "";
+      listaExerciciosDiv.innerHTML = "";
+      adicionarExercicioVazio();
+      treinoEditandoId = null;
+      resumoUltimoTreino.textContent = "";
+    }
+
+    // ====== SALVAR TREINO (NOVO OU EDIÇÃO) ======
     async function salvarTreino() {
       mostrarMsg("");
 
@@ -595,21 +648,36 @@
         return;
       }
 
+      const payload = {
+        uid: currentUid,
+        data: dataTreino,
+        tipoTreino: tipoTreino,
+        nomeTreino: nomeTreino,
+        exercicios: exercicios
+      };
+
       try {
-        await db.collection("treinos").add({
-          uid: currentUid,
-          data: dataTreino,           // "YYYY-MM-DD"
-          tipoTreino: tipoTreino,     // A, B, C ou OUTRO
-          nomeTreino: nomeTreino,     // ex.: Treino A, Treino B, Treino superior...
-          exercicios: exercicios,
-          criadoEm: firebase.firestore.FieldValue.serverTimestamp()
-        });
+        if (treinoEditandoId) {
+          // edição
+          await db.collection("treinos").doc(treinoEditandoId).update({
+            ...payload,
+            atualizadoEm: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          mostrarMsg("Treino atualizado com sucesso!", "ok");
+          resumoUltimoTreino.textContent =
+            `Você editou o treino de ${formatarDataBR(dataTreino)} – ${nomeTreino}.`;
+          treinoEditandoId = null;
+        } else {
+          // novo
+          await db.collection("treinos").add({
+            ...payload,
+            criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          mostrarMsg("Treino salvo com sucesso!", "ok");
+          resumoUltimoTreino.textContent =
+            `Último treino salvo: ${formatarDataBR(dataTreino)} – ${nomeTreino} (${exercicios.length} exercício(s)).`;
+        }
 
-        mostrarMsg("Treino salvo com sucesso!", "ok");
-        resumoUltimoTreino.textContent =
-          `Último treino salvo: ${formatarDataBR(dataTreino)} – ${nomeTreino} (${exercicios.length} exercício(s)).`;
-
-        // recarrega lista de últimos treinos
         carregarUltimosTreinos(currentUid);
       } catch (error) {
         console.error("Erro ao salvar treino:", error);
@@ -618,6 +686,75 @@
     }
 
     btnSalvarTreino.addEventListener("click", salvarTreino);
+
+    // ====== CARREGAR TREINO NO FORMULÁRIO (USAR / EDITAR) ======
+    async function carregarTreinoNoFormulario(treinoId, modoEdicao) {
+      if (!treinoId) return;
+
+      try {
+        const doc = await db.collection("treinos").doc(treinoId).get();
+        if (!doc.exists) return;
+
+        const t = doc.data();
+
+        dataTreinoInput.value = t.data || "";
+        tipoTreinoSelect.value = t.tipoTreino || "";
+        if (t.tipoTreino === "OUTRO") {
+          nomeTreinoInput.value = t.nomeTreino || "";
+        } else {
+          nomeTreinoInput.value = "";
+        }
+
+        listaExerciciosDiv.innerHTML = "";
+        const exs = Array.isArray(t.exercicios) ? t.exercicios : [];
+        if (exs.length === 0) {
+          adicionarExercicioVazio();
+        } else {
+          exs.forEach(e => {
+            listaExerciciosDiv.appendChild(
+              criarLinhaExercicio(e.nome || "", e.pesoKg != null ? e.pesoKg : "")
+            );
+          });
+        }
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
+
+        if (modoEdicao) {
+          treinoEditandoId = treinoId;
+          mostrarMsg("Treino carregado em modo edição. Ao salvar, este registro será atualizado.", "ok");
+          resumoUltimoTreino.textContent =
+            `Editando treino de ${formatarDataBR(t.data || "")} – ${t.nomeTreino || ""}.`;
+        } else {
+          treinoEditandoId = null;
+          mostrarMsg("Treino carregado. Ao salvar, será criado um NOVO registro (histórico de carga).", "ok");
+          resumoUltimoTreino.textContent =
+            `Usando como base o treino de ${formatarDataBR(t.data || "")} – ${t.nomeTreino || ""}.`;
+        }
+      } catch (error) {
+        console.error("Erro ao carregar treino para formulário:", error);
+        mostrarMsg("Erro ao carregar o treino. Tente novamente.", "error");
+      }
+    }
+
+    // ====== EXCLUIR TREINO ======
+    async function excluirTreino(treinoId) {
+      if (!treinoId || !currentUid) return;
+      const ok = window.confirm("Tem certeza que deseja excluir este treino? Isso não pode ser desfeito.");
+      if (!ok) return;
+
+      try {
+        await db.collection("treinos").doc(treinoId).delete();
+        mostrarMsg("Treino excluído com sucesso.", "ok");
+        if (treinoEditandoId === treinoId) {
+          treinoEditandoId = null;
+          resumoUltimoTreino.textContent = "";
+        }
+        carregarUltimosTreinos(currentUid);
+      } catch (error) {
+        console.error("Erro ao excluir treino:", error);
+        mostrarMsg("Erro ao excluir o treino. Tente novamente.", "error");
+      }
+    }
 
     // ====== LISTAR ÚLTIMOS TREINOS ======
     async function carregarUltimosTreinos(uid) {
@@ -645,10 +782,13 @@
           return 0;
         });
 
-        const ultimos = docs.slice(0, 5).map(d => d.data());
+        const ultimosDocs = docs.slice(0, 5);
 
         listaUltimosTreinos.innerHTML = "";
-        ultimos.forEach(t => {
+        ultimosDocs.forEach((doc) => {
+          const t = doc.data();
+          const treinoId = doc.id;
+
           const item = document.createElement("div");
           item.className = "treino-item";
 
@@ -659,12 +799,38 @@
           dataSpan.className = "treino-item-data";
           dataSpan.textContent = formatarDataBR(t.data);
 
+          const actionsDiv = document.createElement("div");
+          actionsDiv.className = "treino-actions";
+
           const tipoSpan = document.createElement("span");
           tipoSpan.className = "treino-item-tipo";
           tipoSpan.textContent = t.nomeTreino || "Treino";
 
+          const usarBtn = document.createElement("button");
+          usarBtn.type = "button";
+          usarBtn.className = "treino-btn usar";
+          usarBtn.textContent = "Usar";
+          usarBtn.addEventListener("click", () => carregarTreinoNoFormulario(treinoId, false));
+
+          const editarBtn = document.createElement("button");
+          editarBtn.type = "button";
+          editarBtn.className = "treino-btn editar";
+          editarBtn.textContent = "Editar";
+          editarBtn.addEventListener("click", () => carregarTreinoNoFormulario(treinoId, true));
+
+          const delBtn = document.createElement("button");
+          delBtn.type = "button";
+          delBtn.className = "treino-btn excluir";
+          delBtn.textContent = "Excluir";
+          delBtn.addEventListener("click", () => excluirTreino(treinoId));
+
+          actionsDiv.appendChild(tipoSpan);
+          actionsDiv.appendChild(usarBtn);
+          actionsDiv.appendChild(editarBtn);
+          actionsDiv.appendChild(delBtn);
+
           header.appendChild(dataSpan);
-          header.appendChild(tipoSpan);
+          header.appendChild(actionsDiv);
 
           const exSpan = document.createElement("div");
           exSpan.className = "treino-item-exs";
