@@ -20,7 +20,6 @@
       --radius-lg: 18px;
       --radius-xl: 22px;
       --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.08);
-      /* aumentei um pouco a largura máxima */
       --max-width: 1360px;
     }
 
@@ -186,10 +185,14 @@
       color: var(--text-muted);
     }
 
+    /* layout principal com 2 colunas e 2 linhas
+       esquerda: formulário + gráficos
+       direita: lista ocupando altura toda
+    */
     .layout-main {
       display: grid;
-      /* coluna da direita MUITO maior que a esquerda */
-      grid-template-columns: minmax(0, 0.4fr) minmax(0, 1.6fr);
+      grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+      grid-auto-rows: minmax(0, auto);
       gap: 16px;
       align-items: flex-start;
     }
@@ -200,6 +203,21 @@
       padding: 16px 16px 14px;
       border: 1px solid var(--border-soft);
       box-shadow: var(--shadow-soft);
+    }
+
+    .card-form {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .card-list {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+
+    .card-graficos {
+      grid-column: 1;
+      grid-row: 2;
     }
 
     .card h2 {
@@ -415,6 +433,33 @@
       background: #f9fafb;
     }
 
+    /* ====== GRÁFICOS ====== */
+    .grid-graficos {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .grafico-card {
+      background: var(--bg-alt);
+      border-radius: var(--radius-lg);
+      padding: 10px 10px 8px;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      font-size: 0.8rem;
+    }
+
+    .grafico-card h3 {
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .grafico-card canvas {
+      width: 100%;
+      height: 170px;
+    }
+
     footer {
       background: #111111;
       color: #d0d0d0;
@@ -485,6 +530,18 @@
       .layout-main {
         grid-template-columns: minmax(0, 1fr);
       }
+      .card-form {
+        grid-column: 1;
+        grid-row: 1;
+      }
+      .card-graficos {
+        grid-column: 1;
+        grid-row: 2;
+      }
+      .card-list {
+        grid-column: 1;
+        grid-row: 3;
+      }
     }
 
     @media (max-width: 640px) {
@@ -553,7 +610,7 @@
 
       <section class="layout-main">
         <!-- Coluna esquerda: formulário -->
-        <div class="card">
+        <div class="card card-form">
           <h2>Cadastrar / editar cliente</h2>
           <p>Use este painel para montar seu "mini CRM" do Clube. Você pode cadastrar manualmente e, agora, 
             também enxerga quem já tem conta criada na plataforma.</p>
@@ -623,8 +680,42 @@
           </form>
         </div>
 
+        <!-- Coluna esquerda – embaixo do formulário: gráficos -->
+        <div class="card card-graficos">
+          <h2>Indicadores e gráficos</h2>
+          <p style="margin-bottom:6px;">
+            Acompanhe a evolução de cadastros, a curva total de clientes, contas excluídas e a movimentação diária do Clube.
+            Os gráficos mostram os <strong>últimos 30 dias</strong>.
+          </p>
+
+          <div class="grid-graficos">
+            <div class="grafico-card">
+              <h3>Novos cadastros (últimos 30 dias)</h3>
+              <canvas id="chart-cadastros"></canvas>
+            </div>
+
+            <div class="grafico-card">
+              <h3>Curva total de clientes</h3>
+              <canvas id="chart-crescimento"></canvas>
+            </div>
+
+            <div class="grafico-card">
+              <h3>Contas excluídas / inativadas</h3>
+              <canvas id="chart-excluidos"></canvas>
+            </div>
+
+            <div class="grafico-card">
+              <h3>Movimento do Clube (acessos/dia)</h3>
+              <canvas id="chart-acessos"></canvas>
+              <p class="helper" style="margin-top:6px;">
+                Para registrar acessos reais, vamos usar a coleção <code>metricas_diarias</code> no Firebase.
+              </p>
+            </div>
+          </div>
+        </div>
+
         <!-- Coluna direita: lista -->
-        <div class="card">
+        <div class="card card-list">
           <h2>Lista de clientes</h2>
           <p>Você pode filtrar, marcar ativo/inativo e usar esse resumo para organizar cobranças e renovações.</p>
 
@@ -701,27 +792,19 @@
     </div>
   </div>
 
-  <!-- Firebase para buscar usuários cadastrados -->
+  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <script>
     // =====================================================================
     // =========================  ATENÇÃO RAFAEL  ==========================
     // =====================================================================
-    //
-    //  ESTA É A SENHA GERAL DO PAINEL DE ADMINISTRAÇÃO.
-    //
-    //  1) Apenas você deve saber essa senha.
-    //  2) Qualquer pessoa com acesso ao código-fonte CONSEGUE ver essa senha,
-    //     então não use aqui algo que você usa em banco, e-mail, etc.
-    //  3) Se quiser trocar, basta alterar o texto entre aspas:
-    //
-    //        const ADMIN_PASSWORD = "SUA-SENHA-AQUI";
-    //
-    // =====================================================================
     const ADMIN_PASSWORD = "PAINEL@2025";
+    // =====================================================================
 
     const firebaseConfig = {
       apiKey: "AIzaSyABfAWUAW6a6g93B9QKooTKd5Mj645G3vE",
@@ -779,6 +862,231 @@
     const kpiMensal = document.getElementById("kpi-mensal");
 
     let clientes = [];
+
+    // gráficos
+    let chartCadastros = null;
+    let chartCrescimento = null;
+    let chartExcluidos = null;
+    let chartAcessos = null;
+
+    function hojeEInicioJanela(diasJanela) {
+      const hoje = new Date();
+      const inicio = new Date();
+      inicio.setHours(0,0,0,0);
+      hoje.setHours(0,0,0,0);
+      inicio.setDate(hoje.getDate() - (diasJanela - 1));
+      return { hoje, inicio };
+    }
+
+    function montarSerieCadastros(listaClientes, diasJanela) {
+      const { hoje, inicio } = hojeEInicioJanela(diasJanela);
+      const mapa = {};
+
+      for (let d = new Date(inicio); d <= hoje; d.setDate(d.getDate() + 1)) {
+        const chave = d.toISOString().slice(0, 10);
+        mapa[chave] = 0;
+      }
+
+      listaClientes.forEach(c => {
+        const iso = c.createdAt || c.dataInicio;
+        if (!iso) return;
+        const dt = new Date(iso);
+        if (isNaN(dt)) return;
+        dt.setHours(0,0,0,0);
+        if (dt < inicio || dt > hoje) return;
+        const chave = dt.toISOString().slice(0, 10);
+        if (mapa[chave] == null) mapa[chave] = 0;
+        mapa[chave] += 1;
+      });
+
+      const labels = Object.keys(mapa).sort();
+      const data = labels.map(k => mapa[k]);
+      return { labels, data };
+    }
+
+    function montarSerieCrescimento(listaClientes, diasJanela) {
+      const { hoje, inicio } = hojeEInicioJanela(diasJanela);
+
+      const labels = [];
+      const novosPorDia = {};
+      for (let d = new Date(inicio); d <= hoje; d.setDate(d.getDate() + 1)) {
+        const chave = d.toISOString().slice(0, 10);
+        labels.push(chave);
+        novosPorDia[chave] = 0;
+      }
+
+      let baseInicial = 0;
+
+      listaClientes.forEach(c => {
+        const iso = c.createdAt || c.dataInicio;
+        if (!iso) return;
+        const dt = new Date(iso);
+        if (isNaN(dt)) return;
+        dt.setHours(0,0,0,0);
+
+        if (dt < inicio) {
+          baseInicial++;
+        } else if (dt <= hoje) {
+          const chave = dt.toISOString().slice(0, 10);
+          if (novosPorDia[chave] == null) novosPorDia[chave] = 0;
+          novosPorDia[chave] += 1;
+        }
+      });
+
+      const data = [];
+      let acumulado = baseInicial;
+      labels.forEach(k => {
+        acumulado += novosPorDia[k] || 0;
+        data.push(acumulado);
+      });
+
+      return { labels, data };
+    }
+
+    async function registrarMetricaDia(campo, incremento) {
+      if (!db || !firebase || !firebase.firestore || !firebase.firestore.FieldValue) return;
+      const hojeKey = new Date().toISOString().slice(0, 10);
+      try {
+        const ref = db.collection("metricas_diarias").doc(hojeKey);
+        const payload = {
+          data: firebase.firestore.FieldValue.serverTimestamp()
+        };
+        payload[campo] = firebase.firestore.FieldValue.increment(incremento);
+        await ref.set(payload, { merge: true });
+      } catch (e) {
+        console.error("Erro ao registrar métrica diária:", e);
+      }
+    }
+
+    async function carregarMetricasDiariasEGerarGraficosAcessosEExcluidos() {
+      if (!db) return;
+      const { hoje, inicio } = hojeEInicioJanela(30);
+
+      const mapa = {};
+      for (let d = new Date(inicio); d <= hoje; d.setDate(d.getDate() + 1)) {
+        const chave = d.toISOString().slice(0, 10);
+        mapa[chave] = { excluidas: 0, acessos: 0 };
+      }
+
+      try {
+        const snap = await db.collection("metricas_diarias")
+          .where("data", ">=", inicio)
+          .orderBy("data", "asc")
+          .get();
+
+        snap.forEach(doc => {
+          const dados = doc.data() || {};
+          let dt;
+          if (dados.data && typeof dados.data.toDate === "function") {
+            dt = dados.data.toDate();
+          } else {
+            dt = new Date(doc.id);
+          }
+          if (isNaN(dt)) return;
+          dt.setHours(0,0,0,0);
+          if (dt < inicio || dt > hoje) return;
+          const chave = dt.toISOString().slice(0, 10);
+          if (!mapa[chave]) mapa[chave] = { excluidas: 0, acessos: 0 };
+
+          const exc = Number(dados.contasExcluidas || 0);
+          const acc = Number(dados.acessos || 0);
+          mapa[chave].excluidas += exc;
+          mapa[chave].acessos += acc;
+        });
+
+        const labels = Object.keys(mapa).sort();
+        const dadosExcl = labels.map(k => mapa[k].excluidas);
+        const dadosAcc = labels.map(k => mapa[k].acessos);
+
+        const ctxExc = document.getElementById("chart-excluidos");
+        if (ctxExc && ctxExc.getContext) {
+          chartExcluidos = criarOuAtualizarChart(
+            chartExcluidos,
+            ctxExc.getContext("2d"),
+            labels,
+            dadosExcl,
+            "Contas excluídas / inativadas"
+          );
+        }
+
+        const ctxAcc = document.getElementById("chart-acessos");
+        if (ctxAcc && ctxAcc.getContext) {
+          chartAcessos = criarOuAtualizarChart(
+            chartAcessos,
+            ctxAcc.getContext("2d"),
+            labels,
+            dadosAcc,
+            "Acessos por dia"
+          );
+        }
+
+      } catch (e) {
+        console.error("Erro ao carregar métricas diárias:", e);
+      }
+    }
+
+    function criarOuAtualizarChart(chartRef, ctx, labels, data, labelSerie) {
+      if (!ctx) return null;
+      const config = {
+        type: "line",
+        data: {
+          labels,
+          datasets: [{
+            label: labelSerie,
+            data,
+            tension: 0.25,
+            fill: false,
+            borderColor: "#1e5a4d",
+            backgroundColor: "#1e5a4d",
+            borderWidth: 2,
+            pointRadius: 2
+          }]
+        },
+        options: {
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { beginAtZero: true, ticks: { stepSize: 1 } }
+          }
+        }
+      };
+
+      if (chartRef) {
+        chartRef.data.labels = labels;
+        chartRef.data.datasets[0].data = data;
+        chartRef.update();
+        return chartRef;
+      } else {
+        return new Chart(ctx, config);
+      }
+    }
+
+    async function gerarGraficos() {
+      const serieCad = montarSerieCadastros(clientes, 30);
+      const ctxCad = document.getElementById("chart-cadastros");
+      if (ctxCad && ctxCad.getContext) {
+        chartCadastros = criarOuAtualizarChart(
+          chartCadastros,
+          ctxCad.getContext("2d"),
+          serieCad.labels,
+          serieCad.data,
+          "Novos cadastros"
+        );
+      }
+
+      const serieCres = montarSerieCrescimento(clientes, 30);
+      const ctxCres = document.getElementById("chart-crescimento");
+      if (ctxCres && ctxCres.getContext) {
+        chartCrescimento = criarOuAtualizarChart(
+          chartCrescimento,
+          ctxCres.getContext("2d"),
+          serieCres.labels,
+          serieCres.data,
+          "Total de clientes"
+        );
+      }
+
+      await carregarMetricasDiariasEGerarGraficosAcessosEExcluidos();
+    }
 
     function carregarClientes() {
       const raw = localStorage.getItem(CLIENTES_KEY);
@@ -1023,7 +1331,7 @@
       tbodyClientes.innerHTML = linhas.join("");
     }
 
-    formCliente.addEventListener("submit", function (e) {
+    formCliente.addEventListener("submit", async function (e) {
       e.preventDefault();
       formErro.textContent = "";
       formOk.textContent = "";
@@ -1059,6 +1367,8 @@
         dataAtualizacao: hojeIso
       };
 
+      const novoCadastro = !idExistente;
+
       if (idExistente) {
         const idx = clientes.findIndex(c => c.id === idExistente);
         if (idx !== -1) {
@@ -1071,8 +1381,13 @@
       salvarClientes();
       atualizarKpis();
       renderTabela();
+      await gerarGraficos();
       formOk.textContent = "Cliente salvo com sucesso.";
       inputId.value = clienteDados.id;
+
+      if (novoCadastro) {
+        registrarMetricaDia("novosCadastros", 1);
+      }
     });
 
     btnLimparForm.addEventListener("click", function () {
@@ -1094,7 +1409,7 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
-    window.alternarAtivo = function (id) {
+    window.alternarAtivo = async function (id) {
       const idx = clientes.findIndex(c => c.id === id);
       if (idx === -1) return;
       const atual = clientes[idx];
@@ -1103,9 +1418,10 @@
       salvarClientes();
       atualizarKpis();
       renderTabela();
+      await gerarGraficos();
     };
 
-    window.duplicarCliente = function (id) {
+    window.duplicarCliente = async function (id) {
       const cliente = clientes.find(c => c.id === id);
       if (!cliente) return;
       const agoraIso = new Date().toISOString();
@@ -1120,6 +1436,7 @@
       salvarClientes();
       atualizarKpis();
       renderTabela();
+      await gerarGraficos();
     };
 
     window.excluirCliente = async function (id) {
@@ -1141,10 +1458,13 @@
         }
       }
 
+      registrarMetricaDia("contasExcluidas", 1);
+
       clientes.splice(idx, 1);
       salvarClientes();
       atualizarKpis();
       renderTabela();
+      await gerarGraficos();
     };
 
     function abrirModalAdmin() {
@@ -1184,6 +1504,7 @@
       await carregarUsuariosFirestore();
       atualizarKpis();
       renderTabela();
+      await gerarGraficos();
     }
 
     document.addEventListener("DOMContentLoaded", function () {
