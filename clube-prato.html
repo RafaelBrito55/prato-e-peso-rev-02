@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Clube Prato & Peso – Montar prato brasileiro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --bg-alt: #ffffff;
+      --primary: #1e5a4d;
+      --primary-soft: #e0f3ec;
+      --accent: #ffb347;
+      --accent-soft: #fff3df;
+      --text-main: #222222;
+      --text-muted: #666666;
+      --border-soft: #e0e0e0;
+      --radius-lg: 16px;
+      --radius-xl: 22px;
+      --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.08);
+      --max-width: 1040px;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #fdf5ea 0, #f5f5f7 45%, #f0f2f5 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display:flex;
+      flex-direction:column;
+    }
+
+    header {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 10px 16px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .logo {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      color:inherit;
+    }
+    .logo-badge {
+      width:30px; height:30px;
+      border-radius:50%;
+      background:var(--accent);
+      display:flex; align-items:center; justify-content:center;
+      font-weight:700; color:#4b2c15; font-size:0.9rem;
+      box-shadow:0 6px 14px rgba(0,0,0,0.1);
+    }
+    .logo-text { display:flex; flex-direction:column; gap:2px; }
+    .logo-text-main { font-weight:700; font-size:0.98rem; letter-spacing:0.03em; }
+    .logo-text-sub { font-size:0.75rem; color:var(--text-muted); }
+
+    .header-pill {
+      padding:6px 12px;
+      border-radius:999px;
+      border:1px solid var(--border-soft);
+      background:#f5f5f7;
+      font-size:0.8rem;
+      cursor:pointer;
+    }
+
+    main {
+      flex:1;
+      padding:24px 16px 40px;
+    }
+    .main-inner {
+      max-width:var(--max-width);
+      margin:0 auto;
+    }
+
+    .card {
+      background:var(--bg-alt);
+      border-radius:var(--radius-xl);
+      box-shadow:var(--shadow-soft);
+      border:1px solid var(--border-soft);
+      padding:18px 16px;
+      margin-bottom:18px;
+    }
+
+    h1 {
+      font-size:1.3rem;
+      margin-bottom:4px;
+    }
+
+    h2 {
+      font-size:1.05rem;
+      margin-top:10px;
+      margin-bottom:4px;
+    }
+
+    .card small {
+      color:var(--text-muted);
+      font-size:0.85rem;
+    }
+
+    label {
+      display:block;
+      font-size:0.85rem;
+      margin-bottom:4px;
+    }
+
+    input[type="number"],
+    input[type="date"],
+    input[type="text"] {
+      width:100%;
+      padding:8px 10px;
+      border-radius:10px;
+      border:1px solid #d1d5db;
+      font-size:0.9rem;
+      background:#f9fafb;
+    }
+
+    input:focus {
+      outline:none;
+      border-color:var(--primary);
+      box-shadow:0 0 0 1px var(--primary-soft);
+      background:#fff;
+    }
+
+    .row { display:flex; flex-wrap:wrap; gap:12px; margin-top:6px; }
+    .col { flex:1; min-width:140px; }
+
+    button.primary {
+      margin-top:14px;
+      background:var(--primary);
+      color:#fff;
+      border:none;
+      border-radius:999px;
+      padding:9px 18px;
+      font-size:0.9rem;
+      cursor:pointer;
+      box-shadow:0 10px 22px rgba(0,0,0,0.18);
+    }
+
+    button.primary:disabled {
+      opacity:0.6;
+      cursor:default;
+      box-shadow:none;
+    }
+
+    .btn-secondary {
+      background:#f3f4f6;
+      color:#111827;
+      border-radius:999px;
+      border:1px solid #d1d5db;
+      padding:8px 14px;
+      font-size:0.86rem;
+      cursor:pointer;
+    }
+    .btn-secondary:hover {
+      background:#e5e7eb;
+    }
+
+    .message {
+      margin-top:8px;
+      font-size:0.85rem;
+      display:none;
+    }
+    .message.ok { color:#15803d; }
+    .message.error { color:#b91c1c; }
+
+    .resumo-box {
+      margin-top:14px;
+      padding:10px 12px;
+      border-radius:var(--radius-lg);
+      border:1px solid #e5e7eb;
+      background:#f9fafb;
+      font-size:0.88rem;
+    }
+    .resumo-box strong { font-size:1.05rem; }
+
+    /* --- Área do Montador de Prato --- */
+    .section-lead {
+      font-size:0.9rem;
+      color:var(--text-muted);
+      margin-bottom:8px;
+    }
+
+    .form-grid {
+      margin-top:8px;
+      display:grid;
+      grid-template-columns:minmax(0,1fr);
+      gap:10px 12px;
+    }
+
+    .form-row {
+      display:grid;
+      grid-template-columns:minmax(0,1.4fr) minmax(0,0.8fr);
+      gap:10px;
+    }
+
+    .form-group {
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      font-size:0.86rem;
+    }
+
+    .hint {
+      font-size:0.74rem;
+      color:var(--text-muted);
+    }
+
+    .actions-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:12px;
+    }
+
+    .error-msg {
+      font-size:0.8rem;
+      color:#b91c1c;
+      margin-top:8px;
+      display:none;
+    }
+
+    table {
+      width:100%;
+      border-collapse:collapse;
+      margin-top:10px;
+      font-size:0.85rem;
+    }
+
+    th,
+    td {
+      border-bottom:1px solid #e5e7eb;
+      padding:6px 4px;
+      text-align:left;
+    }
+
+    th {
+      font-weight:600;
+      color:#374151;
+    }
+
+    .text-right { text-align:right; }
+
+    .data-row {
+      font-size:0.85rem;
+    }
+
+    .resultado-total {
+      font-size:0.95rem;
+      font-weight:500;
+      margin-top:10px;
+    }
+
+    footer {
+      background:#111;
+      color:#d0d0d0;
+      font-size:0.78rem;
+      padding:12px 16px 16px;
+      margin-top:12px;
+    }
+    .footer-inner {
+      max-width:var(--max-width);
+      margin:0 auto;
+      text-align:center;
+    }
+
+    @media (max-width:880px) {
+      .form-row {
+        grid-template-columns:minmax(0,1fr);
+      }
+    }
+
+    @media (max-width:640px) {
+      main { padding-inline:12px; }
+      .header-inner { padding-inline:10px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="clube-area.html" class="logo">
+        <div class="logo-badge">P&amp;P</div>
+        <div class="logo-text">
+          <div class="logo-text-main">Prato &amp; Peso</div>
+          <div class="logo-text-sub">Clube – Prato brasileiro</div>
+        </div>
+      </a>
+
+      <button class="header-pill" onclick="window.location.href='clube-area.html'">
+        ← Voltar para o Clube
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <div class="main-inner">
+      <section class="card">
+        <h1>Montar prato brasileiro – Clube</h1>
+        <small>
+          Aqui você monta o prato com comida de verdade, vê as calorias aproximadas
+          e depois salva o <strong>resumo do dia</strong> na sua conta do Clube para usar no
+          <strong>Resumo rápido</strong> e no <strong>Relatório</strong>.
+        </small>
+
+        <!-- 1. MONTAR O PRATO -->
+        <h2>1. Monte seu prato</h2>
+        <p class="section-lead">
+          Escolha alimentos típicos de prato brasileiro, informe o <strong>peso em gramas</strong>
+          de cada um e veja quantas calorias aproximadas seu prato tem.
+        </p>
+
+        <form class="form-grid" onsubmit="return false;">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="alimento-input">Alimento</label>
+              <input
+                type="text"
+                id="alimento-input"
+                list="lista-alimentos"
+                placeholder="Digite o alimento (ex.: bife, arroz, lasanha, sushi)..."
+              />
+              <datalist id="lista-alimentos"></datalist>
+              <div class="hint" id="alimento-info">
+                Digite ou escolha um alimento da lista para ver a referência de 100 g e as calorias aproximadas.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="quantidade">Quantidade (em gramas)</label>
+              <input type="number" id="quantidade" min="0" step="1" placeholder="Ex.: 120" />
+              <div class="hint">
+                Digite o peso aproximado em gramas (ex.: 120 g de arroz, 80 g de feijão).
+              </div>
+            </div>
+          </div>
+
+          <div class="actions-row">
+            <button id="btn-adicionar" class="btn-secondary" type="button">Adicionar ao prato</button>
+            <button id="btn-limpar-prato" class="btn-secondary" type="button">Limpar prato</button>
+          </div>
+
+          <div class="error-msg" id="erro-mensagem"></div>
+        </form>
+
+        <div style="overflow-x:auto; margin-top:8px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Alimento</th>
+                <th class="text-right">Peso (g)</th>
+                <th class="text-right">kcal (aprox.)</th>
+              </tr>
+            </thead>
+            <tbody id="tabela-itens">
+              <tr>
+                <td colspan="3">
+                  Nenhum alimento no prato ainda. Comece adicionando arroz, feijão, bife, ovo...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="resultado-total">
+          <div><strong>Total do prato:</strong> <span id="total-kcal">0 kcal</span></div>
+        </div>
+
+        <!-- 2. REGISTRAR O DIA NO CLUBE -->
+        <h2 style="margin-top:18px;">2. Registrar o dia no Clube</h2>
+
+        <div class="row" style="margin-top:8px;">
+          <div class="col">
+            <label for="data">Data</label>
+            <input type="date" id="data" />
+          </div>
+          <div class="col">
+            <label for="calorias">Calorias totais do dia (kcal)</label>
+            <input type="number" id="calorias" min="0" step="1" />
+          </div>
+        </div>
+
+        <button class="primary" id="btnSalvar">
+          Salvar dia no Clube
+        </button>
+        <div id="msg" class="message"></div>
+
+        <div id="resumoDia" class="resumo-box" style="display:none;">
+          <p>
+            <strong id="resumoCalorias">–</strong>
+          </p>
+        </div>
+
+        <small style="display:block; margin-top:12px; color:var(--text-muted); font-size:0.8rem;">
+          Dica: você pode montar diferentes pratos ao longo do dia, somar as calorias e registrar aqui o total
+          para ficar salvo no seu histórico do Clube.
+        </small>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      © <span id="anoAtual"></span> Prato &amp; Peso – Clube. Registros de pratos salvos na sua conta.
+    </div>
+  </footer>
+
+  <!-- Firebase v8 -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyABfAWUAW6a6g93B9QKooTKd5Mj645G3vE",
+      authDomain: "prato-e-peso-77b5a.firebaseapp.com",
+      projectId: "prato-e-peso-77b5a",
+      storageBucket: "prato-e-peso-77b5a.firebasestorage.app",
+      messagingSenderId: "432109202072",
+      appId: "1:432109202072:web:1c8636db0c161318ddfeed"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Ano rodapé
+    const anoAtualSpan = document.getElementById("anoAtual");
+    anoAtualSpan.textContent = new Date().getFullYear();
+
+    // ---------- CAMPOS DO REGISTRO NO CLUBE ----------
+    const dataInput = document.getElementById("data");
+    const caloriasInput = document.getElementById("calorias");
+    const btnSalvar = document.getElementById("btnSalvar");
+    const msg = document.getElementById("msg");
+    const resumoDia = document.getElementById("resumoDia");
+    const resumoCalorias = document.getElementById("resumoCalorias");
+
+    let currentUid = null;
+
+    function setHoje() {
+      const hoje = new Date();
+      const yyyy = hoje.getFullYear();
+      const mm = String(hoje.getMonth() + 1).padStart(2, "0");
+      const dd = String(hoje.getDate()).padStart(2, "0");
+      dataInput.value = `${yyyy}-${mm}-${dd}`;
+    }
+
+    function mostrarMsg(texto, tipo) {
+      msg.style.display = texto ? "block" : "none";
+      msg.textContent = texto || "";
+      msg.classList.remove("ok","error");
+      if (tipo === "ok") msg.classList.add("ok");
+      if (tipo === "error") msg.classList.add("error");
+    }
+
+    function formatarDataBR(dataISO) {
+      if (!dataISO) return "";
+      const [ano, mes, dia] = dataISO.split("-");
+      return `${dia}/${mes}/${ano}`;
+    }
+
+    async function salvarDia() {
+      mostrarMsg("");
+
+      if (!currentUid) {
+        mostrarMsg("Não foi possível identificar sua conta. Faça login novamente.", "error");
+        return;
+      }
+
+      const data = dataInput.value;
+      const calorias = parseFloat(caloriasInput.value);
+
+      if (!data || isNaN(calorias)) {
+        mostrarMsg("Preencha a data e as calorias totais do dia.", "error");
+        return;
+      }
+
+      btnSalvar.disabled = true;
+      mostrarMsg("Salvando no Clube...", "ok");
+
+      try {
+        const docId = `${currentUid}_${data}`;
+        await db.collection("consumosDiarios").doc(docId).set({
+          uid: currentUid,
+          data,
+          caloriasTotais: calorias,
+          atualizadoEm: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        const calFmt = Math.round(calorias).toLocaleString("pt-BR");
+        resumoCalorias.textContent = `${calFmt} kcal no dia ${formatarDataBR(data)}`;
+
+        resumoDia.style.display = "block";
+        mostrarMsg("Dia salvo com sucesso no Clube! ✅", "ok");
+      } catch (err) {
+        console.error("Erro ao salvar consumo diário:", err);
+        mostrarMsg("Erro ao salvar no Clube. Tente novamente.", "error");
+      } finally {
+        btnSalvar.disabled = false;
+      }
+    }
+
+    btnSalvar.addEventListener("click", salvarDia);
+
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = "clube-login.html";
+        return;
+      }
+      currentUid = user.uid;
+      setHoje();
+    });
+
+    // ---------- FUNCIONALIDADES DO MONTADOR DE PRATO ----------
+    const alimentoInput = document.getElementById("alimento-input");
+    const datalistAlimentos = document.getElementById("lista-alimentos");
+    const campoQuantidade = document.getElementById("quantidade");
+    const infoAlimento = document.getElementById("alimento-info");
+    const erroMensagem = document.getElementById("erro-mensagem");
+
+    const tabelaItens = document.getElementById("tabela-itens");
+    const totalKcalSpan = document.getElementById("total-kcal");
+
+    const btnAdicionar = document.getElementById("btn-adicionar");
+    const btnLimparPrato = document.getElementById("btn-limpar-prato");
+
+    let itensPrato = [];
+
+    function formatNumber(num, casas = 1) {
+      return num.toLocaleString("pt-BR", { minimumFractionDigits: casas, maximumFractionDigits: casas });
+    }
+
+    // Normaliza texto para busca (tira acentos e deixa minúsculo)
+    function normalizar(str) {
+      return str
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+    }
+
+    // Base ampliada de alimentos com kcal aproximada por 100 g.
+    // (Vários grupos: PF, carnes, lanches, japonês, chinês, bebidas, frutas etc.)
+    const ALIMENTOS = [
+      // --- PF / arroz e feijão ---
+      { id:"arroz_branco_cozido", nome:"Arroz branco cozido", kcalPor100g:130 },
+      { id:"arroz_integral_cozido", nome:"Arroz integral cozido", kcalPor100g:124 },
+      { id:"arroz_parboilizado_cozido", nome:"Arroz parboilizado cozido", kcalPor100g:128 },
+      { id:"feijao_carioca_cozido", nome:"Feijão carioca cozido", kcalPor100g:80 },
+      { id:"feijao_preto_cozido", nome:"Feijão preto cozido", kcalPor100g:77 },
+      { id:"feijao_fradinho_cozido", nome:"Feijão fradinho cozido", kcalPor100g:78 },
+      { id:"lentilha_cozida", nome:"Lentilha cozida", kcalPor100g:93 },
+      { id:"grao_de_bico_cozido", nome:"Grão-de-bico cozido", kcalPor100g:164 },
+      { id:"ervilha_seca_cozida", nome:"Ervilha seca cozida", kcalPor100g:130 },
+      { id:"farofa_simples", nome:"Farofa simples", kcalPor100g:380 },
+      { id:"farofa_ovo", nome:"Farofa de ovo", kcalPor100g:260 },
+      { id:"farofa_bacon", nome:"Farofa de bacon", kcalPor100g:420 },
+      { id:"farinha_mandioca_torrada", nome:"Farinha de mandioca torrada", kcalPor100g:365 },
+      { id:"pure_batata", nome:"Purê de batata", kcalPor100g:110 },
+      { id:"batata_inglesa_cozida", nome:"Batata inglesa cozida", kcalPor100g:86 },
+      { id:"batata_doce_cozida", nome:"Batata doce cozida", kcalPor100g:80 },
+      { id:"mandioca_cozida", nome:"Mandioca (aipim) cozida", kcalPor100g:125 },
+      { id:"mandioquinha_cozida", nome:"Mandioquinha (batata baroa) cozida", kcalPor100g:86 },
+      { id:"inhame_cozido", nome:"Inhame cozido", kcalPor100g:97 },
+      { id:"cuscuz_milho_cozido", nome:"Cuscuz de milho cozido", kcalPor100g:110 },
+      { id:"polenta_mole", nome:"Polenta mole", kcalPor100g:110 },
+
+      // --- Carnes bovinas / "bifes" ---
+      { id:"bife_bovino_grelhado", nome:"Bife bovino grelhado", kcalPor100g:250 },
+      { id:"bife_bovino_acebolado", nome:"Bife bovino acebolado", kcalPor100g:260 },
+      { id:"bife_alcatra_grelhado", nome:"Bife de alcatra grelhado", kcalPor100g:240 },
+      { id:"bife_patinho_grelhado", nome:"Bife de patinho grelhado", kcalPor100g:210 },
+      { id:"bife_file_mignon", nome:"Filé mignon grelhado", kcalPor100g:220 },
+      { id:"contrafile_grelhado", nome:"Contrafilé grelhado", kcalPor100g:260 },
+      { id:"picanha_grelhada", nome:"Picanha bovina grelhada", kcalPor100g:290 },
+      { id:"fraldinha_assada", nome:"Fraldinha bovina assada", kcalPor100g:250 },
+      { id:"acem_cozido", nome:"Acém bovino cozido", kcalPor100g:220 },
+      { id:"carne_moida_magra", nome:"Carne moída bovina magra cozida", kcalPor100g:220 },
+      { id:"carne_moida_media", nome:"Carne moída bovina média cozida", kcalPor100g:250 },
+      { id:"cupim_assado", nome:"Cupim assado", kcalPor100g:320 },
+      { id:"costela_bovina_assada", nome:"Costela bovina assada", kcalPor100g:320 },
+      { id:"musculo_cozido", nome:"Músculo bovino cozido", kcalPor100g:200 },
+      { id:"rabada_cozida", nome:"Rabada cozida", kcalPor100g:300 },
+      { id:"figado_bovino_grelhado", nome:"Fígado bovino grelhado", kcalPor100g:180 },
+
+      // --- Carnes suínas e embutidos ---
+      { id:"lombo_suino_assado", nome:"Lombo suíno assado", kcalPor100g:260 },
+      { id:"pernil_suino_assado", nome:"Pernil suíno assado", kcalPor100g:280 },
+      { id:"costelinha_suina_assada", nome:"Costelinha suína assada", kcalPor100g:320 },
+      { id:"bacon_frito", nome:"Bacon frito", kcalPor100g:540 },
+      { id:"linguica_toscana_grelhada", nome:"Linguiça toscana grelhada", kcalPor100g:300 },
+      { id:"linguica_calabresa_frita", nome:"Linguiça calabresa frita", kcalPor100g:310 },
+      { id:"presunto_cozido", nome:"Presunto cozido", kcalPor100g:120 },
+      { id:"mortadela", nome:"Mortadela", kcalPor100g:280 },
+      { id:"salame", nome:"Salame", kcalPor100g:410 },
+
+      // --- Aves ---
+      { id:"peito_frango_grelhado", nome:"Peito de frango grelhado", kcalPor100g:165 },
+      { id:"peito_frango_cozido", nome:"Peito de frango cozido", kcalPor100g:150 },
+      { id:"coxa_frango_assada", nome:"Coxa de frango assada com pele", kcalPor100g:210 },
+      { id:"sobrecoxa_assada", nome:"Sobrecoxa de frango assada", kcalPor100g:230 },
+      { id:"frango_inteiro_assado", nome:"Frango inteiro assado", kcalPor100g:200 },
+      { id:"frango_milanesa", nome:"Frango à milanesa", kcalPor100g:260 },
+      { id:"frango_empanado_congelado", nome:"Frango empanado (tipo nuggets)", kcalPor100g:260 },
+      { id:"frango_xadrez", nome:"Frango xadrez", kcalPor100g:180 },
+      { id:"frango_curry", nome:"Frango ao curry", kcalPor100g:190 },
+
+      // --- Peixes e frutos do mar ---
+      { id:"peixe_grelhado", nome:"Filé de peixe grelhado", kcalPor100g:140 },
+      { id:"tilapia_grelhada", nome:"Tilápia grelhada", kcalPor100g:130 },
+      { id:"salmao_grelhado", nome:"Salmão grelhado", kcalPor100g:200 },
+      { id:"sardinha_frita", nome:"Sardinha frita", kcalPor100g:250 },
+      { id:"sardinha_lata_oleo", nome:"Sardinha em lata (óleo)", kcalPor100g:210 },
+      { id:"atum_lata_agua", nome:"Atum em lata (água)", kcalPor100g:120 },
+      { id:"atum_lata_oleo", nome:"Atum em lata (óleo)", kcalPor100g:190 },
+      { id:"camarao_refogado", nome:"Camarão refogado", kcalPor100g:90 },
+      { id:"camarao_empanado", nome:"Camarão empanado", kcalPor100g:240 },
+      { id:"bacalhau_cozido", nome:"Bacalhau dessalgado cozido", kcalPor100g:140 },
+
+      // --- Ovos e laticínios ---
+      { id:"ovo_cozido", nome:"Ovo de galinha cozido", kcalPor100g:155 },
+      { id:"ovo_frito", nome:"Ovo frito", kcalPor100g:220 },
+      { id:"ovo_mexido", nome:"Ovo mexido", kcalPor100g:150 },
+      { id:"omelete_simples", nome:"Omelete simples", kcalPor100g:160 },
+      { id:"leite_integral", nome:"Leite integral", kcalPor100g:60 },
+      { id:"leite_desnatado", nome:"Leite desnatado", kcalPor100g:40 },
+      { id:"iogurte_natural_integral", nome:"Iogurte natural integral", kcalPor100g:60 },
+      { id:"iogurte_natural_desnatado", nome:"Iogurte natural desnatado", kcalPor100g:40 },
+      { id:"queijo_mucarela", nome:"Queijo muçarela", kcalPor100g:300 },
+      { id:"queijo_prato", nome:"Queijo prato", kcalPor100g:330 },
+      { id:"queijo_minas_frescal", nome:"Queijo minas frescal", kcalPor100g:260 },
+      { id:"queijo_minas_padrao", nome:"Queijo minas padrão", kcalPor100g:320 },
+      { id:"queijo_coalho", nome:"Queijo coalho", kcalPor100g:320 },
+      { id:"requeijao_cremoso", nome:"Requeijão cremoso", kcalPor100g:240 },
+      { id:"creme_de_leite", nome:"Creme de leite", kcalPor100g:330 },
+      { id:"leite_condensado", nome:"Leite condensado", kcalPor100g:320 },
+
+      // --- Pães, massas, salgados, lanches ---
+      { id:"pao_frances", nome:"Pão francês", kcalPor100g:300 },
+      { id:"pao_forma_branco", nome:"Pão de forma branco", kcalPor100g:260 },
+      { id:"pao_forma_integral", nome:"Pão de forma integral", kcalPor100g:250 },
+      { id:"pao_queijo", nome:"Pão de queijo", kcalPor100g:330 },
+      { id:"tapioca_simples", nome:"Tapioca simples (goma com manteiga)", kcalPor100g:250 },
+      { id:"tapioca_queijo_coalho", nome:"Tapioca com queijo coalho", kcalPor100g:300 },
+      { id:"bolo_simples", nome:"Bolo simples de trigo", kcalPor100g:330 },
+      { id:"bolo_chocolate_cobertura", nome:"Bolo de chocolate com cobertura", kcalPor100g:380 },
+      { id:"bolo_cenoura_cobertura", nome:"Bolo de cenoura com cobertura", kcalPor100g:360 },
+      { id:"biscoito_doce_simples", nome:"Biscoito doce simples", kcalPor100g:430 },
+      { id:"biscoito_recheado", nome:"Biscoito recheado", kcalPor100g:480 },
+      { id:"biscoito_agua_sal", nome:"Biscoito água e sal", kcalPor100g:420 },
+      { id:"torrada_simples", nome:"Torrada simples", kcalPor100g:410 },
+      { id:"croissant", nome:"Croissant", kcalPor100g:420 },
+      { id:"pizza_mussarela", nome:"Pizza de mussarela", kcalPor100g:270 },
+      { id:"pizza_calabresa", nome:"Pizza de calabresa", kcalPor100g:290 },
+      { id:"pizza_frango_catupiry", nome:"Pizza de frango com catupiry", kcalPor100g:280 },
+      { id:"esfirra_carne_assada", nome:"Esfirra de carne assada", kcalPor100g:280 },
+      { id:"esfirra_frango_aberta", nome:"Esfirra aberta de frango", kcalPor100g:260 },
+      { id:"esfirra_queijo_aberta", nome:"Esfirra aberta de queijo", kcalPor100g:270 },
+      { id:"pastel_carne_frito", nome:"Pastel de carne frito", kcalPor100g:330 },
+      { id:"pastel_queijo_frito", nome:"Pastel de queijo frito", kcalPor100g:340 },
+      { id:"coxinha_frango_frita", nome:"Coxinha de frango frita", kcalPor100g:320 },
+      { id:"empada_frango", nome:"Empada de frango", kcalPor100g:340 },
+      { id:"kibe_frito", nome:"Kibe frito", kcalPor100g:280 },
+      { id:"kibe_assado", nome:"Kibe assado", kcalPor100g:200 },
+      { id:"pao_de_alho_assado", nome:"Pão de alho assado", kcalPor100g:350 },
+      { id:"hamburguer_bovino_grelhado", nome:"Hambúrguer bovino grelhado", kcalPor100g:250 },
+      { id:"hamburguer_sanduiche_simples", nome:"Hambúrguer de fast food (sanduíche simples)", kcalPor100g:260 },
+      { id:"cachorro_quente_simples", nome:"Cachorro-quente simples", kcalPor100g:260 },
+      { id:"misto_quente", nome:"Misto quente (pão, queijo e presunto)", kcalPor100g:280 },
+      { id:"sanduiche_natural_frango", nome:"Sanduíche natural de frango", kcalPor100g:210 },
+
+      // --- Pratos brasileiros prontos ---
+      { id:"feijoada_completa", nome:"Feijoada completa", kcalPor100g:180 },
+      { id:"arroz_carreteiro", nome:"Arroz carreteiro", kcalPor100g:190 },
+      { id:"baiao_dois", nome:"Baião de dois", kcalPor100g:170 },
+      { id:"galinhada", nome:"Galinhada", kcalPor100g:170 },
+      { id:"estrogonofe_frango", nome:"Estrogonofe de frango", kcalPor100g:180 },
+      { id:"estrogonofe_carne", nome:"Estrogonofe de carne", kcalPor100g:200 },
+      { id:"moqueca_peixe", nome:"Moqueca de peixe", kcalPor100g:150 },
+      { id:"moqueca_camarao", nome:"Moqueca de camarão", kcalPor100g:180 },
+      { id:"virado_paulista", nome:"Virado à paulista", kcalPor100g:220 },
+      { id:"picadinho_carne", nome:"Picadinho de carne", kcalPor100g:180 },
+      { id:"carne_panela_batata", nome:"Carne de panela com batata", kcalPor100g:150 },
+      { id:"frango_ensopado_legumes", nome:"Frango ensopado com legumes", kcalPor100g:140 },
+      { id:"lasanha_carne", nome:"Lasanha de carne", kcalPor100g:170 },
+      { id:"lasanha_frango", nome:"Lasanha de frango", kcalPor100g:165 },
+      { id:"panqueca_carne", nome:"Panqueca de carne com molho", kcalPor100g:180 },
+      { id:"panqueca_frango", nome:"Panqueca de frango com molho", kcalPor100g:170 },
+      { id:"escondidinho_carne_seca", nome:"Escondidinho de carne seca", kcalPor100g:210 },
+      { id:"escondidinho_frango", nome:"Escondidinho de frango", kcalPor100g:190 },
+      { id:"yakisoba_simples", nome:"Yakisoba simples", kcalPor100g:150 },
+      { id:"yakisoba_frango", nome:"Yakisoba de frango", kcalPor100g:165 },
+      { id:"churrasco_misto", nome:"Churrasco misto (média)", kcalPor100g:250 },
+      { id:"tutu_feijao", nome:"Tutu de feijão", kcalPor100g:150 },
+      { id:"maionese_batata", nome:"Maionese de batata", kcalPor100g:160 },
+      { id:"salpicao_frango", nome:"Salpicão de frango", kcalPor100g:170 },
+      { id:"canja_galinha", nome:"Canja de galinha", kcalPor100g:70 },
+      { id:"caldo_verde", nome:"Caldo verde", kcalPor100g:90 },
+      { id:"caldo_feijao", nome:"Caldo de feijão", kcalPor100g:60 },
+
+      // --- Comida japonesa ---
+      { id:"sushi_salmao", nome:"Sushi de salmão (niguiri)", kcalPor100g:140 },
+      { id:"sushi_atum", nome:"Sushi de atum (niguiri)", kcalPor100g:135 },
+      { id:"sushi_kani", nome:"Sushi de kani", kcalPor100g:130 },
+      { id:"sashimi_salmao", nome:"Sashimi de salmão", kcalPor100g:200 },
+      { id:"sashimi_atum", nome:"Sashimi de atum", kcalPor100g:190 },
+      { id:"hot_roll_salmao", nome:"Hot roll de salmão", kcalPor100g:220 },
+      { id:"temaki_salmao", nome:"Temaki de salmão com arroz", kcalPor100g:200 },
+      { id:"temaki_salmao_creemcheese", nome:"Temaki de salmão com cream cheese", kcalPor100g:220 },
+      { id:"temaki_kani", nome:"Temaki de kani", kcalPor100g:190 },
+      { id:"yakisoba_carne", nome:"Yakisoba de carne", kcalPor100g:170 },
+      { id:"rolinho_primavera", nome:"Rolinho primavera", kcalPor100g:250 },
+
+      // --- Legumes e verduras / saladas ---
+      { id:"alface_crespa_crua", nome:"Alface crespa crua", kcalPor100g:15 },
+      { id:"alface_americana_crua", nome:"Alface americana crua", kcalPor100g:14 },
+      { id:"rucula_crua", nome:"Rúcula crua", kcalPor100g:25 },
+      { id:"agriao_cru", nome:"Agrião cru", kcalPor100g:20 },
+      { id:"acelga_crua", nome:"Acelga crua", kcalPor100g:18 },
+      { id:"espinafre_refogado", nome:"Espinafre refogado", kcalPor100g:70 },
+      { id:"couve_manteiga_refogada", nome:"Couve manteiga refogada", kcalPor100g:90 },
+      { id:"couve_manteiga_crua", nome:"Couve manteiga crua", kcalPor100g:40 },
+      { id:"brocolis_cozido", nome:"Brócolis cozido", kcalPor100g:35 },
+      { id:"couve_flor_cozida", nome:"Couve-flor cozida", kcalPor100g:30 },
+      { id:"cenoura_crua", nome:"Cenoura crua ralada", kcalPor100g:40 },
+      { id:"cenoura_cozida", nome:"Cenoura cozida", kcalPor100g:35 },
+      { id:"beterraba_cozida", nome:"Beterraba cozida", kcalPor100g:45 },
+      { id:"repolho_cru", nome:"Repolho cru", kcalPor100g:25 },
+      { id:"repolho_refogado", nome:"Repolho refogado", kcalPor100g:50 },
+      { id:"tomate_cru", nome:"Tomate cru", kcalPor100g:20 },
+      { id:"cebola_refogada", nome:"Cebola refogada", kcalPor100g:90 },
+      { id:"pimentao_verde", nome:"Pimentão verde", kcalPor100g:22 },
+      { id:"abobrinha_italiana_cozida", nome:"Abobrinha italiana cozida", kcalPor100g:20 },
+      { id:"berinjela_refogada", nome:"Berinjela refogada", kcalPor100g:70 },
+      { id:"pepino_cru", nome:"Pepino cru", kcalPor100g:15 },
+      { id:"chuchu_cozido", nome:"Chuchu cozido", kcalPor100g:20 },
+      { id:"quiabo_refogado", nome:"Quiabo refogado", kcalPor100g:90 },
+      { id:"abobora_cabotia_cozida", nome:"Abóbora cabotiá cozida", kcalPor100g:48 },
+      { id:"abobora_moranga_cozida", nome:"Abóbora moranga cozida", kcalPor100g:30 },
+      { id:"milho_verde_cozido", nome:"Milho verde cozido", kcalPor100g:100 },
+      { id:"ervilha_fresca_cozida", nome:"Ervilha fresca cozida", kcalPor100g:80 },
+      { id:"vagem_cozida", nome:"Vagem cozida", kcalPor100g:35 },
+      { id:"palmito_conserva", nome:"Palmito em conserva", kcalPor100g:20 },
+      { id:"salada_verde_mista", nome:"Salada verde mista (alface, tomate, cenoura)", kcalPor100g:22 },
+
+      // --- Frutas (bem comuns) ---
+      { id:"banana_prata", nome:"Banana prata", kcalPor100g:89 },
+      { id:"banana_nanica", nome:"Banana nanica", kcalPor100g:96 },
+      { id:"maca_com_casca", nome:"Maçã com casca", kcalPor100g:55 },
+      { id:"pera", nome:"Pera", kcalPor100g:57 },
+      { id:"uva_rosada", nome:"Uva rosada", kcalPor100g:70 },
+      { id:"manga_palmer", nome:"Manga palmer", kcalPor100g:60 },
+      { id:"mamao_papaia", nome:"Mamão papaia", kcalPor100g:45 },
+      { id:"laranja_pera", nome:"Laranja pera", kcalPor100g:45 },
+      { id:"tangerina_ponca", nome:"Tangerina poncã", kcalPor100g:50 },
+      { id:"abacaxi", nome:"Abacaxi", kcalPor100g:50 },
+      { id:"melancia", nome:"Melancia", kcalPor100g:30 },
+      { id:"melao_amarelo", nome:"Melão amarelo", kcalPor100g:30 },
+      { id:"goiaba_vermelha", nome:"Goiaba vermelha", kcalPor100g:55 },
+      { id:"kiwi", nome:"Kiwi", kcalPor100g:61 },
+      { id:"morango", nome:"Morango", kcalPor100g:32 },
+      { id:"abacate", nome:"Abacate", kcalPor100g:160 },
+      { id:"coco_verde_polpa", nome:"Coco verde (polpa)", kcalPor100g:110 },
+      { id:"coco_seco_ralado", nome:"Coco seco ralado", kcalPor100g:600 },
+
+      // --- Doces e sobremesas ---
+      { id:"brigadeiro", nome:"Brigadeiro tradicional", kcalPor100g:420 },
+      { id:"beijinho", nome:"Beijinho", kcalPor100g:410 },
+      { id:"cajuzinho", nome:"Cajuzinho", kcalPor100g:400 },
+      { id:"pudim_leite", nome:"Pudim de leite", kcalPor100g:220 },
+      { id:"mousse_maracuja", nome:"Mousse de maracujá", kcalPor100g:230 },
+      { id:"quindim", nome:"Quindim", kcalPor100g:450 },
+      { id:"doce_de_leite", nome:"Doce de leite", kcalPor100g:320 },
+      { id:"goiabada_cascao", nome:"Goiabada cascão", kcalPor100g:280 },
+      { id:"pacoca_amendoim", nome:"Paçoca de amendoim", kcalPor100g:500 },
+      { id:"pe_de_moleque", nome:"Pé de moleque", kcalPor100g:480 },
+      { id:"cocada_branca", nome:"Cocada branca", kcalPor100g:430 },
+      { id:"arroz_doce", nome:"Arroz doce", kcalPor100g:140 },
+      { id:"canjica_doce", nome:"Canjica doce", kcalPor100g:160 },
+      { id:"curau_milho", nome:"Curau de milho", kcalPor100g:150 },
+      { id:"rabanada_frita", nome:"Rabanada frita", kcalPor100g:330 },
+      { id:"sorvete_creme", nome:"Sorvete de creme", kcalPor100g:200 },
+      { id:"sorvete_chocolate", nome:"Sorvete de chocolate", kcalPor100g:210 },
+
+      // --- Bebidas ---
+      { id:"cafe_preto_sem_acucar", nome:"Café preto sem açúcar", kcalPor100g:5 },
+      { id:"cafe_com_acucar", nome:"Café com açúcar", kcalPor100g:40 },
+      { id:"cha_mate_sem_acucar", nome:"Chá mate sem açúcar", kcalPor100g:2 },
+      { id:"refrigerante_cola", nome:"Refrigerante tipo cola", kcalPor100g:40 },
+      { id:"refrigerante_guarana", nome:"Refrigerante de guaraná", kcalPor100g:42 },
+      { id:"suco_laranja_natural", nome:"Suco de laranja natural (sem açúcar)", kcalPor100g:45 },
+      { id:"suco_uva_integral", nome:"Suco de uva integral", kcalPor100g:60 },
+      { id:"suco_maracuja", nome:"Suco de maracujá", kcalPor100g:50 },
+      { id:"suco_manga", nome:"Suco de manga", kcalPor100g:55 },
+      { id:"suco_abacaxi_acucar", nome:"Suco de abacaxi com açúcar", kcalPor100g:60 },
+      { id:"agua_coco", nome:"Água de coco", kcalPor100g:25 },
+      { id:"cerveja_pilsen", nome:"Cerveja pilsen", kcalPor100g:43 },
+      { id:"vinho_tinto_seco", nome:"Vinho tinto seco", kcalPor100g:80 },
+      { id:"acai_xarope", nome:"Açaí batido com xarope", kcalPor100g:110 },
+      { id:"acai_granola_banana", nome:"Açaí com granola e banana", kcalPor100g:160 }
+    ];
+
+    function preencherDatalist() {
+      datalistAlimentos.innerHTML = "";
+      ALIMENTOS.forEach(al => {
+        const opt = document.createElement("option");
+        opt.value = al.nome;
+        datalistAlimentos.appendChild(opt);
+      });
+    }
+
+    function encontrarAlimentoPorNome(nomeDigitado) {
+      if (!nomeDigitado) return null;
+      const n = normalizar(nomeDigitado.trim());
+      if (!n) return null;
+
+      // 1) tenta match exato
+      let encontrado = ALIMENTOS.find(a => normalizar(a.nome) === n);
+      if (encontrado) return encontrado;
+
+      // 2) tenta "começa com"
+      encontrado = ALIMENTOS.find(a => normalizar(a.nome).startsWith(n));
+      if (encontrado) return encontrado;
+
+      // 3) tenta "contém" (ex.: digita 'bife' → acha bife bovino grelhado)
+      encontrado = ALIMENTOS.find(a => normalizar(a.nome).includes(n));
+      return encontrado || null;
+    }
+
+    function atualizarInfoAlimento() {
+      const alimento = encontrarAlimentoPorNome(alimentoInput.value);
+      if (!alimento) {
+        infoAlimento.textContent =
+          "Digite ou escolha um alimento da lista para ver a referência de 100 g e as calorias aproximadas.";
+        return;
+      }
+      infoAlimento.textContent =
+        `${alimento.nome} – referência: 100 g ≈ ${alimento.kcalPor100g} kcal`;
+    }
+
+    function atualizarTabela() {
+      tabelaItens.innerHTML = "";
+      let totalKcal = 0;
+
+      if (!itensPrato.length) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 3;
+        td.textContent = "Nenhum alimento no prato ainda. Comece adicionando arroz, feijão, bife, ovo...";
+        tr.appendChild(td);
+        tabelaItens.appendChild(tr);
+      } else {
+        itensPrato.forEach((item) => {
+          totalKcal += item.kcal;
+
+          const tr = document.createElement("tr");
+          tr.className = "data-row";
+
+          const tdNome = document.createElement("td");
+          tdNome.textContent = item.nome;
+
+          const tdQtd = document.createElement("td");
+          tdQtd.className = "text-right";
+          tdQtd.textContent = formatNumber(item.gramas, 0);
+
+          const tdKcal = document.createElement("td");
+          tdKcal.className = "text-right";
+          tdKcal.textContent = formatNumber(item.kcal, 0);
+
+          tr.appendChild(tdNome);
+          tr.appendChild(tdQtd);
+          tr.appendChild(tdKcal);
+
+          tabelaItens.appendChild(tr);
+        });
+      }
+
+      totalKcalSpan.textContent = `${formatNumber(totalKcal, 0)} kcal`;
+      caloriasInput.value = Math.round(totalKcal);
+    }
+
+    alimentoInput.addEventListener("input", atualizarInfoAlimento);
+
+    btnAdicionar.addEventListener("click", function () {
+      erroMensagem.style.display = "none";
+
+      const alimento = encontrarAlimentoPorNome(alimentoInput.value);
+
+      if (!alimento) {
+        erroMensagem.textContent = "Esse alimento ainda não está na base. Escolha um da lista sugerida.";
+        erroMensagem.style.display = "block";
+        return;
+      }
+
+      const qtdVal = Number(String(campoQuantidade.value).replace(",", "."));
+
+      if (!qtdVal || qtdVal <= 0) {
+        erroMensagem.textContent = "Informe o peso em gramas (ex.: 120).";
+        erroMensagem.style.display = "block";
+        return;
+      }
+
+      const kcalItem = (alimento.kcalPor100g * qtdVal) / 100;
+
+      itensPrato.push({
+        id: alimento.id,
+        nome: alimento.nome,
+        gramas: qtdVal,
+        kcal: kcalItem,
+      });
+
+      campoQuantidade.value = "";
+      atualizarTabela();
+    });
+
+    btnLimparPrato.addEventListener("click", function () {
+      itensPrato = [];
+      atualizarTabela();
+      erroMensagem.style.display = "none";
+    });
+
+    // Inicial
+    preencherDatalist();
+    atualizarTabela();
+    atualizarInfoAlimento();
+  </script>
+</body>
+</html>

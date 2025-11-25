@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Calculadora TDEE – Prato & Peso</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Calcule seu gasto calórico diário (TDEE) de forma simples, com base no método de Mifflin-St Jeor, e veja faixas para manutenção, emagrecimento e ganho de peso com comida de verdade." />
+
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --bg-alt: #ffffff;
+      --primary: #1e5a4d;
+      --primary-soft: #e0f3ec;
+      --accent: #ffb347;
+      --accent-soft: #fff3df;
+      --text-main: #222222;
+      --text-muted: #666666;
+      --border-soft: #e0e0e0;
+      --radius-lg: 16px;
+      --radius-xl: 22px;
+      --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.08);
+      --max-width: 1040px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #fdf5ea 0, #f5f5f7 45%, #f0f2f5 100%);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-badge {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #4b2c15;
+      font-size: 0.9rem;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .logo-text-main {
+      font-weight: 700;
+      font-size: 0.98rem;
+      letter-spacing: 0.03em;
+    }
+
+    .logo-text-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .header-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .header-link {
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .header-link-clube {
+      background: var(--accent);
+      color: #4b2c15;
+      font-weight: 600;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+    }
+
+    main {
+      flex: 1;
+      padding: 24px 16px 40px;
+    }
+
+    .main-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 0.8rem;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 6px;
+    }
+
+    .intro {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      max-width: 640px;
+    }
+
+    .grid-main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    .card {
+      background: var(--bg-alt);
+      border-radius: var(--radius-xl);
+      padding: 18px 16px;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .card h2 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 14px;
+      margin-top: 6px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      font-size: 0.86rem;
+    }
+
+    .form-group label {
+      font-weight: 500;
+    }
+
+    .form-hint {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    input[type="number"],
+    select {
+      padding: 8px 9px;
+      border-radius: 10px;
+      border: 1px solid var(--border-soft);
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+      background: #fff;
+    }
+
+    input[type="number"]:focus,
+    select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px var(--primary-soft);
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    .actions {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+    }
+
+    .btn-secondary {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      background: #f5f5f7;
+      font-size: 0.86rem;
+      cursor: pointer;
+    }
+
+    /* Botão de próxima etapa (ir para Meta) */
+    .next-step {
+      margin-top: 10px;
+      display: none; /* começa escondido */
+    }
+
+    .btn-next {
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: none;
+      background: var(--accent);
+      color: #4b2c15;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+    }
+
+    .btn-next:hover {
+      filter: brightness(1.03);
+      transform: translateY(-1px);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.2);
+    }
+
+    .small-note {
+      margin-top: 6px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .erro {
+      margin-top: 6px;
+      font-size: 0.82rem;
+      color: #c0392b;
+      display: none;
+    }
+
+    .card-results {
+      background: var(--bg-alt);
+      border-radius: var(--radius-xl);
+      padding: 18px 16px;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .results-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .result-card {
+      padding: 8px 10px;
+      border-radius: var(--radius-lg);
+      background: #f8faf9;
+      border: 1px solid #e5f0ec;
+    }
+
+    .result-label {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 3px;
+    }
+
+    .result-value {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .result-note {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .details-card {
+      margin-top: 10px;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+
+    .details-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--text-main);
+    }
+
+    .summary-note {
+      margin-top: 6px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .alert {
+      margin-top: 6px;
+      padding: 6px 8px;
+      border-radius: 10px;
+      font-size: 0.78rem;
+      background: #fff3df;
+      border: 1px solid #f3d19b;
+      color: #8a5a24;
+      display: none;
+    }
+
+    .alert.visible {
+      display: block;
+    }
+
+    footer {
+      background: #111111;
+      color: #d0d0d0;
+      font-size: 0.78rem;
+      padding: 12px 16px 16px;
+      margin-top: 28px;
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .footer-disclaimer {
+      color: #aaaaaa;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 720px) {
+      .grid-main {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .card {
+        padding: 16px 14px;
+      }
+
+      .card-results {
+        margin-top: 10px;
+      }
+
+      .results-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .header-inner {
+        padding-inline: 10px;
+      }
+
+      main {
+        padding-inline: 12px;
+      }
+
+      h1 {
+        font-size: 1.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header>
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <div class="logo-badge">P&amp;P</div>
+          <div class="logo-text">
+            <div class="logo-text-main">Prato &amp; Peso</div>
+            <div class="logo-text-sub">Comida de verdade, meta clara</div>
+          </div>
+        </a>
+
+        <nav class="header-links">
+          <a href="clube.html" class="header-link header-link-clube">Clube Prato &amp; Peso</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="main-inner">
+        <div class="tag">
+          Prato &amp; Peso • Calculadora de gasto calórico (TDEE)
+        </div>
+
+        <h1>Calcule seu TDEE e veja faixas de calorias.</h1>
+        <p class="intro">
+          Use esta calculadora para estimar quantas calorias você precisa por dia para <strong>manter, emagrecer ou ganhar peso</strong>.
+          É um ponto de partida para organizar seus pratos dentro de uma meta realista.
+        </p>
+
+        <div class="grid-main">
+          <section class="card">
+            <h2>Preencha seus dados</h2>
+            <p>Você pode ajustar depois, conforme for acompanhando seu peso na prática.</p>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="sexo">Sexo</label>
+                <select id="sexo">
+                  <option value="">Selecione</option>
+                  <option value="masc">Masculino</option>
+                  <option value="fem">Feminino</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="idade">Idade</label>
+                <input type="number" id="idade" placeholder="Ex.: 29" />
+                <div class="form-hint">Em anos completos</div>
+              </div>
+
+              <div class="form-group">
+                <label for="peso">Peso</label>
+                <input type="number" id="peso" placeholder="Ex.: 96,5" step="0.1" />
+                <div class="form-hint">Em kg (ex.: 96,5)</div>
+              </div>
+
+              <div class="form-group">
+                <label for="altura">Altura</label>
+                <input type="number" id="altura" placeholder="Ex.: 180" />
+                <div class="form-hint">Em cm (ex.: 180)</div>
+              </div>
+
+              <div class="form-group full-width">
+                <label for="atividade">Nível de atividade</label>
+                <select id="atividade">
+                  <option value="">Selecione</option>
+                  <option value="1.2">Sedentário (quase não se exercita)</option>
+                  <option value="1.375">Levemente ativo (1–3 treinos leves/semana)</option>
+                  <option value="1.55">Moderadamente ativo (3–5 treinos/semana)</option>
+                  <option value="1.725">Muito ativo (treino pesado 5–6x/semana)</option>
+                  <option value="1.9">Atleta ou trabalho físico pesado</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button type="button" class="btn-primary" id="btn-calcular">
+                Calcular TDEE
+              </button>
+              <button type="button" class="btn-secondary" id="btn-limpar">
+                Limpar campos
+              </button>
+            </div>
+
+            <div class="small-note">
+              Os resultados são estimativas aproximadas. Observe na prática como o seu corpo responde e ajuste se
+              necessário. Sempre que possível, conte com um profissional de saúde.
+            </div>
+
+            <div class="erro" id="erro-mensagem"></div>
+          </section>
+
+          <aside class="card-results">
+            <div class="results-title">
+              🔍 Seus resultados
+            </div>
+            <p id="texto-intro" style="font-size:0.86rem; color:var(--text-muted); margin-bottom:8px;">
+              Preencha seus dados ao lado e clique em <strong>“Calcular TDEE”</strong> para ver suas calorias estimadas.
+            </p>
+
+            <div class="results-grid" id="bloco-resultados" style="display:none;">
+              <!-- Gasto basal diário -->
+              <div class="result-card">
+                <div class="result-label">Gasto basal diário</div>
+                <div class="result-value" id="kcal-basal">–</div>
+                <div class="result-note">
+                  Calorias gastas parado, em repouso, ao longo do dia.
+                </div>
+              </div>
+
+              <div class="result-card">
+                <div class="result-label">Manutenção estimada</div>
+                <div class="result-value" id="kcal-manutencao">–</div>
+                <div class="result-note">
+                  Aproximadamente quantas calorias por dia para manter o peso atual.
+                </div>
+              </div>
+
+              <div class="result-card">
+                <div class="result-label">Déficit leve</div>
+                <div class="result-value" id="kcal-deficit-leve">–</div>
+                <div class="result-note">
+                  Emagrecimento gradual, mais sustentável no longo prazo.
+                </div>
+              </div>
+
+              <div class="result-card">
+                <div class="result-label">Déficit moderado</div>
+                <div class="result-value" id="kcal-deficit-moderado">–</div>
+                <div class="result-note">
+                  Emagrecimento mais rápido, mas ainda dentro de um limite razoável.
+                </div>
+              </div>
+
+              <div class="result-card">
+                <div class="result-label">Superávit leve</div>
+                <div class="result-value" id="kcal-superavit">–</div>
+                <div class="result-note">
+                  Ganho de peso controlado, focando em massa magra (com treino).
+                </div>
+              </div>
+            </div>
+
+            <div class="details-card result-card" id="detalhes-calculo" style="display:none; margin-top:10px;">
+              <div class="details-title">Como chegamos nesses números</div>
+              <p class="details-text">
+                Usamos o método de <strong>Mifflin-St Jeor</strong> para estimar seu gasto basal (BMR) a partir de
+                sexo, idade, peso e altura. Em seguida, multiplicamos esse valor pelo <strong>nível de atividade</strong>
+                que você escolheu para chegar nas calorias de manutenção. A partir dessa base, calculamos as faixas
+                de déficit e superávit exibidas nos cards.
+              </p>
+            </div>
+
+            <p class="summary-note" id="resumo-texto" style="display:none;">
+              Use esses números como <strong>ponto de partida</strong>. Monte seus pratos no Prato &amp; Peso 
+              tentando ficar próximo dessas faixas e acompanhe o peso semana a semana.
+            </p>
+
+            <!-- NOVA CTA: ir para meta de emagrecimento -->
+            <div class="next-step" id="cta-meta">
+              <button type="button" class="btn-next" id="btn-ir-meta">
+                Definir meta de emagrecimento
+              </button>
+            </div>
+
+            <div class="alert" id="alerta-baixo">
+              Resultado de calorias diárias muito baixo. Em geral, valores baixos demais são difíceis de manter
+              e não são recomendados sem acompanhamento profissional. 
+              Considere trabalhar com um déficit mais leve e conversar com um nutricionista ou médico.
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-disclaimer">
+          <strong>Aviso importante:</strong><br />
+          Esta calculadora tem caráter educativo e fornece estimativas aproximadas de gasto calórico diário. 
+          Ela não substitui avaliação individual com nutricionista, médico ou outros profissionais de saúde.
+          Nunca faça mudanças drásticas na alimentação ou no peso apenas com base em calculadoras on-line,
+          principalmente se você tiver condições de saúde pré-existentes.
+        </div>
+        <div style="font-size:0.75rem; color:#888888;">
+          © <span id="ano-atual"></span> Prato &amp; Peso. Todos os direitos reservados.
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Atualiza ano no rodapé
+    document.getElementById("ano-atual").textContent = new Date().getFullYear();
+
+    // Referências aos elementos
+    const campoSexo = document.getElementById("sexo");
+    const campoIdade = document.getElementById("idade");
+    const campoPeso = document.getElementById("peso");
+    const campoAltura = document.getElementById("altura");
+    const campoAtividade = document.getElementById("atividade");
+
+    const erroMensagem = document.getElementById("erro-mensagem");
+    const blocoResultados = document.getElementById("bloco-resultados");
+    const resumoTexto = document.getElementById("resumo-texto");
+    const alertaBaixo = document.getElementById("alerta-baixo");
+    const textoIntro = document.getElementById("texto-intro");
+
+    const outBasal = document.getElementById("kcal-basal");
+    const outManutencao = document.getElementById("kcal-manutencao");
+    const outDefLeve = document.getElementById("kcal-deficit-leve");
+    const outDefModerado = document.getElementById("kcal-deficit-moderado");
+    const outSuperavit = document.getElementById("kcal-superavit");
+
+    const detalhesCard = document.getElementById("detalhes-calculo");
+
+    // nova CTA
+    const ctaMeta = document.getElementById("cta-meta");
+    const btnIrMeta = document.getElementById("btn-ir-meta");
+
+    const btnCalcular = document.getElementById("btn-calcular");
+    const btnLimpar = document.getElementById("btn-limpar");
+
+    function parseNumeroBr(valor) {
+      if (!valor) return NaN;
+      return parseFloat(valor.replace(",", "."));
+    }
+
+    function formatarKcal(valor) {
+      return Math.round(valor).toLocaleString("pt-BR") + " kcal/dia";
+    }
+
+    btnCalcular.addEventListener("click", function () {
+      erroMensagem.style.display = "none";
+      alertaBaixo.classList.remove("visible");
+
+      const sexo = campoSexo.value;
+      const idade = parseNumeroBr(campoIdade.value);
+      const peso = parseNumeroBr(campoPeso.value);
+      const altura = parseNumeroBr(campoAltura.value);
+      const fatorAtividade = parseNumeroBr(campoAtividade.value);
+
+      if (!sexo || isNaN(idade) || isNaN(peso) || isNaN(altura) || isNaN(fatorAtividade)) {
+        erroMensagem.textContent = "Preencha todos os campos com valores válidos para calcular.";
+        erroMensagem.style.display = "block";
+        blocoResultados.style.display = "none";
+        resumoTexto.style.display = "none";
+        textoIntro.style.display = "block";
+        detalhesCard.style.display = "none";
+        ctaMeta.style.display = "none";
+        return;
+      }
+
+      if (idade < 10 || idade > 100 || peso < 30 || peso > 250 || altura < 130 || altura > 220) {
+        erroMensagem.textContent = "Verifique se idade, peso e altura estão em faixas realistas.";
+        erroMensagem.style.display = "block";
+        blocoResultados.style.display = "none";
+        resumoTexto.style.display = "none";
+        textoIntro.style.display = "block";
+        detalhesCard.style.display = "none";
+        ctaMeta.style.display = "none";
+        return;
+      }
+
+      // Fórmula de Mifflin-St Jeor
+      let bmr;
+      if (sexo === "masc") {
+        bmr = 10 * peso + 6.25 * altura - 5 * idade + 5;
+      } else {
+        bmr = 10 * peso + 6.25 * altura - 5 * idade - 161;
+      }
+
+      const manutencao = bmr * fatorAtividade;
+
+      const deficitLeve = manutencao - 250;
+      const deficitModerado = manutencao - 500;
+      const superavitLeve = manutencao + 250;
+
+      // Atualiza os 5 cards principais
+      outBasal.textContent = formatarKcal(bmr);
+      outManutencao.textContent = formatarKcal(manutencao);
+      outDefLeve.textContent = formatarKcal(deficitLeve);
+      outDefModerado.textContent = formatarKcal(deficitModerado);
+      outSuperavit.textContent = formatarKcal(superavitLeve);
+
+      blocoResultados.style.display = "grid";
+      resumoTexto.style.display = "block";
+      textoIntro.style.display = "none";
+
+      // Mostra card de explicação (texto fixo)
+      detalhesCard.style.display = "block";
+
+      // Mostra CTA para ir para meta de emagrecimento
+      ctaMeta.style.display = "block";
+
+      // Aviso se o déficit moderado ficar muito baixo
+      const limiteBaixo = sexo === "fem" ? 1200 : 1400;
+      if (deficitModerado < limiteBaixo) {
+        alertaBaixo.classList.add("visible");
+      }
+    });
+
+    btnLimpar.addEventListener("click", function () {
+      campoSexo.value = "";
+      campoIdade.value = "";
+      campoPeso.value = "";
+      campoAltura.value = "";
+      campoAtividade.value = "";
+      erroMensagem.style.display = "none";
+      blocoResultados.style.display = "none";
+      resumoTexto.style.display = "none";
+      alertaBaixo.classList.remove("visible");
+      textoIntro.style.display = "block";
+      detalhesCard.style.display = "none";
+      ctaMeta.style.display = "none";
+
+      outBasal.textContent = "–";
+      outManutencao.textContent = "–";
+      outDefLeve.textContent = "–";
+      outDefModerado.textContent = "–";
+      outSuperavit.textContent = "–";
+    });
+
+    // Navegar para a página de meta de emagrecimento
+    btnIrMeta.addEventListener("click", function () {
+      window.location.href = "meta-emagrecimento.html";
+    });
+  </script>
+</body>
+</html>

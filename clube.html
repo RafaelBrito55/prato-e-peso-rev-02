@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Clube Prato & Peso – Acompanhamento simples, sem milagre</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Clube Prato & Peso: histórico de peso, diário de pratos brasileiros e relatórios simples para acompanhar o emagrecimento sem dieta maluca." />
+
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --bg-alt: #ffffff;
+      --primary: #1e5a4d;
+      --primary-soft: #e0f3ec;
+      --accent: #ffb347;
+      --accent-soft: #fff3df;
+      --text-main: #222222;
+      --text-muted: #666666;
+      --border-soft: #e0e0e0;
+      --radius-lg: 16px;
+      --radius-xl: 22px;
+      --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.08);
+      --max-width: 1040px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #fdf5ea 0, #f5f5f7 45%, #f0f2f5 100%);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #4b2c15;
+      font-size: 0.95rem;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+    }
+
+    .logo-text-main {
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 0.03em;
+    }
+
+    .logo-text-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .header-link {
+      font-size: 0.82rem;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    /* BOTÃO DESTACADO – ACESSO AO CLUBE */
+    .header-link-cta {
+      background: var(--accent);
+      color: #4b2c15;
+      font-weight: 600;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+    }
+
+    .header-link-cta:hover {
+      filter: brightness(0.98);
+    }
+
+    main {
+      flex: 1;
+      padding: 24px 16px 40px;
+    }
+
+    .main-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .tag-trilha {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 0.8rem;
+      margin-bottom: 18px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.3fr);
+      gap: 24px;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .hero-subtitle {
+      font-size: 0.96rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .hero-list {
+      font-size: 0.9rem;
+      margin-left: 18px;
+      margin-bottom: 14px;
+      color: var(--text-main);
+    }
+
+    .hero-list li {
+      margin-bottom: 4px;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .btn-primary-lg {
+      border: none;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 10px 20px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-helper {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .hero-card {
+      background: var(--bg-alt);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 16px 16px 14px;
+      font-size: 0.88rem;
+    }
+
+    .hero-card h2 {
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .hero-card p {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .hero-card ul {
+      font-size: 0.84rem;
+      margin-left: 16px;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .hero-card li {
+      margin-bottom: 4px;
+    }
+
+    .section {
+      margin-top: 18px;
+    }
+
+    .section h2 {
+      font-size: 1.35rem;
+      margin-bottom: 8px;
+    }
+
+    .section p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .section ul {
+      font-size: 0.89rem;
+      margin-left: 18px;
+      margin-bottom: 10px;
+    }
+
+    .section li {
+      margin-bottom: 4px;
+    }
+
+    footer {
+      background: #111111;
+      color: #d0d0d0;
+      font-size: 0.78rem;
+      padding: 10px 16px 16px;
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .footer-disclaimer {
+      color: #aaaaaa;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 880px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .header-inner {
+        padding-inline: 10px;
+      }
+      main {
+        padding-inline: 12px;
+      }
+      h1 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-badge">P&amp;P</div>
+        <div>
+          <div class="logo-text-main">Prato &amp; Peso</div>
+          <div class="logo-text-sub">Clube Prato &amp; Peso</div>
+        </div>
+      </a>
+
+      <div class="header-right">
+        <!-- Acesso direto ao painel do Clube -->
+        <a href="clube-login.html" class="header-link header-link-cta">
+          Acessar painel do Clube
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="main-inner">
+      <div class="tag-trilha">
+        Clube Prato &amp; Peso • Acompanhamento simples, sem milagre
+      </div>
+
+      <section class="hero">
+        <div>
+          <h1>Um painel de controle para o seu emagrecimento.</h1>
+          <p class="hero-subtitle">
+            O Clube Prato &amp; Peso é para quem quer continuar comendo <strong>comida normal</strong>,
+            ter mais consciência das calorias e acompanhar o peso sem neurose.
+          </p>
+
+          <ul class="hero-list">
+            <li>📈 <strong>Histórico de peso e metas</strong> em um lugar só.</li>
+            <li>🍽️ <strong>Diário de pratos e marmitas</strong> baseado em comida brasileira.</li>
+            <li>📊 <strong>Relatórios simples</strong> semanais e mensais.</li>
+            <li>📎 <strong>Materiais extras</strong> para organizar marmitas e hábitos.</li>
+          </ul>
+
+          <div class="hero-cta">
+            <a href="clube-login.html" class="btn-primary-lg">
+              Entrar no Clube (acesso gratuito na fase inicial)
+            </a>
+          </div>
+
+          <p class="hero-helper">
+            Durante a fase inicial do projeto, o acesso ao Clube está liberado gratuitamente para você usar e testar à vontade.
+          </p>
+        </div>
+
+        <aside class="hero-card">
+          <h2>Como o Clube encaixa com a parte grátis</h2>
+          <p>Primeiro, você usa as ferramentas gratuitas:</p>
+          <ul>
+            <li>📐 Calcula seu TDEE (manutenção).</li>
+            <li>🎯 Define uma meta de emagrecimento realista.</li>
+            <li>🍛 Monta pratos com o Montador de Prato.</li>
+          </ul>
+          <p>No Clube, você:</p>
+          <ul>
+            <li>📝 Registra peso (diário ou semanal) e vê a tendência.</li>
+            <li>❤️ Salva seus pratos favoritos (marmita do trabalho, jantar de casa, etc.).</li>
+            <li>📈 Vê relatórios simples que ligam calorias e evolução do peso.</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="section">
+        <h2>O que tem dentro do Clube</h2>
+        <p>
+          Nada de dieta maluca pronta. Aqui a ideia é dar ferramentas para você organizar o que já decidiu fazer por conta própria.
+        </p>
+
+        <ul>
+          <li>
+            <strong>Histórico de peso:</strong> você registra o peso 1x por dia ou por semana e
+            acompanha a linha ao longo do tempo.
+          </li>
+          <li>
+            <strong>Metas:</strong> define peso atual, peso alvo e prazo aproximado.
+          </li>
+          <li>
+            <strong>Diário de pratos:</strong> monta e salva pratos típicos do seu dia
+            (marmita da firma, jantar de casa, PF do restaurante).
+          </li>
+          <li>
+            <strong>Relatórios básicos:</strong> resumo semanal / mensal com calorias médias,
+            variação de peso e alguns recados simples.
+          </li>
+          <li>
+            <strong>Materiais extras:</strong> PDFs e guias para organizar marmitas e hábitos
+            (ex.: checklist de compra, ideias de pratos, etc.).
+          </li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-disclaimer">
+        <strong>Aviso:</strong> o Clube Prato &amp; Peso é um ambiente educativo e de organização.
+        Ele não substitui acompanhamento individual com nutricionista, médico ou outros profissionais de saúde.
+      </div>
+      <div style="font-size:0.75rem; color:#888888;">
+        © <span id="ano-atual"></span> Prato &amp; Peso. Todos os direitos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Atualiza ano automaticamente no rodapé
+    document.getElementById("ano-atual").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

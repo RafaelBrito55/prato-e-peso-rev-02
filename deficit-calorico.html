@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>O que é déficit calórico? – Prato & Peso</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Entenda, de maneira simples, o que é déficit calórico, por que ele faz você emagrecer e como usar essa ideia sem virar paranoia." />
+
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --bg-alt: #ffffff;
+      --primary: #1e5a4d;
+      --primary-soft: #e0f3ec;
+      --accent: #ffb347;
+      --accent-soft: #fff3df;
+      --text-main: #222222;
+      --text-muted: #666666;
+      --border-soft: #e0e0e0;
+      --radius-lg: 16px;
+      --radius-xl: 22px;
+      --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.08);
+      --max-width: 780px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: var(--bg-alt);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-badge {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #4b2c15;
+      font-size: 0.9rem;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo-text-main {
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.03em;
+    }
+
+    .logo-text-sub {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .header-links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .header-link {
+      font-size: 0.82rem;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .section {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 22px 16px 26px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 0.78rem;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #7a4a04;
+      font-size: 0.74rem;
+      margin-bottom: 4px;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      margin-top: 20px;
+      margin-bottom: 6px;
+    }
+
+    p {
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+    }
+
+    ul {
+      margin-left: 18px;
+      margin-bottom: 10px;
+      font-size: 0.94rem;
+    }
+
+    li {
+      margin-bottom: 4px;
+    }
+
+    .box-highlight {
+      margin: 10px 0 12px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: var(--accent-soft);
+      color: #7a4a04;
+      font-size: 0.9rem;
+    }
+
+    .box-note {
+      margin: 12px 0;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 0.9rem;
+    }
+
+    .inline-strong {
+      font-weight: 600;
+    }
+
+    .list-check {
+      list-style: none;
+      margin-left: 0;
+    }
+
+    .list-check li {
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .list-check span {
+      margin-top: 1px;
+    }
+
+    .nav-bottom {
+      margin-top: 18px;
+      padding-top: 10px;
+      border-top: 1px solid #e2e4e8;
+      font-size: 0.88rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: space-between;
+    }
+
+    .nav-bottom a {
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.88rem;
+    }
+
+    footer {
+      background: #111111;
+      color: #d0d0d0;
+      font-size: 0.78rem;
+      padding: 14px 16px 18px;
+      margin-top: auto;
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-disclaimer {
+      color: #aaaaaa;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 540px) {
+      .header-inner {
+        padding-inline: 10px;
+      }
+
+      .section {
+        padding-inline: 12px;
+      }
+
+      h1 {
+        font-size: 1.45rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <div class="logo-badge">P&amp;P</div>
+          <div>
+            <div class="logo-text-main">Prato &amp; Peso</div>
+            <div class="logo-text-sub">Conteúdo educativo</div>
+          </div>
+        </a>
+        <div class="header-links">
+          <a href="tdee.html" class="header-link">TDEE</a>
+          <a href="meta-emagrecimento.html" class="header-link">Meta</a>
+          <a href="prato.html" class="header-link">Montar prato</a>
+          <a href="clube.html" class="header-link">Clube</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section">
+        <div class="tag">
+          Conceito básico &nbsp;•&nbsp; Déficit calórico
+        </div>
+        <h1>O que é déficit calórico (sem complicação)?</h1>
+        <p class="subtitle">
+          Você já deve ter ouvido que “para emagrecer precisa estar em déficit calórico”. 
+          Aqui vai a versão simples, pé no chão e ligada à vida real – arroz, feijão, marmita, PF.
+        </p>
+
+        <div class="box-highlight">
+          <strong>Em uma frase:</strong> déficit calórico é quando, ao longo do tempo, 
+          você <span class="inline-strong">gasta mais calorias do que consome</span>.  
+          É isso que faz o corpo ir usando reservas (gordura) e o peso cair.
+        </div>
+
+        <h2>1. De onde vêm essas calorias?</h2>
+        <p>
+          Seu corpo gasta calorias todo dia, mesmo se você ficar parado. Esse gasto vem de:
+        </p>
+        <ul>
+          <li><strong>Metabolismo básico</strong>: manter órgãos funcionando, temperatura, etc.</li>
+          <li><strong>Movimento do dia a dia</strong>: caminhar, trabalhar, subir escada.</li>
+          <li><strong>Exercício</strong>: academia, caminhada, pedal, esporte.</li>
+        </ul>
+        <p>
+          A calculadora <strong>TDEE</strong> do Prato &amp; Peso faz uma estimativa desse gasto total de um dia. 
+          Esse número é a sua <strong>manutenção</strong>: se você comer mais ou menos isso, tende a manter o peso.
+        </p>
+
+        <h2>2. Então onde entra o déficit calórico?</h2>
+        <p>
+          Se manutenção é o “tanto pra ficar igual”, déficit calórico é quando você come <strong>um pouco menos</strong> do que isso.
+        </p>
+        <ul class="list-check">
+          <li>
+            <span>➖</span>
+            <span>Se você gasta ~2.200 kcal/dia e come ~2.200 kcal/dia → <strong>peso tende a ficar estável</strong>.</span>
+          </li>
+          <li>
+            <span>📉</span>
+            <span>Se você gasta ~2.200 kcal/dia e come ~1.800–1.900 kcal/dia → tem um <strong>déficit leve</strong>, tendência a emagrecer devagar.</span>
+          </li>
+          <li>
+            <span>📈</span>
+            <span>Se você gasta ~2.200 kcal/dia e come ~2.500–2.600 kcal/dia → tem um <strong>superávit</strong>, tendência a ganhar peso.</span>
+          </li>
+        </ul>
+
+        <div class="box-note">
+          No Prato &amp; Peso, a calculadora de <strong>Meta de Emagrecimento</strong> te ajuda a ver:  
+          “com esse déficit aqui, quanto tempo mais ou menos até chegar na meta?”
+        </div>
+
+        <h2>3. “Mas eu como arroz e feijão, não barrinha fitness…”</h2>
+        <p>
+          E é justamente aí que entra a ideia do site. Você não precisa trocar tudo por comida estranha.  
+          Em vez disso, você olha para o seu <strong>prato brasileiro normal</strong>:
+        </p>
+        <ul>
+          <li>Arroz, feijão, bife/frango, salada, farofa…</li>
+          <li>Marmita do trabalho, PF do dia a dia.</li>
+        </ul>
+        <p>
+          Com o <strong>Montador de Prato</strong>, você monta esse prato do jeito que já faz e vê:
+        </p>
+        <ul class="list-check">
+          <li><span>🍽️</span><span>Quantas kcal mais ou menos tem esse prato.</span></li>
+          <li><span>📊</span><span>Que % da sua meta diária esse prato representa.</span></li>
+        </ul>
+        <p>
+          A partir daí, os ajustes são mais pé no chão:
+        </p>
+        <ul>
+          <li>um pouco menos de arroz;</li>
+          <li>trocar batata frita por outra opção em alguns dias;</li>
+          <li>aumentar salada/legumes;</li>
+          <li>reduzir um pouco farofa, refrigerante, doces no dia a dia.</li>
+        </ul>
+
+        <h2>4. Déficit demais: onde a coisa começa a dar problema</h2>
+        <p>
+          “Então é só cortar o máximo possível e pronto?” Não é bem assim.
+        </p>
+        <p>Déficit muito alto costuma trazer:</p>
+        <ul>
+          <li>fome exagerada;</li>
+          <li>cansaço, irritação, queda de desempenho;</li>
+          <li>maior chance de largar tudo depois de algumas semanas;</li>
+          <li>perda de massa magra junto com gordura.</li>
+        </ul>
+        <p>
+          Por isso, em geral, se fala em algo como <strong>0,5–1,0 kg por semana</strong> como um intervalo mais razoável para muita gente.  
+          A calculadora de meta do Prato &amp; Peso já te mostra quando a meta está muito agressiva.
+        </p>
+
+        <h2>5. Como usar o Prato &amp; Peso nessa lógica</h2>
+        <p>Um roteiro bem prático:</p>
+        <ul class="list-check">
+          <li>
+            <span>1️⃣</span>
+            <span>Use a <strong>calculadora TDEE</strong> para estimar quantas calorias você gasta por dia (manutenção).</span>
+          </li>
+          <li>
+            <span>2️⃣</span>
+            <span>Na calculadora de <strong>Meta de Emagrecimento</strong>, defina seu peso atual, peso desejado e veja um déficit que não seja maluco.</span>
+          </li>
+          <li>
+            <span>3️⃣</span>
+            <span>No <strong>Montador de Prato</strong>, monte os pratos que você costuma comer (almoço, janta, marmita).</span>
+          </li>
+          <li>
+            <span>4️⃣</span>
+            <span>Compare os pratos com sua <strong>meta diária de calorias</strong>. Veja se precisa reduzir um pouco, ou trocar alguns itens em parte dos dias.</span>
+          </li>
+        </ul>
+
+        <p>
+          Se quiser ir além, no futuro o <strong>Clube Prato &amp; Peso</strong> entra como o lugar onde você:
+        </p>
+        <ul>
+          <li>registra seu peso (diário ou semanal);</li>
+          <li>salva seus pratos favoritos;</li>
+          <li>vê relatórios simples ligando calorias e evolução do peso.</li>
+        </ul>
+
+        <div class="box-note">
+          O objetivo aqui não é deixar você neurótico com número, e sim dar <strong>clareza</strong>.  
+          Em vez de “acho que estou fazendo tudo certo”, você passa a ver: “minha média de calorias está assim, meu peso está respondendo assim”.
+        </div>
+
+        <p style="font-size:0.9rem; color:var(--text-muted); margin-top:10px;">
+          Este texto tem caráter educativo e não substitui acompanhamento individual com nutricionista ou médico.  
+          Se você tem alguma condição de saúde, sempre converse com um profissional antes de fazer mudanças maiores.
+        </p>
+
+        <div class="nav-bottom">
+          <div>
+            ← <a href="index.html">Voltar para a página inicial</a>
+          </div>
+          <div>
+            Próximo passo: <a href="tdee.html">calcular meu TDEE</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-disclaimer">
+          <strong>Aviso importante:</strong><br />
+          As informações deste texto têm caráter educativo e não substituem avaliação individual com nutricionista, médico ou outros profissionais de saúde.
+        </div>
+        <div style="font-size:0.75rem; color:#888888;">
+          © <span id="ano-atual"></span> Prato &amp; Peso. Todos os direitos reservados.
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("ano-atual").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
