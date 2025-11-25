@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Clube Prato & Peso – Treino de hoje / Academia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --bg-alt: #ffffff;
+      --primary: #1e5a4d;
+      --primary-soft: #e0f3ec;
+      --accent: #ffb347;
+      --text-main: #222222;
+      --text-muted: #6b7280;
+      --border-soft: #e5e7eb;
+      --radius-xl: 20px;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
+      --max-width: 960px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #fff7df 0, #f5f5f7 45%, #e5e7eb 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-badge {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #4b2c15;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+    }
+
+    .logo-text-main {
+      font-weight: 700;
+      font-size: 0.97rem;
+      letter-spacing: 0.03em;
+    }
+
+    .header-link {
+      font-size: 0.82rem;
+      border-radius: 999px;
+      padding: 6px 12px;
+      border: 1px solid var(--border-soft);
+      background: #f9fafb;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .header-link span {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    main {
+      flex: 1;
+      padding: 24px 16px 32px;
+    }
+
+    .main-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .page-title {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .page-title h1 {
+      font-size: 1.4rem;
+      font-weight: 800;
+    }
+
+    .page-title p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .card {
+      background: var(--bg-alt);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-soft);
+      border: 1px solid var(--border-soft);
+      padding: 18px 16px 20px;
+    }
+
+    .card h2 {
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+
+    .card-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    @media (max-width: 640px) {
+      .form-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #374151;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .input,
+    select {
+      width: 100%;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      outline: none;
+      background: #f9fafb;
+    }
+
+    .input:focus,
+    select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px rgba(30, 90, 77, 0.2);
+      background: #ffffff;
+    }
+
+    .exercicios-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+      margin-top: 8px;
+    }
+
+    .exercicios-header h3 {
+      font-size: 0.92rem;
+    }
+
+    .btn,
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: none;
+      padding: 8px 14px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 10px 22px rgba(30, 90, 77, 0.55);
+    }
+
+    .btn:hover {
+      background: #124538;
+    }
+
+    .btn-ghost {
+      background: #e5efe9;
+      color: #065f46;
+    }
+
+    .btn-ghost:hover {
+      background: #d1e7dd;
+    }
+
+    .btn-small {
+      padding: 4px 10px;
+      font-size: 0.78rem;
+    }
+
+    .exercicio-lista {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .exercicio-row {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    @media (max-width: 640px) {
+      .exercicio-row {
+        grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+        grid-template-rows: auto auto;
+      }
+      .exercicio-row .btn-remove {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+      }
+    }
+
+    .input-number {
+      text-align: right;
+    }
+
+    .msg {
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+      min-height: 18px;
+    }
+
+    .msg.ok {
+      color: #166534;
+    }
+
+    .msg.error {
+      color: #b91c1c;
+    }
+
+    .ultimo-treino {
+      font-size: 0.87rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .treinos-lista {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .treino-item {
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      font-size: 0.86rem;
+    }
+
+    .treino-item-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .treino-item-data {
+      font-weight: 600;
+    }
+
+    .treino-item-tipo {
+      font-size: 0.8rem;
+      color: #047857;
+    }
+
+    .treino-item-exs {
+      font-size: 0.8rem;
+      color: #4b5563;
+    }
+
+    footer {
+      padding: 10px 16px 16px;
+      font-size: 0.78rem;
+      color: #9ca3af;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-badge">PaP</div>
+        <div class="logo-text-main">Prato &amp; Peso – Clube</div>
+      </div>
+      <button class="header-link" onclick="window.location.href='clube-area.html'">
+        <span>←</span> Voltar para o Clube
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <div class="main-inner">
+      <div class="page-title">
+        <h1>Treino de hoje / Academia</h1>
+        <p>Cadastre seu treino com os exercícios e seus respectivos pesos. Depois isso vira histórico para acompanhar a progressão de carga.</p>
+      </div>
+
+      <!-- CARD PRINCIPAL: FORMULÁRIO -->
+      <section class="card">
+        <h2>Registrar treino</h2>
+        <p class="card-subtitle">
+          Escolha o tipo de treino, a data e cadastre os exercícios com o peso que você utilizou.
+        </p>
+
+        <div class="form-grid">
+          <div>
+            <label for="dataTreino">Data do treino</label>
+            <input type="date" id="dataTreino" class="input" />
+          </div>
+          <div>
+            <label for="tipoTreino">Tipo de treino</label>
+            <select id="tipoTreino" class="input">
+              <option value="">Selecione...</option>
+              <option value="A">Treino A</option>
+              <option value="B">Treino B</option>
+              <option value="C">Treino C</option>
+              <option value="OUTRO">Outro / Personalizado</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div>
+            <label for="nomeTreinoPersonalizado">Nome do treino (quando for “Outro”)</label>
+            <input
+              type="text"
+              id="nomeTreinoPersonalizado"
+              class="input"
+              placeholder="Ex.: Treino Full body, Treino superior, etc."
+            />
+          </div>
+          <div>
+            <label>&nbsp;</label>
+            <div style="font-size:0.8rem; color:var(--text-muted);">
+              Para Treino A/B/C, o nome é preenchido automaticamente.
+            </div>
+          </div>
+        </div>
+
+        <div class="exercicios-header">
+          <h3>Exercícios do treino</h3>
+          <button type="button" class="btn-ghost btn-small" id="btnAdicionarExercicio">
+            + Adicionar exercício
+          </button>
+        </div>
+
+        <div class="exercicio-lista" id="listaExercicios">
+          <!-- linhas de exercícios são adicionadas via JS -->
+        </div>
+
+        <div class="msg" id="msg"></div>
+
+        <button type="button" class="btn" id="btnSalvarTreino">
+          Salvar treino
+        </button>
+
+        <p class="ultimo-treino" id="resumoUltimoTreino"></p>
+      </section>
+
+      <!-- CARD: ÚLTIMOS TREINOS -->
+      <section class="card">
+        <h2>Últimos treinos cadastrados</h2>
+        <p class="card-subtitle">
+          Veja um resumo dos últimos treinos salvos no Clube. Em breve isso será usado no relatório para mostrar sua progressão de carga.
+        </p>
+
+        <div class="treinos-lista" id="listaUltimosTreinos">
+          <!-- preenchido via JS -->
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    © <span id="anoAtual"></span> Prato &amp; Peso – Clube.
+  </footer>
+
+  <!-- Firebase / Firestore v8 -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+  <script>
+    // ====== CONFIG FIREBASE ======
+    const firebaseConfig = {
+      apiKey: "AIzaSyABfAWUAW6a6g93B9QKooTKd5Mj645G3vE",
+      authDomain: "prato-e-peso-77b5a.firebaseapp.com",
+      projectId: "prato-e-peso-77b5a",
+      storageBucket: "prato-e-peso-77b5a.firebasestorage.app",
+      messagingSenderId: "432109202072",
+      appId: "1:432109202072:web:1c8636db0c161318ddfeed"
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const auth = firebase.auth();
+    const db   = firebase.firestore();
+
+    // ====== ELEMENTOS ======
+    const anoAtualSpan   = document.getElementById("anoAtual");
+    const dataTreinoInput = document.getElementById("dataTreino");
+    const tipoTreinoSelect = document.getElementById("tipoTreino");
+    const nomeTreinoInput = document.getElementById("nomeTreinoPersonalizado");
+    const listaExerciciosDiv = document.getElementById("listaExercicios");
+    const msgDiv = document.getElementById("msg");
+    const btnAdicionarExercicio = document.getElementById("btnAdicionarExercicio");
+    const btnSalvarTreino = document.getElementById("btnSalvarTreino");
+    const resumoUltimoTreino = document.getElementById("resumoUltimoTreino");
+    const listaUltimosTreinos = document.getElementById("listaUltimosTreinos");
+
+    let currentUid = null;
+
+    anoAtualSpan.textContent = new Date().getFullYear();
+
+    function setHoje() {
+      const hoje = new Date();
+      const yyyy = hoje.getFullYear();
+      const mm = String(hoje.getMonth() + 1).padStart(2, "0");
+      const dd = String(hoje.getDate()).padStart(2, "0");
+      dataTreinoInput.value = `${yyyy}-${mm}-${dd}`;
+    }
+
+    function mostrarMsg(texto, tipo) {
+      msgDiv.textContent = texto || "";
+      msgDiv.classList.remove("ok", "error");
+      if (!texto) return;
+      if (tipo === "ok") msgDiv.classList.add("ok");
+      if (tipo === "error") msgDiv.classList.add("error");
+    }
+
+    function formatarDataBR(dataISO) {
+      if (!dataISO) return "";
+      const partes = dataISO.split("-");
+      if (partes.length !== 3) return dataISO;
+      const [ano, mes, dia] = partes;
+      return `${dia}/${mes}/${ano}`;
+    }
+
+    // ====== EXERCÍCIOS DINÂMICOS ======
+    function criarLinhaExercicio(nome = "", peso = "") {
+      const row = document.createElement("div");
+      row.className = "exercicio-row";
+
+      const inputNome = document.createElement("input");
+      inputNome.type = "text";
+      inputNome.placeholder = "Nome do exercício (ex.: Supino reto, Extensora...)";
+      inputNome.className = "input exercicio-nome";
+      inputNome.value = nome;
+
+      const inputPeso = document.createElement("input");
+      inputPeso.type = "number";
+      inputPeso.min = "0";
+      inputPeso.step = "0.5";
+      inputPeso.placeholder = "Peso (kg)";
+      inputPeso.className = "input input-number exercicio-peso";
+      inputPeso.value = peso;
+
+      const btnRemover = document.createElement("button");
+      btnRemover.type = "button";
+      btnRemover.className = "btn-ghost btn-small btn-remove";
+      btnRemover.textContent = "Remover";
+      btnRemover.addEventListener("click", () => {
+        listaExerciciosDiv.removeChild(row);
+        if (listaExerciciosDiv.children.length === 0) {
+          adicionarExercicioVazio();
+        }
+      });
+
+      row.appendChild(inputNome);
+      row.appendChild(inputPeso);
+      row.appendChild(btnRemover);
+
+      return row;
+    }
+
+    function adicionarExercicioVazio() {
+      const linha = criarLinhaExercicio();
+      listaExerciciosDiv.appendChild(linha);
+    }
+
+    btnAdicionarExercicio.addEventListener("click", () => {
+      listaExerciciosDiv.appendChild(criarLinhaExercicio());
+    });
+
+    // ====== SALVAR TREINO ======
+    async function salvarTreino() {
+      mostrarMsg("");
+
+      if (!currentUid) {
+        mostrarMsg("Não foi possível identificar sua conta. Faça login novamente.", "error");
+        return;
+      }
+
+      const dataTreino = dataTreinoInput.value;
+      const tipoTreino = tipoTreinoSelect.value;
+
+      if (!dataTreino) {
+        mostrarMsg("Informe a data do treino.", "error");
+        return;
+      }
+      if (!tipoTreino) {
+        mostrarMsg("Selecione o tipo de treino (A, B, C ou Outro).", "error");
+        return;
+      }
+
+      let nomeTreino = "";
+      if (tipoTreino === "OUTRO") {
+        nomeTreino = nomeTreinoInput.value.trim();
+        if (!nomeTreino) {
+          mostrarMsg("Informe o nome do treino quando escolher 'Outro'.", "error");
+          return;
+        }
+      } else {
+        nomeTreino = `Treino ${tipoTreino}`;
+      }
+
+      const linhas = listaExerciciosDiv.querySelectorAll(".exercicio-row");
+      const exercicios = [];
+
+      linhas.forEach((row) => {
+        const nome = row.querySelector(".exercicio-nome").value.trim();
+        const pesoStr = row.querySelector(".exercicio-peso").value.trim();
+        if (!nome && !pesoStr) return;
+
+        const peso = parseFloat(pesoStr.replace(",", "."));
+        if (!nome || isNaN(peso)) return;
+
+        exercicios.push({
+          nome,
+          pesoKg: peso
+        });
+      });
+
+      if (exercicios.length === 0) {
+        mostrarMsg("Adicione pelo menos um exercício com nome e peso.", "error");
+        return;
+      }
+
+      try {
+        await db.collection("treinos").add({
+          uid: currentUid,
+          data: dataTreino,           // "YYYY-MM-DD"
+          tipoTreino: tipoTreino,     // A, B, C ou OUTRO
+          nomeTreino: nomeTreino,     // ex.: Treino A, Treino B, Treino superior...
+          exercicios: exercicios,
+          criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        mostrarMsg("Treino salvo com sucesso!", "ok");
+        resumoUltimoTreino.textContent =
+          `Último treino salvo: ${formatarDataBR(dataTreino)} – ${nomeTreino} (${exercicios.length} exercício(s)).`;
+
+        // recarrega lista de últimos treinos
+        carregarUltimosTreinos(currentUid);
+      } catch (error) {
+        console.error("Erro ao salvar treino:", error);
+        mostrarMsg("Erro ao salvar o treino. Tente novamente.", "error");
+      }
+    }
+
+    btnSalvarTreino.addEventListener("click", salvarTreino);
+
+    // ====== LISTAR ÚLTIMOS TREINOS ======
+    async function carregarUltimosTreinos(uid) {
+      if (!listaUltimosTreinos) return;
+      listaUltimosTreinos.innerHTML = "<div style='font-size:0.85rem; color:#9ca3af;'>Carregando...</div>";
+
+      try {
+        const snapshot = await db
+          .collection("treinos")
+          .where("uid", "==", uid)
+          .get();
+
+        if (snapshot.empty) {
+          listaUltimosTreinos.innerHTML =
+            "<div style='font-size:0.85rem; color:#9ca3af;'>Você ainda não cadastrou treinos no Clube.</div>";
+          return;
+        }
+
+        const docs = snapshot.docs.slice();
+        docs.sort((a, b) => {
+          const da = a.data().data || "";
+          const dbb = b.data().data || "";
+          if (da < dbb) return 1;
+          if (da > dbb) return -1;
+          return 0;
+        });
+
+        const ultimos = docs.slice(0, 5).map(d => d.data());
+
+        listaUltimosTreinos.innerHTML = "";
+        ultimos.forEach(t => {
+          const item = document.createElement("div");
+          item.className = "treino-item";
+
+          const header = document.createElement("div");
+          header.className = "treino-item-header";
+
+          const dataSpan = document.createElement("span");
+          dataSpan.className = "treino-item-data";
+          dataSpan.textContent = formatarDataBR(t.data);
+
+          const tipoSpan = document.createElement("span");
+          tipoSpan.className = "treino-item-tipo";
+          tipoSpan.textContent = t.nomeTreino || "Treino";
+
+          header.appendChild(dataSpan);
+          header.appendChild(tipoSpan);
+
+          const exSpan = document.createElement("div");
+          exSpan.className = "treino-item-exs";
+
+          const exs = Array.isArray(t.exercicios) ? t.exercicios.slice(0, 3) : [];
+          if (exs.length === 0) {
+            exSpan.textContent = "Sem exercícios cadastrados.";
+          } else {
+            exSpan.textContent = exs
+              .map(e => `${e.nome} – ${e.pesoKg} kg`)
+              .join(" · ");
+          }
+
+          item.appendChild(header);
+          item.appendChild(exSpan);
+          listaUltimosTreinos.appendChild(item);
+        });
+      } catch (error) {
+        console.error("Erro ao carregar últimos treinos:", error);
+        listaUltimosTreinos.innerHTML =
+          "<div style='font-size:0.85rem; color:#b91c1c;'>Erro ao carregar os treinos. Tente novamente.</div>";
+      }
+    }
+
+    // ====== LOGIN / INICIALIZAÇÃO ======
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = "clube-login.html";
+        return;
+      }
+
+      currentUid = user.uid;
+      setHoje();
+
+      if (listaExerciciosDiv.children.length === 0) {
+        adicionarExercicioVazio();
+      }
+
+      carregarUltimosTreinos(currentUid);
+    });
+  </script>
+</body>
+</html>
