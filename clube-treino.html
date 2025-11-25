@@ -131,6 +131,18 @@
       color: var(--text-muted);
     }
 
+    .layout-top {
+      display: grid;
+      gap: 16px;
+    }
+
+    @media (min-width: 900px) {
+      .layout-top {
+        grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+        align-items: flex-start;
+      }
+    }
+
     .card {
       background: var(--bg-alt);
       border-radius: var(--radius-xl);
@@ -302,6 +314,13 @@
       background: #f9fafb;
       border: 1px solid #e5e7eb;
       font-size: 0.86rem;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.05s ease;
+    }
+
+    .treino-item:hover {
+      background: #eef2ff;
+      transform: translateY(-1px);
     }
 
     .treino-item-header {
@@ -367,6 +386,43 @@
       color: #4b5563;
     }
 
+    /* Histórico */
+    .historico-lista {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .hist-item {
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      font-size: 0.84rem;
+    }
+
+    .hist-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 3px;
+    }
+
+    .hist-data {
+      font-weight: 600;
+    }
+
+    .hist-nome {
+      font-size: 0.8rem;
+      color: #047857;
+    }
+
+    .hist-exs {
+      font-size: 0.8rem;
+      color: #4b5563;
+    }
+
     footer {
       padding: 10px 16px 16px;
       font-size: 0.78rem;
@@ -395,76 +451,91 @@
         <p>Cadastre seu treino com os exercícios e seus respectivos pesos. Depois isso vira histórico para acompanhar a progressão de carga.</p>
       </div>
 
-      <!-- CARD PRINCIPAL: FORMULÁRIO -->
-      <section class="card">
-        <h2>Registrar treino</h2>
-        <p class="card-subtitle">
-          Escolha o tipo de treino, a data e cadastre os exercícios com o peso que você utilizou.
-        </p>
+      <!-- FORM + SELEÇÃO LADO A LADO -->
+      <div class="layout-top">
+        <!-- CARD PRINCIPAL: FORMULÁRIO -->
+        <section class="card">
+          <h2>Registrar treino</h2>
+          <p class="card-subtitle">
+            Escolha o tipo de treino, a data e cadastre os exercícios com o peso que você utilizou.
+          </p>
 
-        <div class="form-grid">
-          <div>
-            <label for="dataTreino">Data do treino</label>
-            <input type="date" id="dataTreino" class="input" />
-          </div>
-          <div>
-            <label for="tipoTreino">Tipo de treino</label>
-            <select id="tipoTreino" class="input">
-              <option value="">Selecione...</option>
-              <option value="A">Treino A</option>
-              <option value="B">Treino B</option>
-              <option value="C">Treino C</option>
-              <option value="OUTRO">Outro / Personalizado</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-grid">
-          <div>
-            <label for="nomeTreinoPersonalizado">Nome do treino (quando for “Outro”)</label>
-            <input
-              type="text"
-              id="nomeTreinoPersonalizado"
-              class="input"
-              placeholder="Ex.: Treino Full body, Treino superior, etc."
-            />
-          </div>
-          <div>
-            <label>&nbsp;</label>
-            <div style="font-size:0.8rem; color:var(--text-muted);">
-              Para Treino A/B/C, o nome é preenchido automaticamente.
+          <div class="form-grid">
+            <div>
+              <label for="dataTreino">Data do treino</label>
+              <input type="date" id="dataTreino" class="input" />
+            </div>
+            <div>
+              <label for="tipoTreino">Tipo de treino</label>
+              <select id="tipoTreino" class="input">
+                <option value="">Selecione...</option>
+                <option value="A">Treino A</option>
+                <option value="B">Treino B</option>
+                <option value="C">Treino C</option>
+                <option value="OUTRO">Outro / Personalizado</option>
+              </select>
             </div>
           </div>
-        </div>
 
-        <div class="exercicios-header">
-          <h3>Exercícios do treino</h3>
-          <button type="button" class="btn-ghost btn-small" id="btnAdicionarExercicio">
-            + Adicionar exercício
+          <div class="form-grid">
+            <div>
+              <label for="nomeTreinoPersonalizado">Nome do treino (quando for “Outro”)</label>
+              <input
+                type="text"
+                id="nomeTreinoPersonalizado"
+                class="input"
+                placeholder="Ex.: Treino Full body, Treino superior, etc."
+              />
+            </div>
+            <div>
+              <label>&nbsp;</label>
+              <div style="font-size:0.8rem; color:var(--text-muted);">
+                Para Treino A/B/C, o nome é preenchido automaticamente.
+              </div>
+            </div>
+          </div>
+
+          <div class="exercicios-header">
+            <h3>Exercícios do treino</h3>
+            <button type="button" class="btn-ghost btn-small" id="btnAdicionarExercicio">
+              + Adicionar exercício
+            </button>
+          </div>
+
+          <div class="exercicio-lista" id="listaExercicios">
+            <!-- linhas de exercícios são adicionadas via JS -->
+          </div>
+
+          <div class="msg" id="msg"></div>
+
+          <button type="button" class="btn" id="btnSalvarTreino">
+            Salvar treino
           </button>
-        </div>
 
-        <div class="exercicio-lista" id="listaExercicios">
-          <!-- linhas de exercícios são adicionadas via JS -->
-        </div>
+          <p class="ultimo-treino" id="resumoUltimoTreino"></p>
+        </section>
 
-        <div class="msg" id="msg"></div>
+        <!-- CARD LATERAL: SELEÇÃO RÁPIDA -->
+        <section class="card">
+          <h2>Treinos salvos para usar</h2>
+          <p class="card-subtitle">
+            Toque em um treino para carregar no formulário ao lado. Use <strong>Editar</strong> apenas para corrigir um treino já salvo.
+          </p>
 
-        <button type="button" class="btn" id="btnSalvarTreino">
-          Salvar treino
-        </button>
+          <div class="treinos-lista" id="listaTreinosSelecao">
+            <!-- preenchido via JS -->
+          </div>
+        </section>
+      </div>
 
-        <p class="ultimo-treino" id="resumoUltimoTreino"></p>
-      </section>
-
-      <!-- CARD: ÚLTIMOS TREINOS -->
+      <!-- CARD INFERIOR: HISTÓRICO -->
       <section class="card">
-        <h2>Últimos treinos cadastrados</h2>
+        <h2>Histórico recente de treinos</h2>
         <p class="card-subtitle">
-          Veja um resumo dos últimos treinos salvos no Clube. Use <strong>Usar</strong> para carregar o treino e salvar como novo, ou <strong>Editar</strong> para corrigir um treino já salvo.
+          Visão simples dos últimos treinos registrados no Clube. Em breve será usado nos relatórios de progressão de carga.
         </p>
 
-        <div class="treinos-lista" id="listaUltimosTreinos">
+        <div class="historico-lista" id="listaUltimosTreinos">
           <!-- preenchido via JS -->
         </div>
       </section>
@@ -507,6 +578,7 @@
     const btnAdicionarExercicio = document.getElementById("btnAdicionarExercicio");
     const btnSalvarTreino     = document.getElementById("btnSalvarTreino");
     const resumoUltimoTreino  = document.getElementById("resumoUltimoTreino");
+    const listaTreinosSelecao = document.getElementById("listaTreinosSelecao");
     const listaUltimosTreinos = document.getElementById("listaUltimosTreinos");
 
     let currentUid = null;
@@ -756,10 +828,14 @@
       }
     }
 
-    // ====== LISTAR ÚLTIMOS TREINOS ======
+    // ====== LISTAR ÚLTIMOS TREINOS (SELEÇÃO + HISTÓRICO) ======
     async function carregarUltimosTreinos(uid) {
-      if (!listaUltimosTreinos) return;
-      listaUltimosTreinos.innerHTML = "<div style='font-size:0.85rem; color:#9ca3af;'>Carregando...</div>";
+      if (!listaTreinosSelecao || !listaUltimosTreinos) return;
+
+      listaTreinosSelecao.innerHTML =
+        "<div style='font-size:0.85rem; color:#9ca3af;'>Carregando...</div>";
+      listaUltimosTreinos.innerHTML =
+        "<div style='font-size:0.85rem; color:#9ca3af;'>Carregando...</div>";
 
       try {
         const snapshot = await db
@@ -768,8 +844,9 @@
           .get();
 
         if (snapshot.empty) {
-          listaUltimosTreinos.innerHTML =
-            "<div style='font-size:0.85rem; color:#9ca3af;'>Você ainda não cadastrou treinos no Clube.</div>";
+          const msg = "<div style='font-size:0.85rem; color:#9ca3af;'>Você ainda não cadastrou treinos no Clube.</div>";
+          listaTreinosSelecao.innerHTML = msg;
+          listaUltimosTreinos.innerHTML = msg;
           return;
         }
 
@@ -782,10 +859,12 @@
           return 0;
         });
 
-        const ultimosDocs = docs.slice(0, 5);
+        const selecaoDocs = docs.slice(0, 5);
+        const histDocs    = docs.slice(0, 10);
 
-        listaUltimosTreinos.innerHTML = "";
-        ultimosDocs.forEach((doc) => {
+        // --- seleção lateral ---
+        listaTreinosSelecao.innerHTML = "";
+        selecaoDocs.forEach((doc) => {
           const t = doc.data();
           const treinoId = doc.id;
 
@@ -810,19 +889,28 @@
           usarBtn.type = "button";
           usarBtn.className = "treino-btn usar";
           usarBtn.textContent = "Usar";
-          usarBtn.addEventListener("click", () => carregarTreinoNoFormulario(treinoId, false));
+          usarBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            carregarTreinoNoFormulario(treinoId, false);
+          });
 
           const editarBtn = document.createElement("button");
           editarBtn.type = "button";
           editarBtn.className = "treino-btn editar";
           editarBtn.textContent = "Editar";
-          editarBtn.addEventListener("click", () => carregarTreinoNoFormulario(treinoId, true));
+          editarBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            carregarTreinoNoFormulario(treinoId, true);
+          });
 
           const delBtn = document.createElement("button");
           delBtn.type = "button";
           delBtn.className = "treino-btn excluir";
           delBtn.textContent = "Excluir";
-          delBtn.addEventListener("click", () => excluirTreino(treinoId));
+          delBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            excluirTreino(treinoId);
+          });
 
           actionsDiv.appendChild(tipoSpan);
           actionsDiv.appendChild(usarBtn);
@@ -844,14 +932,59 @@
               .join(" · ");
           }
 
+          // clicar no card inteiro = Usar
+          item.addEventListener("click", () => {
+            carregarTreinoNoFormulario(treinoId, false);
+          });
+
+          item.appendChild(header);
+          item.appendChild(exSpan);
+          listaTreinosSelecao.appendChild(item);
+        });
+
+        // --- histórico inferior ---
+        listaUltimosTreinos.innerHTML = "";
+        histDocs.forEach((doc) => {
+          const t = doc.data();
+          const item = document.createElement("div");
+          item.className = "hist-item";
+
+          const header = document.createElement("div");
+          header.className = "hist-header";
+
+          const dataSpan = document.createElement("span");
+          dataSpan.className = "hist-data";
+          dataSpan.textContent = formatarDataBR(t.data);
+
+          const nomeSpan = document.createElement("span");
+          nomeSpan.className = "hist-nome";
+          nomeSpan.textContent = t.nomeTreino || "Treino";
+
+          header.appendChild(dataSpan);
+          header.appendChild(nomeSpan);
+
+          const exSpan = document.createElement("div");
+          exSpan.className = "hist-exs";
+          const exs = Array.isArray(t.exercicios) ? t.exercicios.slice(0, 3) : [];
+          if (exs.length === 0) {
+            exSpan.textContent = "Sem exercícios cadastrados.";
+          } else {
+            exSpan.textContent = exs
+              .map(e => `${e.nome} – ${e.pesoKg} kg`)
+              .join(" · ");
+          }
+
           item.appendChild(header);
           item.appendChild(exSpan);
           listaUltimosTreinos.appendChild(item);
         });
+
       } catch (error) {
         console.error("Erro ao carregar últimos treinos:", error);
-        listaUltimosTreinos.innerHTML =
+        const msgErro =
           "<div style='font-size:0.85rem; color:#b91c1c;'>Erro ao carregar os treinos. Tente novamente.</div>";
+        listaTreinosSelecao.innerHTML = msgErro;
+        listaUltimosTreinos.innerHTML = msgErro;
       }
     }
 
