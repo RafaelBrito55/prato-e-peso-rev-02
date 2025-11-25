@@ -549,6 +549,47 @@
       color: #6b7280;
     }
 
+    /* Banner de aviso de novo endereço */
+    .info-banner {
+      margin: 12px auto 18px;
+      max-width: 960px;
+      background: #fff7e6;
+      border: 1px solid #f4d9a7;
+      color: #5c4b2b;
+      border-radius: 14px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 0.88rem;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .info-banner-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .info-banner-text strong {
+      font-weight: 600;
+    }
+
+    .info-banner-close {
+      border: none;
+      background: transparent;
+      font-size: 1.1rem;
+      line-height: 1;
+      cursor: pointer;
+      color: #8c7a4f;
+      padding: 2px 4px;
+    }
+
+    .info-banner-close:hover {
+      color: #5c4b2b;
+    }
+
     @media (max-width: 900px) {
       .hero {
         grid-template-columns: minmax(0, 1fr);
@@ -566,6 +607,11 @@
 
       .header-inner {
         padding-inline: 10px;
+      }
+
+      .info-banner {
+        margin-inline: 8px;
+        font-size: 0.8rem;
       }
     }
   </style>
@@ -594,6 +640,21 @@
 
   <main>
     <div class="main-inner">
+
+      <!-- Aviso de novo endereço do site -->
+      <div id="info-domain-banner" class="info-banner" style="display: none;">
+        <div class="info-banner-text">
+          <strong>Aviso importante:</strong>
+          <span>
+            A partir de <strong>1º de dezembro de 2025</strong>, o Prato &amp; Peso passa a ficar disponível em um novo endereço:
+            <strong>www.pratoepeso.com.br</strong>. Salve esse link nos seus favoritos.
+            Em caso de dúvidas, entre em contato pelo e-mail
+            <strong>rafaelbrito162@gmail.com</strong>.
+          </span>
+        </div>
+        <button type="button" class="info-banner-close" aria-label="Fechar aviso">&times;</button>
+      </div>
+
       <section class="hero">
         <div class="hero-left">
           <div class="hero-pill">
@@ -784,7 +845,31 @@
   </footer>
 
   <script>
+    // ano no rodapé
     document.getElementById("anoAtual").textContent = new Date().getFullYear();
+
+    // banner de novo endereço
+    (function () {
+      var banner = document.getElementById("info-domain-banner");
+      if (!banner) return;
+
+      var hoje = new Date();
+      var inicio = new Date("2025-12-01T00:00:00");
+
+      // só exibe a partir de 01/12/2025
+      if (hoje >= inicio) {
+        banner.style.display = "flex";
+      } else {
+        return;
+      }
+
+      var btnFechar = banner.querySelector(".info-banner-close");
+      if (btnFechar) {
+        btnFechar.addEventListener("click", function () {
+          banner.style.display = "none";
+        });
+      }
+    })();
   </script>
 </body>
 </html>
