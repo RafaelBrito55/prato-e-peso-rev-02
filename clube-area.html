@@ -7,18 +7,16 @@
 
   <style>
     :root {
-      --bg: #f3f4f6;
+      --bg: #f5f5f7;
       --bg-alt: #ffffff;
-      --primary: #145a32;
-      --primary-soft: #e0f2f1;
-      --accent: #facc15;
-      --accent-text: #78350f;
-      --text-main: #111827;
+      --primary: #1e5a4d;
+      --primary-soft: #e0f3ec;
+      --accent: #ffb347;
+      --text-main: #222222;
       --text-muted: #6b7280;
       --border-soft: #e5e7eb;
-      --radius-lg: 18px;
       --radius-xl: 22px;
-      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.12);
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
       --max-width: 1120px;
     }
 
@@ -30,7 +28,7 @@
 
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #fdf5dd 0, #f3f4f6 45%, #e5e7eb 100%);
+      background: radial-gradient(circle at top, #fff7df 0, #f5f5f7 45%, #e5e7eb 100%);
       color: var(--text-main);
       min-height: 100vh;
     }
@@ -40,10 +38,10 @@
       text-decoration: none;
     }
 
-    /* HEADER SUPERIOR */
+    /* HEADER */
     header {
       background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(10px);
       position: sticky;
       top: 0;
       z-index: 10;
@@ -67,8 +65,8 @@
     }
 
     .brand-badge {
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       background: var(--accent);
       display: flex;
@@ -76,17 +74,31 @@
       justify-content: center;
       font-weight: 800;
       font-size: 0.9rem;
-      color: var(--accent-text);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+      color: #4b2c15;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
     }
 
     .brand-name {
       font-weight: 700;
       letter-spacing: 0.03em;
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
 
-    /* CONTEÚDO PRINCIPAL */
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .topbar-link {
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      padding: 6px 12px;
+      background: #f9fafb;
+      font-size: 0.82rem;
+      cursor: pointer;
+    }
+
     main {
       padding: 24px 16px 36px;
     }
@@ -97,13 +109,12 @@
     }
 
     .hero {
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
     .hero h1 {
-      font-size: 1.8rem;
+      font-size: 1.7rem;
       font-weight: 800;
-      margin-bottom: 4px;
     }
 
     /* GRID DE CARDS */
@@ -194,7 +205,11 @@
     .btn-primary {
       background: var(--primary);
       color: #ffffff;
-      box-shadow: 0 10px 22px rgba(21, 128, 61, 0.5);
+      box-shadow: 0 10px 22px rgba(30, 90, 77, 0.55);
+    }
+
+    .btn-primary:hover {
+      background: #124538;
     }
 
     .btn-ghost {
@@ -215,15 +230,7 @@
       margin-top: 6px;
     }
 
-    footer {
-      padding: 10px 16px 18px;
-      font-size: 0.78rem;
-      color: #9ca3af;
-      text-align: center;
-    }
-
-    /* ========= PESO & PROGRESSO ========= */
-
+    /* PESO & PROGRESSO – gráfico mini */
     .peso-wrapper {
       display: flex;
       align-items: flex-start;
@@ -278,7 +285,7 @@
       text-align: right;
     }
 
-    /* TAGS MEDIDAS – chips */
+    /* MEDIDAS – chips */
     .tags-grid {
       display: flex;
       flex-wrap: wrap;
@@ -298,6 +305,25 @@
 
     .tag-pill strong {
       font-size: 0.83rem;
+    }
+
+    /* LISTA SIMPLES */
+    .list-simple {
+      list-style: none;
+      font-size: 0.88rem;
+      margin-bottom: 8px;
+      padding-left: 0;
+    }
+
+    .list-simple li + li {
+      margin-top: 3px;
+    }
+
+    footer {
+      padding: 10px 16px 18px;
+      font-size: 0.78rem;
+      color: #9ca3af;
+      text-align: center;
     }
 
     @media (max-width: 480px) {
@@ -326,7 +352,11 @@
         <div class="brand-badge">PaP</div>
         <span class="brand-name">Prato &amp; Peso</span>
       </div>
-      <!-- botão de meta removido -->
+      <div class="topbar-right">
+        <button class="topbar-link" onclick="window.location.href='clube-conta.html'">
+          Minha conta
+        </button>
+      </div>
     </div>
   </header>
 
@@ -339,7 +369,7 @@
 
       <!-- Cards -->
       <section class="cards-grid">
-        <!-- Resumo de hoje (ainda estático) -->
+        <!-- Resumo de hoje (estático por enquanto) -->
         <article class="card" id="card-resumo-hoje">
           <h2>Resumo de hoje</h2>
           <p class="card-subtitle">Visão rápida do seu dia em calorias.</p>
@@ -526,18 +556,25 @@
           </button>
         </article>
 
-        <!-- Treino de hoje / Academia (por enquanto estático) -->
+        <!-- Treino de hoje / Academia -->
         <article class="card" id="card-treino">
           <h2>Treino de hoje / Academia</h2>
           <p class="card-subtitle">Últimos pesos para você lembrar na próxima sessão.</p>
 
           <ul class="list-simple">
-            <li><strong>Último treino:</strong> 24/11/2025 – Treino A (Peito/Tríceps)</li>
-            <li><strong>Supino reto:</strong> 60 kg</li>
-            <li><strong>Leg press:</strong> 200 kg</li>
+            <li id="treino-ultimo">
+              <strong>Último treino:</strong> —
+            </li>
+            <li id="treino-ex1">
+              <strong>Exercício 1:</strong> —
+            </li>
+            <li id="treino-ex2">
+              <strong>Exercício 2:</strong> —
+            </li>
           </ul>
 
-          <button class="btn btn-primary" type="button">
+          <button class="btn btn-primary" type="button"
+                  onclick="window.location.href='clube-treino.html'">
             Registrar treino de hoje
           </button>
         </article>
@@ -597,21 +634,41 @@
 
     let currentUid = null;
 
-    // --- elementos prato ---
+    /* ---------- Funções utilitárias ---------- */
+    function formatarDataBR(dataISO) {
+      if (!dataISO) return "";
+      const partes = dataISO.split("-");
+      if (partes.length !== 3) return dataISO;
+      const [ano, mes, dia] = partes;
+      return `${dia}/${mes}`;
+    }
+
+    function formatarNumero(valor, casas) {
+      if (valor === null || valor === undefined || isNaN(valor)) return "—";
+      return Number(valor).toLocaleString("pt-BR", {
+        minimumFractionDigits: casas,
+        maximumFractionDigits: casas
+      });
+    }
+
+    /* ---------- Referências DOM ---------- */
+    // prato
     const pratoDataSpan     = document.getElementById("prato-data");
     const pratoCaloriasSpan = document.getElementById("prato-calorias");
     const pratoSubtitle     = document.getElementById("card-prato-subtitle");
 
-    // --- elementos peso ---
+    // peso
     const pesoAtualSpan     = document.getElementById("peso-atual");
     const pesoVariacao7Text = document.getElementById("peso-variacao7-text");
+    let graficoPesoMini = null;
 
-    // --- elementos TDEE ---
-    const tdeeAtualSpan        = document.getElementById("tdee-atual");
-    const tdeeMetaDescricao    = document.getElementById("tdee-meta-descricao");
-    const tdeeConsumoResumo    = document.getElementById("tdee-consumo-resumo");
+    // TDEE
+    const tdeeAtualSpan     = document.getElementById("tdee-atual");
+    const tdeeMetaDescricao = document.getElementById("tdee-meta-descricao");
+    const tdeeConsumoResumo = document.getElementById("tdee-consumo-resumo");
+    let consumoTotalHojeFmt = "— kcal";
 
-    // --- elementos Medidas corporais ---
+    // medidas
     const medidaPescocoSpan    = document.getElementById("medida-pescoco");
     const medidaOmbroSpan      = document.getElementById("medida-ombro");
     const medidaPeitoSpan      = document.getElementById("medida-peito");
@@ -629,32 +686,18 @@
     const medidaQuadrilSpan    = document.getElementById("medida-quadril");
     const medidasLegenda       = document.getElementById("medidas-legenda");
 
-    let graficoPesoMini = null;
-    let consumoTotalHojeFmt = "— kcal";
+    // treino
+    const treinoUltimoLi = document.getElementById("treino-ultimo");
+    const treinoEx1Li    = document.getElementById("treino-ex1");
+    const treinoEx2Li    = document.getElementById("treino-ex2");
 
-    function formatarDataBR(dataISO) {
-      if (!dataISO) return "";
-      const partes = dataISO.split("-");
-      if (partes.length !== 3) return dataISO;
-      const [ano, mes, dia] = partes;
-      return `${dia}/${mes}`;
-    }
-
-    function formatarNumero(valor, casas) {
-      if (valor === null || valor === undefined || isNaN(valor)) return "—";
-      return Number(valor).toLocaleString("pt-BR", {
-        minimumFractionDigits: casas,
-        maximumFractionDigits: casas
-      });
-    }
-
+    /* ---------- Consumo / prato ---------- */
     function atualizarTdeeConsumoResumo() {
       if (tdeeConsumoResumo) {
         tdeeConsumoResumo.textContent = "Consumo total hoje: " + consumoTotalHojeFmt;
       }
     }
 
-    /* ====== MONTAR PRATO BRASILEIRO (card) ====== */
     async function carregarResumoPrato(uid) {
       if (!pratoDataSpan || !pratoCaloriasSpan) return;
 
@@ -720,7 +763,7 @@
       }
     }
 
-    /* ====== DESENHO DO MINI GRÁFICO DE PESO (Chart.js, VERDE) ====== */
+    /* ---------- Gráfico de peso (Chart.js) ---------- */
     function desenharGraficoPesoMini(labels, dados) {
       const canvas = document.getElementById("graficoPesoMini");
       if (!canvas) return;
@@ -782,7 +825,6 @@
       });
     }
 
-    /* ====== PESO & PROGRESSO (texto + gráfico) ====== */
     async function carregarPesoEProgresso(uid) {
       if (!pesoAtualSpan || !pesoVariacao7Text) return;
 
@@ -868,7 +910,7 @@
       }
     }
 
-    /* ====== RESUMO TDEE & META ====== */
+    /* ---------- TDEE ---------- */
     async function carregarResumoTdee(uid) {
       if (!tdeeAtualSpan || !tdeeMetaDescricao) return;
 
@@ -914,7 +956,7 @@
       }
     }
 
-    /* ====== RESUMO MEDIDAS CORPORAIS ====== */
+    /* ---------- Medidas corporais ---------- */
     async function carregarResumoMedidas(uid) {
       const spans = [
         medidaPescocoSpan, medidaOmbroSpan, medidaPeitoSpan,
@@ -1001,17 +1043,89 @@
       }
     }
 
-    /* ====== LOGIN / CARGA INICIAL ====== */
+    /* ---------- Treino – resumo ---------- */
+    async function carregarResumoTreino(uid) {
+      if (!treinoUltimoLi || !treinoEx1Li || !treinoEx2Li) return;
+
+      treinoUltimoLi.innerHTML = "<strong>Último treino:</strong> —";
+      treinoEx1Li.innerHTML    = "<strong>Exercício 1:</strong> —";
+      treinoEx2Li.innerHTML    = "<strong>Exercício 2:</strong> —";
+      treinoEx1Li.style.display = "";
+      treinoEx2Li.style.display = "";
+
+      try {
+        const snapshot = await db
+          .collection("treinos")
+          .where("uid", "==", uid)
+          .get();
+
+        if (snapshot.empty) {
+          treinoUltimoLi.innerHTML =
+            "<strong>Último treino:</strong> você ainda não cadastrou treinos.";
+          treinoEx1Li.style.display = "none";
+          treinoEx2Li.style.display = "none";
+          return;
+        }
+
+        const docs = snapshot.docs.slice();
+        docs.sort((a, b) => {
+          const da = a.data().data || "";
+          const dbb = b.data().data || "";
+          if (da < dbb) return 1;
+          if (da > dbb) return -1;
+          return 0;
+        });
+
+        const ultimo = docs[0].data();
+        const dataBR = ultimo.data ? formatarDataBR(ultimo.data) : "";
+        const nomeTreino = ultimo.nomeTreino ||
+          (ultimo.tipoTreino ? `Treino ${ultimo.tipoTreino}` : "Treino");
+
+        treinoUltimoLi.innerHTML =
+          `<strong>Último treino:</strong> ${dataBR} – ${nomeTreino}`;
+
+        const exs = Array.isArray(ultimo.exercicios) ? ultimo.exercicios : [];
+
+        if (exs.length > 0) {
+          const ex1 = exs[0];
+          treinoEx1Li.innerHTML =
+            `<strong>${ex1.nome}:</strong> ${formatarNumero(ex1.pesoKg, 1)} kg`;
+          treinoEx1Li.style.display = "";
+        } else {
+          treinoEx1Li.style.display = "none";
+        }
+
+        if (exs.length > 1) {
+          const ex2 = exs[1];
+          treinoEx2Li.innerHTML =
+            `<strong>${ex2.nome}:</strong> ${formatarNumero(ex2.pesoKg, 1)} kg`;
+          treinoEx2Li.style.display = "";
+        } else {
+          treinoEx2Li.style.display = "none";
+        }
+      } catch (err) {
+        console.error("Erro ao carregar resumo de treino:", err);
+        treinoUltimoLi.innerHTML =
+          "<strong>Último treino:</strong> não foi possível carregar os dados.";
+        treinoEx1Li.style.display = "none";
+        treinoEx2Li.style.display = "none";
+      }
+    }
+
+    /* ---------- Login / inicialização ---------- */
     auth.onAuthStateChanged((user) => {
       if (!user) {
         window.location.href = "clube-login.html";
         return;
       }
+
       currentUid = user.uid;
+
       carregarResumoPrato(currentUid);
       carregarPesoEProgresso(currentUid);
       carregarResumoTdee(currentUid);
       carregarResumoMedidas(currentUid);
+      carregarResumoTreino(currentUid);
     });
   </script>
 </body>
