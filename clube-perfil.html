@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Meu perfil – Clube Prato & Peso</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --bg-alt: #ffffff;
+      --primary: #1e5a4d;
+      --primary-soft: #e0f3ec;
+      --accent: #ffb347;
+      --accent-soft: #fff3df;
+      --text-main: #222222;
+      --text-muted: #6b7280;
+      --border-soft: #e5e7eb;
+      --radius-lg: 18px;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.12);
+      --max-width: 960px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #fff7e6 0, #f5f5f7 45%, #e5e7eb 100%);
+      min-height: 100vh;
+      color: var(--text-main);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* HEADER */
+    header {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: #4b2c15;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+    }
+
+    .logo-text-main {
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 0.03em;
+    }
+
+    .logo-text-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .header-link {
+      font-size: 0.85rem;
+      color: var(--primary);
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(30, 90, 77, 0.16);
+      background: #f0fdf4;
+      cursor: pointer;
+    }
+
+    .header-link-cta {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 10px 22px rgba(21, 128, 61, 0.4);
+    }
+
+    .header-link-cta:hover {
+      filter: brightness(1.05);
+    }
+
+    /* MAIN */
+    main {
+      padding: 24px 16px 32px;
+    }
+
+    .wrapper {
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--bg-alt);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      border: 1px solid var(--border-soft);
+      padding: 22px 22px 20px;
+    }
+
+    .card h1 {
+      font-size: 1.4rem;
+      margin-bottom: 4px;
+    }
+
+    .card > p.subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      margin-top: 10px;
+      margin-bottom: 4px;
+      color: #374151;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"] {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      background: #f9fafb;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px rgba(30, 90, 77, 0.35);
+      background: #ffffff;
+    }
+
+    input[disabled] {
+      background: #f3f4f6;
+      color: #6b7280;
+      cursor: not-allowed;
+    }
+
+    .btn-row {
+      margin-top: 14px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border-radius: 999px;
+      border: none;
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 10px 22px rgba(21, 128, 61, 0.45);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
+    .btn-outline {
+      background: #eef2ff;
+      color: #1e3a8a;
+    }
+
+    .btn-danger {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .btn-danger:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
+    .message {
+      margin-top: 8px;
+      font-size: 0.8rem;
+      padding: 6px 8px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .message.ok {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .message.error {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #e5e7eb;
+      margin: 18px 0 14px;
+    }
+
+    .danger-title {
+      font-size: 0.95rem;
+      color: #b91c1c;
+      margin-bottom: 4px;
+    }
+
+    .danger-text {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    footer {
+      padding: 10px 16px 20px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: #9ca3af;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 18px 16px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <!-- Logo clicável para voltar ao início do Clube -->
+      <a href="clube-area.html" class="logo">
+        <div class="logo-badge">P&amp;P</div>
+        <div>
+          <div class="logo-text-main">Prato &amp; Peso</div>
+          <div class="logo-text-sub">Clube Prato &amp; Peso</div>
+        </div>
+      </a>
+
+      <div class="header-right">
+        <a href="clube-area.html" class="header-link">← Voltar para o Clube</a>
+        <button id="btnLogout" class="header-link header-link-cta">Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrapper">
+      <div class="card">
+        <h1>Meu perfil</h1>
+        <p class="subtitle">
+          Atualize seus dados básicos e, se quiser, gerencie a exclusão da sua conta do Clube.
+        </p>
+
+        <label for="perfilNome">Nome</label>
+        <input type="text" id="perfilNome" placeholder="Seu nome" />
+
+        <label for="perfilEmail">E-mail (não editável)</label>
+        <input type="email" id="perfilEmail" disabled />
+
+        <label for="perfilDataNascimento">Data de nascimento</label>
+        <input type="date" id="perfilDataNascimento" />
+
+        <div class="btn-row">
+          <button class="btn btn-primary" id="btnSalvarPerfil">Salvar alterações</button>
+        </div>
+        <div id="perfilMessage" class="message"></div>
+
+        <hr />
+
+        <h2 class="danger-title">Excluir minha conta</h2>
+        <p class="danger-text">
+          Essa ação é <strong>definitiva</strong>. Seus dados de pesos, pratos e acesso ao Clube serão apagados.
+        </p>
+
+        <button class="btn btn-danger" id="btnExcluirConta">Excluir minha conta</button>
+        <div id="excluirMessage" class="message"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © <span id="anoAtual"></span> Prato &amp; Peso – Clube para acompanhar seu emagrecimento sem loucura.
+  </footer>
+
+  <!-- Firebase v8 -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyABfAWUAW6a6g93B9QKooTKd5Mj645G3vE",
+      authDomain: "prato-e-peso-77b5a.firebaseapp.com",
+      projectId: "prato-e-peso-77b5a",
+      storageBucket: "prato-e-peso-77b5a.firebasestorage.app",
+      messagingSenderId: "432109202072",
+      appId: "1:432109202072:web:1c8636db0c161318ddfeed"
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    const perfilNomeInput = document.getElementById("perfilNome");
+    const perfilEmailInput = document.getElementById("perfilEmail");
+    const perfilDataNascimentoInput = document.getElementById("perfilDataNascimento");
+    const btnSalvarPerfil = document.getElementById("btnSalvarPerfil");
+    const perfilMessage = document.getElementById("perfilMessage");
+
+    const btnExcluirConta = document.getElementById("btnExcluirConta");
+    const excluirMessage = document.getElementById("excluirMessage");
+    const btnLogout = document.getElementById("btnLogout");
+
+    let currentUser = null;
+    let currentUid = null;
+
+    function mostrarMensagem(el, texto, tipo) {
+      if (!el) return;
+      el.style.display = texto ? "block" : "none";
+      el.textContent = texto || "";
+      el.classList.remove("ok", "error");
+      if (tipo === "ok") el.classList.add("ok");
+      if (tipo === "error") el.classList.add("error");
+    }
+
+    function limparLocalStorageClube() {
+      try {
+        localStorage.removeItem("pp_user_uid");
+        localStorage.removeItem("pp_user_email");
+        localStorage.removeItem("pp_user_nome");
+        localStorage.removeItem("pp_plano_codigo");
+        localStorage.removeItem("pp_plano_nome");
+      } catch (e) {
+        console.warn("Não foi possível limpar localStorage do Clube:", e);
+      }
+    }
+
+    async function carregarPerfil(uid, user) {
+      mostrarMensagem(perfilMessage, "", null);
+
+      try {
+        const docRef = db.collection("perfis").doc(uid);
+        const docSnap = await docRef.get();
+
+        if (docSnap.exists) {
+          const dados = docSnap.data();
+          perfilNomeInput.value = dados.nome || user.displayName || "";
+          perfilEmailInput.value = user.email || "";
+          perfilDataNascimentoInput.value = dados.dataNascimento || "";
+        } else {
+          perfilNomeInput.value = user.displayName || "";
+          perfilEmailInput.value = user.email || "";
+          perfilDataNascimentoInput.value = "";
+        }
+      } catch (err) {
+        console.error("Erro ao carregar perfil:", err);
+        mostrarMensagem(perfilMessage, "Não foi possível carregar seu perfil.", "error");
+      }
+    }
+
+    async function salvarPerfil() {
+      mostrarMensagem(perfilMessage, "", null);
+
+      const nome = perfilNomeInput.value.trim();
+      const dataNascimento = perfilDataNascimentoInput.value;
+
+      if (!currentUid || !currentUser) {
+        mostrarMensagem(perfilMessage, "Não foi possível identificar sua conta.", "error");
+        return;
+      }
+
+      btnSalvarPerfil.disabled = true;
+      mostrarMensagem(perfilMessage, "Salvando...", "ok");
+
+      try {
+        await db.collection("perfis").doc(currentUid).set(
+          {
+            nome,
+            dataNascimento,
+            email: currentUser.email || ""
+          },
+          { merge: true }
+        );
+
+        try {
+          if (nome) {
+            await currentUser.updateProfile({ displayName: nome });
+            localStorage.setItem("pp_user_nome", nome);
+          }
+        } catch (err) {
+          console.warn("Não foi possível atualizar displayName no Auth:", err);
+        }
+
+        mostrarMensagem(perfilMessage, "Perfil atualizado com sucesso.", "ok");
+      } catch (err) {
+        console.error("Erro ao salvar perfil:", err);
+        mostrarMensagem(perfilMessage, "Erro ao salvar perfil. Tente novamente.", "error");
+      } finally {
+        btnSalvarPerfil.disabled = false;
+      }
+    }
+
+    async function excluirConta() {
+      if (!currentUid || !currentUser) {
+        mostrarMensagem(excluirMessage, "Não foi possível identificar sua conta.", "error");
+        return;
+      }
+
+      const confirma = confirm(
+        "Tem certeza que deseja excluir sua conta? Essa ação é definitiva e não poderá ser desfeita."
+      );
+      if (!confirma) return;
+
+      btnExcluirConta.disabled = true;
+      mostrarMensagem(excluirMessage, "Excluindo sua conta e dados...", "ok");
+
+      try {
+        // Apaga pesos associados ao usuário
+        const pesosSnap = await db
+          .collection("pesos")
+          .where("uid", "==", currentUid)
+          .get();
+
+        const batch = db.batch();
+        pesosSnap.forEach((doc) => batch.delete(doc.ref));
+        await batch.commit();
+
+        // Apaga documento de perfil
+        await db.collection("perfis").doc(currentUid).delete().catch(() => {});
+
+        // Registra no plano (mesma lógica do clube-area)
+        const planoCodigo = localStorage.getItem("pp_plano_codigo");
+        if (planoCodigo) {
+          const refPlano = db.collection("planos").doc(planoCodigo);
+          await refPlano.set(
+            {
+              ultimoUidRemovido: currentUid,
+              updatedAt: new Date().toISOString()
+            },
+            { merge: true }
+          );
+        }
+
+        // Tenta remover do Auth
+        await currentUser.delete().catch((err) => {
+          console.warn("Erro ao deletar usuário do Auth:", err);
+        });
+
+        limparLocalStorageClube();
+        mostrarMensagem(
+          excluirMessage,
+          "Conta excluída com sucesso. Obrigado por ter feito parte do Clube. ❤️",
+          "ok"
+        );
+
+        // Depois de excluir, manda para a página de conta excluída
+        setTimeout(() => {
+          window.location.href = "clube-conta-excluida.html";
+        }, 2000);
+      } catch (err) {
+        console.error("Erro ao excluir conta:", err);
+        mostrarMensagem(excluirMessage, "Erro ao excluir conta. Tente novamente mais tarde.", "error");
+        btnExcluirConta.disabled = false;
+      }
+    }
+
+    function fazerLogout() {
+      auth.signOut().finally(() => {
+        limparLocalStorageClube();
+        window.location.href = "clube-login.html";
+      });
+    }
+
+    // Eventos
+    if (btnSalvarPerfil) {
+      btnSalvarPerfil.addEventListener("click", salvarPerfil);
+    }
+    if (btnExcluirConta) {
+      btnExcluirConta.addEventListener("click", excluirConta);
+    }
+    if (btnLogout) {
+      btnLogout.addEventListener("click", fazerLogout);
+    }
+
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = "clube-login.html";
+        return;
+      }
+
+      currentUser = user;
+      currentUid = user.uid;
+      carregarPerfil(currentUid, currentUser);
+    });
+
+    // Ano no rodapé
+    document.addEventListener("DOMContentLoaded", () => {
+      const anoSpan = document.getElementById("anoAtual");
+      if (anoSpan) anoSpan.textContent = new Date().getFullYear();
+    });
+  </script>
+</body>
+</html>
