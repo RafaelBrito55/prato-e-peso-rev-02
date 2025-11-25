@@ -86,19 +86,6 @@
       font-size: 1rem;
     }
 
-    .goal-pill {
-      border-radius: 999px;
-      padding: 8px 18px;
-      border: none;
-      background: var(--primary);
-      color: #ffffff;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: default;
-      box-shadow: 0 12px 26px rgba(21, 128, 61, 0.5);
-      white-space: nowrap;
-    }
-
     /* CONTEÚDO PRINCIPAL */
     main {
       padding: 24px 16px 36px;
@@ -117,11 +104,6 @@
       font-size: 1.8rem;
       font-weight: 800;
       margin-bottom: 4px;
-    }
-
-    .hero p {
-      font-size: 0.95rem;
-      color: var(--text-muted);
     }
 
     /* GRID DE CARDS */
@@ -344,7 +326,7 @@
         <div class="brand-badge">PaP</div>
         <span class="brand-name">Prato &amp; Peso</span>
       </div>
-      <button class="goal-pill" id="pill-meta">Emagrecer 10 kg</button>
+      <!-- botão de meta removido -->
     </div>
   </header>
 
@@ -353,7 +335,6 @@
       <!-- Saudação -->
       <section class="hero">
         <h1>Olá, Rafael</h1>
-        <p>Você vem adiantando a meta nos últimos 7 dias.</p>
       </section>
 
       <!-- Cards -->
@@ -629,7 +610,6 @@
     const tdeeAtualSpan        = document.getElementById("tdee-atual");
     const tdeeMetaDescricao    = document.getElementById("tdee-meta-descricao");
     const tdeeConsumoResumo    = document.getElementById("tdee-consumo-resumo");
-    const pillMeta             = document.getElementById("pill-meta");
 
     // --- elementos Medidas corporais ---
     const medidaPescocoSpan    = document.getElementById("medida-pescoco");
@@ -918,7 +898,6 @@
         const tdee = Number(dados.tdee);
         const metaCalorias = Number(dados.metaCalorias);
         const metaTipo = dados.metaTipo || "Meta";
-        const objetivoKg = dados.objetivoKg; // se estiver salvo na tela TDEE
 
         const tdeeFmt = !isNaN(tdee)
           ? Math.round(tdee).toLocaleString("pt-BR") + " kcal/dia"
@@ -929,10 +908,6 @@
 
         tdeeAtualSpan.textContent = tdeeFmt;
         tdeeMetaDescricao.textContent = `${metaTipo} – meta ${metaFmt}`;
-
-        if (objetivoKg && pillMeta) {
-          pillMeta.textContent = `Emagrecer ${objetivoKg} kg`;
-        }
       } catch (err) {
         console.error("Erro ao carregar resumo de TDEE:", err);
         tdeeMetaDescricao.textContent = "Não foi possível carregar seu TDEE agora.";
