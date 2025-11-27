@@ -22,66 +22,65 @@
     }
 
     * {
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: linear-gradient(180deg, #fdfaf5 0%, #f5f5f7 40%, #eceff1 100%);
-      color:var(--text-main);
-      min-height:100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top, #fdf7f0 0, #f5f5f7 45%, #eceff1 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     a {
-      color:inherit;
-      text-decoration:none;
+      color: inherit;
+      text-decoration: none;
     }
 
     header {
-      background:rgba(255,255,255,0.96);
-      backdrop-filter:blur(12px);
-      box-shadow:0 2px 8px rgba(15,23,42,0.08);
-      position:sticky;
-      top:0;
-      z-index:10;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(224, 224, 224, 0.8);
+      position: sticky;
+      top: 0;
+      z-index: 20;
     }
 
-    .topbar {
-      max-width:var(--max-width);
-      margin:0 auto;
-      padding:10px 16px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
+    .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
     }
 
-    .logo {
-      display:flex;
-      align-items:center;
-      gap:10px;
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .logo-badge {
       width:30px; height:30px;
-      border-radius:50%;
-      background:var(--accent);
-      display:flex; align-items:center; justify-content:center;
-      font-weight:700; color:#4b2c15; font-size:0.9rem;
-      box-shadow:0 6px 14px rgba(0,0,0,0.1);
+      border-radius:999px;
+      background: radial-gradient(circle at 30% 20%, #ffd28a, #ffb347);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.15);
     }
 
-    .logo-text-main {
+    .logo-badge span {
       font-weight:700;
-      font-size:0.98rem;
-      letter-spacing:0.03em;
-    }
-
-    .logo-text-sub {
-      font-size:0.75rem;
-      color:var(--text-muted);
+      color:#3f2410;
+      font-size:0.8rem;
     }
 
     .logo-text {
@@ -90,21 +89,101 @@
       gap:2px;
     }
 
+    .logo-text strong {
+      font-size:0.95rem;
+      letter-spacing:0.02em;
+    }
+
+    .logo-text small {
+      font-size:0.75rem;
+      color:var(--text-muted);
+    }
+
     .btn-link {
       border-radius:999px;
       padding:7px 14px;
       border:none;
       background:var(--primary-soft);
       color:var(--primary);
-      font-size:0.85rem;
-      font-weight:600;
+      font-size:0.8rem;
+      font-weight:500;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
       cursor:pointer;
+      box-shadow:0 4px 10px rgba(15,23,42,0.12);
+      transition:background 0.2s, transform 0.1s, box-shadow 0.2s;
+      text-decoration:none;
+    }
+
+    .btn-link:hover {
+      background:#d2eee3;
+      transform:translateY(-1px);
+      box-shadow:0 8px 18px rgba(15,23,42,0.18);
+    }
+
+    .btn-link span {
+      font-size:1rem;
     }
 
     main {
+      flex:1;
+      display:flex;
+      justify-content:center;
+      padding:24px 16px 32px;
+    }
+
+    .page-container {
+      width:100%;
       max-width:var(--max-width);
-      margin:0 auto;
-      padding:22px 16px 32px;
+    }
+
+    .card-main {
+      background:var(--bg-alt);
+      border-radius:24px;
+      box-shadow:var(--shadow-soft);
+      padding:28px 24px 24px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .card-main::before {
+      content:"";
+      position:absolute;
+      inset:0;
+      background:radial-gradient(circle at top right,
+        rgba(255,179,71,0.13),
+        transparent 55%);
+      pointer-events:none;
+    }
+
+    .card-main-inner {
+      position:relative;
+      z-index:1;
+    }
+
+    .page-header {
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-bottom:18px;
+    }
+
+    .page-badge {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      font-size:0.78rem;
+      color:var(--text-muted);
+      padding:4px 10px;
+      border-radius:999px;
+      background:rgba(30,90,77,0.06);
+      border:1px solid rgba(30,90,77,0.14);
+      width:fit-content;
+    }
+
+    .page-badge span {
+      font-size:0.9rem;
     }
 
     h1 {
@@ -119,88 +198,163 @@
     }
 
     .card {
-      background:var(--bg-alt);
-      border-radius:var(--radius);
-      padding:18px 18px 20px;
-      box-shadow:var(--shadow-soft);
-      border:1px solid var(--border-soft);
+      background:rgba(255,255,255,0.9);
+      border-radius:18px;
+      border:1px solid rgba(224,224,224,0.7);
+      padding:18px 18px 14px;
+      box-shadow:0 6px 16px rgba(15,23,42,0.10);
       margin-bottom:18px;
     }
 
-    .card h2 {
-      font-size:1.1rem;
-      margin-bottom:4px;
+    .card-header {
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      margin-bottom:10px;
+      gap:10px;
     }
 
-    .card small {
-      color:var(--text-muted);
+    .card-title {
+      font-size:1rem;
+      font-weight:600;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .card-title span {
+      font-size:1.1rem;
+    }
+
+    .card-subtitle {
       font-size:0.8rem;
+      color:var(--text-muted);
     }
 
     .form-row {
       display:flex;
-      gap:10px;
-      margin-top:12px;
-      margin-bottom:10px;
+      gap:12px;
+      margin-bottom:12px;
     }
 
-    .col {
+    .form-group {
       flex:1;
       display:flex;
       flex-direction:column;
-      gap:4px;
+      gap:6px;
     }
 
     label {
-      font-size:0.85rem;
+      font-size:0.8rem;
       color:var(--text-muted);
+      font-weight:500;
     }
 
     input[type="date"],
     input[type="number"] {
-      border-radius:10px;
+      padding:8px 11px;
+      border-radius:999px;
       border:1px solid var(--border-soft);
-      padding:7px 9px;
-      font-size:0.9rem;
+      font-size:0.85rem;
       outline:none;
+      background:rgba(249,250,251,0.95);
+      transition:border-color 0.18s, box-shadow 0.18s, background 0.18s;
     }
 
-    input:focus {
+    input[type="date"]:focus,
+    input[type="number"]:focus {
       border-color:var(--primary);
-      box-shadow:0 0 0 1px rgba(21,128,61,0.20);
+      box-shadow:0 0 0 1px rgba(30,90,77,0.15);
+      background:#ffffff;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance:none;
+      margin:0;
     }
 
     .btn-primary {
-      background:var(--primary);
-      color:#fff;
-      border:none;
+      padding:9px 20px;
       border-radius:999px;
-      padding:8px 16px;
+      border:none;
+      background:var(--primary);
+      color:#ffffff;
       font-size:0.9rem;
       font-weight:600;
       cursor:pointer;
-      box-shadow:0 10px 22px rgba(21,128,61,0.5);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      box-shadow:0 10px 22px rgba(15,23,42,0.25);
+      transition:background 0.18s, transform 0.1s, box-shadow 0.18s;
+      min-width:130px;
+    }
+
+    .btn-primary:hover {
+      background:#194b40;
+      transform:translateY(-1px);
+      box-shadow:0 14px 26px rgba(15,23,42,0.3);
+    }
+
+    .btn-primary:disabled {
+      opacity:0.6;
+      cursor:not-allowed;
+      box-shadow:none;
+      transform:none;
+    }
+
+    .info-text {
+      font-size:0.8rem;
+      color:var(--text-muted);
+      margin-top:4px;
     }
 
     .message {
-      margin-top:8px;
+      margin-top:10px;
       font-size:0.82rem;
+      padding:8px 11px;
+      border-radius:999px;
       display:none;
+      align-items:center;
+      gap:8px;
     }
-    .message.ok { color:#15803d; }
-    .message.error { color:#b91c1c; }
+
+    .message.ok {
+      display:flex;
+      background:rgba(46, 125, 50, 0.08);
+      color:#1b5e20;
+      border:1px solid rgba(129, 199, 132, 0.8);
+    }
+
+    .message.error {
+      display:flex;
+      background:rgba(211, 47, 47, 0.08);
+      color:#b71c1c;
+      border:1px solid rgba(239, 154, 154, 0.9);
+    }
+
+    .message span {
+      font-size:1rem;
+    }
+
+    .table-card {
+      margin-top:6px;
+    }
 
     table {
       width:100%;
       border-collapse:collapse;
-      margin-top:14px;
-      font-size:0.9rem;
+      margin-top:4px;
     }
 
-    th, td {
-      padding:6px 8px;
-      border-bottom:1px solid #e5e7eb;
+    th,
+    td {
       text-align:left;
+      padding:8px 0;
+      font-size:0.85rem;
+      border-bottom:1px solid rgba(224,224,224,0.8);
     }
 
     th {
@@ -217,51 +371,119 @@
     @media (max-width:540px) {
       .form-row { flex-direction:column; }
     }
+    /* Botão de excluir peso */
+    .btn-delete {
+      border-radius:999px;
+      padding:4px 10px;
+      border:1px solid #e57373;
+      background:#fff5f5;
+      color:#c62828;
+      font-size:0.75rem;
+      cursor:pointer;
+      transition:background 0.2s, transform 0.1s, box-shadow 0.2s;
+      white-space:nowrap;
+    }
+
+    .btn-delete:hover {
+      background:#ffebee;
+      transform:translateY(-1px);
+      box-shadow:0 4px 10px rgba(0, 0, 0, 0.08);
+    }
   </style>
 </head>
 <body>
   <header>
-    <div class="topbar">
-      <a href="clube-area.html" class="logo">
-        <div class="logo-badge">PaP</div>
+    <div class="header-inner">
+      <a href="club-area.html" class="logo-area">
+        <div class="logo-badge">
+          <span>PaP</span>
+        </div>
         <div class="logo-text">
-          <span class="logo-text-main">Prato &amp; Peso</span>
-          <span class="logo-text-sub">Clube – Meu peso</span>
+          <strong>Prato & Peso</strong>
+          <small>Clube – Meu peso</small>
         </div>
       </a>
-      <button class="btn-link" type="button" onclick="window.location.href='clube-area.html'">
+
+      <a href="club-area.html" class="btn-link">
+        <span>←</span>
         Voltar para o painel
-      </button>
+      </a>
     </div>
   </header>
 
   <main>
-    <h1>Meu peso</h1>
-    <p class="lead">Registre seu peso e acompanhe a evolução ao longo do tempo. Esses dados serão usados no painel e no relatório.</p>
+    <div class="page-container">
+      <section class="card-main">
+        <div class="card-main-inner">
+          <div class="page-header">
+            <div class="page-badge">
+              <span>⚖️</span>
+              Meu peso ao longo do tempo
+            </div>
+            <h1>Meu peso</h1>
+            <p class="lead">
+              Registre seu peso e acompanhe a evolução ao longo do tempo. Esses dados serão usados no painel e no relatório.
+            </p>
+          </div>
 
-    <section class="card">
-      <h2>Registrar peso</h2>
-      <small>Salve sempre que tiver uma nova pesagem.</small>
+          <section class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">
+                  <span>📝</span>
+                  <span>Registrar peso</span>
+                </div>
+                <p class="card-subtitle">
+                  Salve sempre que tiver uma nova pesagem.
+                </p>
+              </div>
+            </div>
 
-      <div class="form-row">
-        <div class="col">
-          <label for="pesoData">Data</label>
-          <input type="date" id="pesoData" />
-        </div>
-        <div class="col">
-          <label for="pesoValor">Peso (kg)</label>
-          <input type="number" id="pesoValor" step="0.1" min="0" />
-        </div>
-      </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="pesoData">Data</label>
+                <input type="date" id="pesoData" />
+              </div>
+              <div class="form-group">
+                <label for="pesoValor">Peso (kg)</label>
+                <input type="number" id="pesoValor" step="0.1" placeholder="Ex: 82,5" />
+              </div>
+            </div>
 
-      <button class="btn-primary" id="btnSalvarPeso" type="button">Salvar peso</button>
-      <div id="pesoMessage" class="message"></div>
+            <button class="btn-primary" id="btnSalvarPeso">
+              <span>💾</span>
+              Salvar peso
+            </button>
 
-      <table>
-        <thead>
+            <p class="info-text">
+              Dica: tente se pesar em horários parecidos (por exemplo, de manhã ao acordar) para ter uma leitura mais fiel da evolução.
+            </p>
+
+            <div id="pesoMessage" class="message">
+              <span>ℹ️</span>
+              <span></span>
+            </div>
+          </section>
+
+          <section class="card table-card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">
+                  <span>📊</span>
+                  <span>Histórico de pesos</span>
+                </div>
+                <p class="card-subtitle">
+                  Os registros mais recentes aparecem no topo. Até 60 pesagens são exibidas aqui.
+                </p>
+              </div>
+            </div>
+
+            <table>
+              <thead>
           <tr>
             <th>Data</th>
             <th>Peso (kg)</th>
+            <th style="text-align:right;">Ações</th>
           </tr>
         </thead>
         <tbody id="listaPesos"></tbody>
@@ -286,7 +508,7 @@
 
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
-    const db   = firebase.firestore();
+    const db = firebase.firestore();
 
     const pesoDataInput = document.getElementById("pesoData");
     const pesoValorInput = document.getElementById("pesoValor");
@@ -300,19 +522,21 @@
       if (!el) return;
       if (!texto) {
         el.style.display = "none";
-        el.textContent = "";
-        el.className = "message";
+        el.classList.remove("ok", "error");
+        el.querySelectorAll("span")[1].textContent = "";
         return;
       }
-      el.style.display = "block";
-      el.textContent = texto;
-      el.className = "message " + (tipo === "error" ? "error" : "ok");
+
+      el.style.display = "flex";
+      el.classList.remove("ok", "error");
+      el.classList.add(tipo || "ok");
+      el.querySelectorAll("span")[1].textContent = texto;
     }
 
     function formatarDataBR(dataISO) {
       if (!dataISO) return "";
-      const [ano, mes, dia] = dataISO.split("-");
-      return `${dia}/${mes}/${ano}`;
+      const [yyyy, mm, dd] = dataISO.split("-");
+      return `${dd}/${mm}/${yyyy}`;
     }
 
     async function carregarPesos(uid) {
@@ -341,7 +565,7 @@
         const limitados = docs.slice(0, 60);
         limitados.forEach(doc => {
           const dados = doc.data();
-          adicionarLinhaPeso(dados.data, dados.peso);
+          adicionarLinhaPeso(dados.data, dados.peso, doc.id);
         });
       } catch (err) {
         console.error("Erro ao carregar pesos:", err);
@@ -349,10 +573,11 @@
       }
     }
 
-    function adicionarLinhaPeso(dataISO, peso) {
+    function adicionarLinhaPeso(dataISO, peso, docId) {
       const tr = document.createElement("tr");
       const tdData = document.createElement("td");
       const tdPeso = document.createElement("td");
+      const tdAcoes = document.createElement("td");
 
       tdData.textContent = formatarDataBR(dataISO);
       tdPeso.textContent = Number(peso).toLocaleString("pt-BR", {
@@ -360,9 +585,36 @@
         maximumFractionDigits: 1
       });
 
+      const btnExcluir = document.createElement("button");
+      btnExcluir.textContent = "Excluir";
+      btnExcluir.className = "btn-delete";
+      btnExcluir.addEventListener("click", () => {
+        excluirPeso(docId, dataISO);
+      });
+
+      tdAcoes.style.textAlign = "right";
+      tdAcoes.appendChild(btnExcluir);
+
       tr.appendChild(tdData);
       tr.appendChild(tdPeso);
+      tr.appendChild(tdAcoes);
       listaPesos.appendChild(tr);
+    }
+
+    async function excluirPeso(docId, dataISO) {
+      const confirmar = confirm("Tem certeza que deseja excluir este registro de peso?");
+      if (!confirmar) return;
+
+      try {
+        await db.collection("pesos").doc(docId).delete();
+        mostrarMensagem(pesoMessage, "Peso excluído com sucesso!", "ok");
+        if (currentUid) {
+          await carregarPesos(currentUid);
+        }
+      } catch (err) {
+        console.error("Erro ao excluir peso:", err);
+        mostrarMensagem(pesoMessage, "Não foi possível excluir o peso. Tente novamente.", "error");
+      }
     }
 
     async function salvarPeso() {
@@ -373,15 +625,6 @@
 
       if (!data || isNaN(peso)) {
         mostrarMensagem(pesoMessage, "Preencha a data e o peso.", "error");
-        return;
-      }
-
-      if (!currentUid) {
-        mostrarMensagem(
-          pesoMessage,
-          "Não foi possível identificar sua conta. Tente sair e entrar novamente.",
-          "error"
-        );
         return;
       }
 
