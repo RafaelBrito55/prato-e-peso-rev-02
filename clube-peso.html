@@ -371,6 +371,7 @@
     @media (max-width:540px) {
       .form-row { flex-direction:column; }
     }
+
     /* Botão de excluir peso */
     .btn-delete {
       border-radius:999px;
@@ -394,7 +395,8 @@
 <body>
   <header>
     <div class="header-inner">
-      <a href="club-area.html" class="logo-area">
+      <!-- ajuste: vai para clube-area.html -->
+      <a href="clube-area.html" class="logo-area">
         <div class="logo-badge">
           <span>PaP</span>
         </div>
@@ -404,7 +406,8 @@
         </div>
       </a>
 
-      <a href="club-area.html" class="btn-link">
+      <!-- ajuste: também para clube-area.html -->
+      <a href="clube-area.html" class="btn-link">
         <span>←</span>
         Voltar para o painel
       </a>
@@ -480,15 +483,18 @@
 
             <table>
               <thead>
-          <tr>
-            <th>Data</th>
-            <th>Peso (kg)</th>
-            <th style="text-align:right;">Ações</th>
-          </tr>
-        </thead>
-        <tbody id="listaPesos"></tbody>
-      </table>
-    </section>
+                <tr>
+                  <th>Data</th>
+                  <th>Peso (kg)</th>
+                  <th style="text-align:right;">Ações</th>
+                </tr>
+              </thead>
+              <tbody id="listaPesos"></tbody>
+            </table>
+          </section>
+        </div>
+      </section>
+    </div>
   </main>
 
   <!-- Firebase -->
