@@ -386,6 +386,30 @@
       color: #4b5563;
     }
 
+    /* Tabela do treino selecionado */
+    .treino-detalhes {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+    }
+
+    .treino-detalhes th,
+    .treino-detalhes td {
+      padding: 6px 4px;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 0.85rem;
+      text-align: left;
+    }
+
+    .treino-detalhes th {
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .treino-detalhes tr:last-child td {
+      border-bottom: none;
+    }
+
     /* Histórico */
     .historico-lista {
       display: flex;
@@ -515,11 +539,11 @@
           <p class="ultimo-treino" id="resumoUltimoTreino"></p>
         </section>
 
-        <!-- CARD LATERAL: SELEÇÃO RÁPIDA -->
+        <!-- CARD LATERAL: SELEÇÃO RÁPIDA (AGRUPADA POR TREINO) -->
         <section class="card">
           <h2>Treinos salvos para usar</h2>
           <p class="card-subtitle">
-            Toque em um treino para carregar no formulário ao lado. Use <strong>Editar</strong> apenas para corrigir um treino já salvo.
+            Escolha um dos treinos salvos para carregar no formulário ao lado ou visualizar o treino completo abaixo.
           </p>
 
           <div class="treinos-lista" id="listaTreinosSelecao">
@@ -527,6 +551,17 @@
           </div>
         </section>
       </div>
+
+      <!-- NOVO CARD: TREINO SELECIONADO COMPLETO -->
+      <section class="card" id="cardTreinoSelecionado" style="display:none;">
+        <h2>Treino selecionado</h2>
+        <p class="card-subtitle" id="treinoSelecionadoInfo">
+          Quando você escolher um treino salvo para usar, ele aparece aqui com todos os exercícios e pesos.
+        </p>
+        <div id="treinoSelecionadoTabelaWrapper">
+          <!-- tabela com exercícios do treino selecionado -->
+        </div>
+      </section>
 
       <!-- CARD INFERIOR: HISTÓRICO -->
       <section class="card">
@@ -580,6 +615,10 @@
     const resumoUltimoTreino  = document.getElementById("resumoUltimoTreino");
     const listaTreinosSelecao = document.getElementById("listaTreinosSelecao");
     const listaUltimosTreinos = document.getElementById("listaUltimosTreinos");
+
+    const cardTreinoSelecionado = document.getElementById("cardTreinoSelecionado");
+    const treinoSelecionadoInfo = document.getElementById("treinoSelecionadoInfo");
+    const treinoSelecionadoTabelaWrapper = document.getElementById("treinoSelecionadoTabelaWrapper");
 
     let currentUid = null;
     let treinoEditandoId = null; // se não for null, estamos editando esse treino
@@ -664,6 +703,66 @@
       adicionarExercicioVazio();
       treinoEditandoId = null;
       resumoUltimoTreino.textContent = "";
+    }
+
+    // ====== TREINO SELECIONADO (CARD INTERMEDIÁRIO) ======
+    function mostrarTreinoSelecionado(dadosTreino) {
+      if (!dadosTreino) {
+        cardTreinoSelecionado.style.display = "none";
+        treinoSelecionadoTabelaWrapper.innerHTML = "";
+        treinoSelecionadoInfo.textContent =
+          "Quando você escolher um treino salvo para usar, ele aparece aqui com todos os exercícios e pesos.";
+        return;
+      }
+
+      cardTreinoSelecionado.style.display = "block";
+
+      const nome = dadosTreino.nomeTreino || "Treino";
+      const data = dadosTreino.data ? formatarDataBR(dadosTreino.data) : "";
+      if (data) {
+        treinoSelecionadoInfo.textContent = `${nome} – último cadastrado em ${data}.`;
+      } else {
+        treinoSelecionadoInfo.textContent = nome;
+      }
+
+      const exs = Array.isArray(dadosTreino.exercicios) ? dadosTreino.exercicios : [];
+
+      if (exs.length === 0) {
+        treinoSelecionadoTabelaWrapper.innerHTML =
+          "<div style='font-size:0.85rem; color:#6b7280;'>Este treino ainda não possui exercícios cadastrados.</div>";
+        return;
+      }
+
+      const table = document.createElement("table");
+      table.className = "treino-detalhes";
+
+      const thead = document.createElement("thead");
+      const trHead = document.createElement("tr");
+      ["Exercício", "Peso (kg)"].forEach((titulo) => {
+        const th = document.createElement("th");
+        th.textContent = titulo;
+        trHead.appendChild(th);
+      });
+      thead.appendChild(trHead);
+
+      const tbody = document.createElement("tbody");
+      exs.forEach((e) => {
+        const tr = document.createElement("tr");
+        const tdNome = document.createElement("td");
+        tdNome.textContent = e.nome || "";
+        const tdPeso = document.createElement("td");
+        tdPeso.textContent =
+          e.pesoKg != null && e.pesoKg !== "" ? `${e.pesoKg} kg` : "";
+        tr.appendChild(tdNome);
+        tr.appendChild(tdPeso);
+        tbody.appendChild(tr);
+      });
+
+      table.appendChild(thead);
+      table.appendChild(tbody);
+
+      treinoSelecionadoTabelaWrapper.innerHTML = "";
+      treinoSelecionadoTabelaWrapper.appendChild(table);
     }
 
     // ====== SALVAR TREINO (NOVO OU EDIÇÃO) ======
@@ -822,6 +921,7 @@
           resumoUltimoTreino.textContent = "";
         }
         carregarUltimosTreinos(currentUid);
+        mostrarTreinoSelecionado(null);
       } catch (error) {
         console.error("Erro ao excluir treino:", error);
         mostrarMsg("Erro ao excluir o treino. Tente novamente.", "error");
@@ -847,10 +947,12 @@
           const msg = "<div style='font-size:0.85rem; color:#9ca3af;'>Você ainda não cadastrou treinos no Clube.</div>";
           listaTreinosSelecao.innerHTML = msg;
           listaUltimosTreinos.innerHTML = msg;
+          mostrarTreinoSelecionado(null);
           return;
         }
 
         const docs = snapshot.docs.slice();
+        // Ordena por data (mais recente primeiro)
         docs.sort((a, b) => {
           const da = a.data().data || "";
           const dbb = b.data().data || "";
@@ -859,10 +961,22 @@
           return 0;
         });
 
-        const selecaoDocs = docs.slice(0, 5);
-        const histDocs    = docs.slice(0, 10);
+        // Agrupa por nomeTreino (um card por treino)
+        const vistos = new Set();
+        const grupos = [];
+        docs.forEach((doc) => {
+          const dados = doc.data();
+          const chave = dados.nomeTreino || "Treino";
+          if (!vistos.has(chave)) {
+            vistos.add(chave);
+            grupos.push(doc); // fica o mais recente desse nome
+          }
+        });
 
-        // --- seleção lateral ---
+        const selecaoDocs = grupos.slice(0, 10); // até 10 tipos de treino
+        const histDocs    = docs.slice(0, 10);   // histórico continua por registro
+
+        // --- seleção lateral (agrupada) ---
         listaTreinosSelecao.innerHTML = "";
         selecaoDocs.forEach((doc) => {
           const t = doc.data();
@@ -876,14 +990,17 @@
 
           const dataSpan = document.createElement("span");
           dataSpan.className = "treino-item-data";
-          dataSpan.textContent = formatarDataBR(t.data);
+          dataSpan.textContent = t.nomeTreino || "Treino";
 
           const actionsDiv = document.createElement("div");
           actionsDiv.className = "treino-actions";
 
           const tipoSpan = document.createElement("span");
           tipoSpan.className = "treino-item-tipo";
-          tipoSpan.textContent = t.nomeTreino || "Treino";
+          const dataBR = t.data ? formatarDataBR(t.data) : "";
+          tipoSpan.textContent = dataBR
+            ? `Último em ${dataBR}`
+            : "Último treino cadastrado";
 
           const usarBtn = document.createElement("button");
           usarBtn.type = "button";
@@ -892,6 +1009,7 @@
           usarBtn.addEventListener("click", (e) => {
             e.stopPropagation();
             carregarTreinoNoFormulario(treinoId, false);
+            mostrarTreinoSelecionado(t);
           });
 
           const editarBtn = document.createElement("button");
@@ -901,6 +1019,7 @@
           editarBtn.addEventListener("click", (e) => {
             e.stopPropagation();
             carregarTreinoNoFormulario(treinoId, true);
+            // edição é mais para estrutura, não precisa abrir card completo
           });
 
           const delBtn = document.createElement("button");
@@ -932,9 +1051,10 @@
               .join(" · ");
           }
 
-          // clicar no card inteiro = Usar
+          // clicar no card inteiro = Usar + mostrar treino completo
           item.addEventListener("click", () => {
             carregarTreinoNoFormulario(treinoId, false);
+            mostrarTreinoSelecionado(t);
           });
 
           item.appendChild(header);
@@ -942,7 +1062,7 @@
           listaTreinosSelecao.appendChild(item);
         });
 
-        // --- histórico inferior ---
+        // --- histórico inferior (continua por registro) ---
         listaUltimosTreinos.innerHTML = "";
         histDocs.forEach((doc) => {
           const t = doc.data();
@@ -985,6 +1105,7 @@
           "<div style='font-size:0.85rem; color:#b91c1c;'>Erro ao carregar os treinos. Tente novamente.</div>";
         listaTreinosSelecao.innerHTML = msgErro;
         listaUltimosTreinos.innerHTML = msgErro;
+        mostrarTreinoSelecionado(null);
       }
     }
 
@@ -1002,6 +1123,7 @@
         adicionarExercicioVazio();
       }
 
+      mostrarTreinoSelecionado(null);
       carregarUltimosTreinos(currentUid);
     });
   </script>
