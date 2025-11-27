@@ -667,6 +667,24 @@
             Registrar treino de hoje
           </a>
         </article>
+
+        <!-- NOVO CARD: Relatório do período -->
+        <article class="card">
+          <h2>Relatório do período</h2>
+          <p class="card-subtitle">
+            Gere um relatório com peso, calorias e medidas corporais em um intervalo de datas.
+          </p>
+
+          <div class="lista-simples">
+            <span>
+              Use esta opção quando quiser analisar uma semana, mês ou outro período com mais detalhes.
+            </span>
+          </div>
+
+          <a href="relatorio.html" class="btn btn-secondary">
+            Abrir relatório simples
+          </a>
+        </article>
       </section>
     </div>
   </main>
@@ -819,7 +837,6 @@
         let cor   = "#6b7280";
 
         if (saldo < 0) {
-          // déficit – bom para emagrecer
           texto = "– " + saldoAbs + " kcal";
           cor   = "#16a34a";
         } else if (saldo > 0) {
