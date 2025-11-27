@@ -27,8 +27,9 @@
     }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #fff7df 0, #f5f5f7 45%, #e5e7eb 100%);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top, #fff7e6 0, #f5f5f7 45%, #e5e7eb 100%);
       color: var(--text-main);
       min-height: 100vh;
     }
@@ -38,65 +39,106 @@
       text-decoration: none;
     }
 
-    /* HEADER */
+    /* HEADER NOVO – mesmo estilo do Clube/Perfil */
     header {
       background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(10px);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
       position: sticky;
       top: 0;
-      z-index: 10;
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+      z-index: 20;
     }
 
-    .topbar-inner {
+    .header-inner {
       max-width: var(--max-width);
       margin: 0 auto;
       padding: 10px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
-    .brand {
+    .logo {
       display: flex;
       align-items: center;
       gap: 10px;
+      text-decoration: none;
+      color: inherit;
     }
 
-    .brand-badge {
-      width: 32px;
-      height: 32px;
+    .logo-badge {
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       background: var(--accent);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
-      font-size: 0.9rem;
-      color: #4b2c15;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
-    }
-
-    .brand-name {
       font-weight: 700;
-      letter-spacing: 0.03em;
+      color: #4b2c15;
       font-size: 0.95rem;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
     }
 
-    .topbar-right {
+    .logo-text-main {
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      color: #111827;
+    }
+
+    .logo-text-sub {
+      font-size: 0.78rem;
+      color: #6b7280;
+    }
+
+    .header-right {
       display: flex;
       align-items: center;
       gap: 10px;
+      flex-wrap: wrap;
     }
 
-    .topbar-link {
+    .header-link {
+      font-size: 0.85rem;
       border-radius: 999px;
-      border: 1px solid var(--border-soft);
-      padding: 6px 12px;
-      background: #f9fafb;
-      font-size: 0.82rem;
+      padding: 8px 14px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: #ffffff;
+      color: #0f172a;
       cursor: pointer;
+      text-decoration: none;
+      transition: all 0.18s ease-in-out;
+    }
+
+    .header-link:hover {
+      border-color: #0f766e;
+      color: #0f766e;
+      box-shadow: 0 6px 16px rgba(15, 118, 110, 0.18);
+      transform: translateY(-1px);
+    }
+
+    .header-link-cta {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #ffffff;
+      border: none;
+      font-weight: 600;
+    }
+
+    .header-link-cta:hover {
+      background: linear-gradient(135deg, #22c55e, #15803d);
+      color: #ecfdf5;
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 12px 30px rgba(22, 163, 74, 0.35);
+    }
+
+    @media (max-width: 640px) {
+      .header-inner {
+        padding-inline: 12px;
+      }
     }
 
     main {
@@ -106,18 +148,28 @@
     .main-inner {
       max-width: var(--max-width);
       margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
 
     .hero {
-      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
     }
 
     .hero h1 {
-      font-size: 1.7rem;
+      font-size: 1.6rem;
       font-weight: 800;
     }
 
-    /* GRID DE CARDS */
+    .hero-subtitle {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
     .cards-grid {
       display: grid;
       gap: 16px;
@@ -134,59 +186,75 @@
       border-radius: var(--radius-xl);
       box-shadow: var(--shadow-soft);
       border: 1px solid var(--border-soft);
-      padding: 16px 16px 18px;
+      padding: 18px 18px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    .card-full {
-      grid-column: 1 / -1;
+    .card-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
     }
 
-    .card h2 {
+    .card-title {
       font-size: 1rem;
-      margin-bottom: 6px;
+      font-weight: 700;
     }
 
     .card-subtitle {
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       color: var(--text-muted);
-      margin-bottom: 12px;
+      margin-top: 2px;
     }
 
-    .metrics {
-      font-size: 0.9rem;
-      line-height: 1.5;
-      margin-bottom: 14px;
-    }
-
-    .metric-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 4px;
-      margin-bottom: 4px;
-    }
-
-    .metric-label {
-      font-size: 0.86rem;
-      color: var(--text-muted);
-    }
-
-    .metric-value {
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
-
-    .metric-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2px 8px;
+    .card-badge {
+      font-size: 0.75rem;
+      padding: 4px 10px;
       border-radius: 999px;
-      font-size: 0.78rem;
       background: var(--primary-soft);
       color: var(--primary);
       font-weight: 600;
-      margin-top: 2px;
+    }
+
+    .card-content {
+      font-size: 0.9rem;
+      color: var(--text-main);
+    }
+
+    .card-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .row-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .row-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .row-value.negativo {
+      color: #22c55e;
+    }
+
+    .row-value.neutro {
+      color: #6b7280;
+    }
+
+    .row-value.atencao {
+      color: #b91c1c;
+    }
+
+    .row-small {
+      font-size: 0.8rem;
+      color: var(--text-muted);
     }
 
     .btn {
@@ -199,404 +267,446 @@
       font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .btn-primary {
       background: var(--primary);
       color: #ffffff;
       box-shadow: 0 10px 22px rgba(30, 90, 77, 0.55);
+      margin-top: 6px;
+      text-decoration: none;
     }
 
-    .btn-primary:hover {
+    .btn:hover {
       background: #124538;
     }
 
-    .btn-ghost {
+    .btn-secondary {
       background: #e5efe9;
-      color: var(--primary);
+      color: #065f46;
+      box-shadow: none;
     }
 
-    .btn-row {
-      display: flex;
+    .btn-secondary:hover {
+      background: #d1e7dd;
+    }
+
+    .badge-medidas {
+      display: inline-flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 10px;
+      gap: 6px;
+      margin-top: 8px;
     }
 
-    .help-text {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 6px;
+    .badge-medida {
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      background: #f9fafb;
+      white-space: nowrap;
     }
 
-    /* PESO & PROGRESSO – gráfico mini */
-    .peso-wrapper {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 10px;
-      flex-wrap: wrap;
+    .badge-medida strong {
+      font-weight: 600;
+      margin-right: 3px;
     }
 
-    .peso-main {
-      min-width: 120px;
+    .badge-medida .valor {
+      font-weight: 600;
+    }
+
+    .badge-medida .valor.vazio {
+      color: #9ca3af;
+      font-weight: 400;
+    }
+
+    .peso-card-main {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 10px;
+      align-items: center;
+    }
+
+    @media (max-width: 780px) {
+      .peso-card-main {
+        grid-template-columns: minmax(0, 1fr);
+      }
     }
 
     .peso-valor {
-      font-size: 1.4rem;
+      font-size: 2rem;
       font-weight: 800;
     }
 
-    .peso-legend {
+    .peso-valor span {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-left: 4px;
+    }
+
+    .peso-grafico {
+      border-radius: 18px;
+      border: 1px dashed #d1d5db;
+      padding: 8px 10px;
       font-size: 0.8rem;
+      color: var(--text-muted);
+      min-height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .peso-grafico svg {
+      width: 100%;
+      height: 70px;
+    }
+
+    .peso-rodape {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
       color: var(--text-muted);
       margin-top: 4px;
     }
 
-    .peso-chart-container {
-      flex: 1;
-      min-width: 160px;
+    .tdee-resumo {
       display: flex;
       flex-direction: column;
       gap: 4px;
     }
 
-    .peso-chart-mini-wrapper {
-      border-radius: 16px;
-      background: radial-gradient(circle at top, #dcfce7 0, #ffffff 45%, #f9fafb 100%);
-      border: 1px solid rgba(74, 222, 128, 0.5);
-      padding: 6px;
-      height: 130px;
+    .tdee-linha {
       display: flex;
-      align-items: stretch;
+      justify-content: space-between;
+      font-size: 0.85rem;
     }
 
-    .peso-chart-mini-wrapper canvas {
-      width: 100%;
-      height: 100%;
-      border-radius: 12px;
-      background: #ffffff;
+    .tdee-linha strong {
+      font-weight: 600;
     }
 
-    .peso-chart-mini-caption {
-      font-size: 0.75rem;
+    .tdee-meta {
+      font-size: 0.85rem;
       color: var(--text-muted);
-      text-align: right;
+      margin-top: 4px;
     }
 
-    /* MEDIDAS – chips */
-    .tags-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .tag-pill {
-      background: #eef2ff;
-      color: #1e293b;
-      border-radius: 999px;
-      padding: 6px 10px;
-      font-size: 0.8rem;
-      display: inline-flex;
-      align-items: baseline;
-      gap: 4px;
-    }
-
-    .tag-pill strong {
-      font-size: 0.83rem;
-    }
-
-    /* LISTA SIMPLES */
-    .list-simple {
-      list-style: none;
+    .lista-simples {
       font-size: 0.88rem;
-      margin-bottom: 8px;
-      padding-left: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      margin-top: 4px;
     }
 
-    .list-simple li + li {
-      margin-top: 3px;
+    .lista-simples strong {
+      font-weight: 600;
+    }
+
+    .lista-simples .vazio {
+      color: #9ca3af;
+    }
+
+    .treino-resumo {
+      font-size: 0.88rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .treino-resumo li {
+      list-style: none;
     }
 
     footer {
       padding: 10px 16px 18px;
+      text-align: center;
       font-size: 0.78rem;
       color: #9ca3af;
-      text-align: center;
     }
 
     @media (max-width: 480px) {
-      .hero h1 {
-        font-size: 1.6rem;
-      }
-      .topbar-inner {
-        padding-inline: 12px;
-      }
-      main {
-        padding-inline: 12px;
-      }
-      .peso-wrapper {
-        flex-direction: column;
-      }
-      .peso-chart-mini-caption {
-        text-align: left;
+      .card {
+        padding: 16px 14px 16px;
       }
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="topbar-inner">
-      <div class="brand">
-        <div class="brand-badge">PaP</div>
-        <span class="brand-name">Prato &amp; Peso</span>
-      </div>
-      <div class="topbar-right">
-        <button class="topbar-link" onclick="window.location.href='clube-conta.html'">
-          Minha conta
-        </button>
+    <div class="header-inner">
+      <!-- Logo clicável para voltar ao início do Clube -->
+      <a href="clube-area.html" class="logo">
+        <div class="logo-badge">P&amp;P</div>
+        <div>
+          <div class="logo-text-main">Prato &amp; Peso</div>
+          <div class="logo-text-sub">Clube Prato &amp; Peso</div>
+        </div>
+      </a>
+
+      <div class="header-right">
+        <a href="clube-perfil.html" class="header-link">Perfil</a>
+        <button id="btnLogout" class="header-link header-link-cta">Sair</button>
       </div>
     </div>
   </header>
 
   <main>
     <div class="main-inner">
-      <!-- Saudação -->
       <section class="hero">
-        <h1>Olá, Rafael</h1>
+        <div>
+          <h1>Olá, Rafael</h1>
+          <p class="hero-subtitle">
+            Aqui você acompanha os principais números do seu dia a dia no Clube.
+          </p>
+        </div>
       </section>
 
-      <!-- Cards -->
       <section class="cards-grid">
-        <!-- Resumo de hoje (estático por enquanto) -->
-        <article class="card" id="card-resumo-hoje">
-          <h2>Resumo de hoje</h2>
-          <p class="card-subtitle">Visão rápida do seu dia em calorias.</p>
+        <!-- RESUMO DO DIA -->
+        <article class="card">
+          <header class="card-header">
+            <div>
+              <h2 class="card-title">Resumo de hoje</h2>
+              <p class="card-subtitle">
+                Visão rápida do seu dia em calorias.
+              </p>
+            </div>
+            <div class="card-badge">Dia a dia</div>
+          </header>
 
-          <div class="metrics">
-            <div class="metric-row">
-              <span class="metric-label">Gasto estimado hoje</span>
-              <span class="metric-value"><strong>2.300 kcal</strong></span>
+          <div class="card-content">
+            <div class="card-rows">
+              <div>
+                <div class="row-label">Gasto estimado hoje</div>
+                <div class="row-value" id="resumo-gasto">-- kcal</div>
+              </div>
+              <div>
+                <div class="row-label">Ingeriu hoje</div>
+                <div class="row-value" id="resumo-ingerido">-- kcal</div>
+              </div>
+              <div>
+                <div class="row-label">Saldo do dia</div>
+                <div class="row-value neutro" id="resumo-saldo">-- kcal</div>
+              </div>
             </div>
-            <div class="metric-row">
-              <span class="metric-label">Ingeriu hoje</span>
-              <span class="metric-value"><strong>1.450 kcal</strong></span>
+
+            <p class="row-small" id="resumo-dia-legenda">
+              Conecte o TDEE e o prato de hoje para ver o saldo diário.
+            </p>
+          </div>
+        </article>
+
+        <!-- PESO & PROGRESSO -->
+        <article class="card">
+          <header class="card-header">
+            <div>
+              <h2 class="card-title">Peso &amp; progresso</h2>
+              <p class="card-subtitle">
+                Seu peso atual e a tendência da meta.
+              </p>
             </div>
-            <div class="metric-row">
-              <span class="metric-label">Saldo do dia</span>
-              <span class="metric-value" style="color:#16a34a;"><strong>–850 kcal</strong></span>
+          </header>
+
+          <div class="card-content">
+            <div class="peso-card-main">
+              <div>
+                <div class="row-label">Peso atual</div>
+                <div class="peso-valor" id="peso-atual">
+                  --,-- <span>kg</span>
+                </div>
+                <p class="row-small" id="peso-variacao7-text">
+                  Você ainda não registrou seu peso no Clube.
+                </p>
+
+                <a href="clube-peso.html" class="btn">Ver e registrar peso</a>
+              </div>
+
+              <div class="peso-grafico" id="peso-grafico-mini">
+                <span>Últimos 7 registros</span>
+              </div>
             </div>
           </div>
         </article>
 
-        <!-- Peso & progresso -->
-        <article class="card" id="card-peso-progresso">
-          <h2>Peso &amp; progresso</h2>
-          <p class="card-subtitle">Seu peso atual e a tendência da meta.</p>
-
-          <div class="peso-wrapper">
-            <div class="peso-main">
-              <div class="peso-valor" id="peso-atual">--,-- kg</div>
-              <div class="peso-legend" id="peso-variacao7-text">
-                Carregando dados de peso...
-              </div>
+        <!-- TDEE & META -->
+        <article class="card">
+          <header class="card-header">
+            <div>
+              <h2 class="card-title">Meu TDEE &amp; Meta</h2>
+              <p class="card-subtitle">
+                Resumo do gasto calórico diário e da meta.
+              </p>
             </div>
+          </header>
 
-            <div class="peso-chart-container">
-              <div class="peso-chart-mini-wrapper">
-                <canvas id="graficoPesoMini"></canvas>
-              </div>
-              <div class="peso-chart-mini-caption">Últimos 7 registros</div>
-            </div>
-          </div>
-
-          <button
-            class="btn btn-primary"
-            type="button"
-            onclick="window.location.href='clube-peso.html'"
-          >
-            Ver e registrar peso
-          </button>
-        </article>
-
-        <!-- Meu TDEE & Meta -->
-        <article class="card" id="card-tdee-meta">
-          <h2>Meu TDEE &amp; Meta</h2>
-          <p class="card-subtitle">Resumo do gasto calórico diário e da meta.</p>
-
-          <div class="metrics">
-            <div class="metric-row">
-              <span class="metric-label">TDEE atual</span>
-              <span class="metric-value">
+          <div class="card-content">
+            <div class="tdee-resumo">
+              <div class="tdee-linha">
+                <span>TDEE atual</span>
                 <strong id="tdee-atual">-- kcal/dia</strong>
-              </span>
+              </div>
+              <div class="tdee-linha">
+                <span>Objetivo</span>
+                <strong id="tdee-meta">Nenhum cálculo salvo ainda.</strong>
+              </div>
+              <div class="tdee-linha">
+                <span>Consumo total hoje</span>
+                <strong id="tdee-consumo-hoje">-- kcal</strong>
+              </div>
             </div>
-            <div class="metric-row">
-              <span class="metric-label">Objetivo</span>
-              <span class="metric-value">
-                <strong id="tdee-meta-descricao">Nenhum cálculo salvo ainda.</strong>
-              </span>
-            </div>
-            <span class="metric-badge" id="tdee-consumo-resumo">
-              Consumo total hoje: — kcal
-            </span>
+
+            <p class="tdee-meta" id="tdee-meta-descricao">
+              Calcule seu TDEE, defina um déficit ou superávit e acompanhe aqui.
+            </p>
+
+            <a href="clube-tdee.html" class="btn btn-secondary">
+              Ver detalhes da meta
+            </a>
           </div>
-
-          <button class="btn btn-primary" type="button"
-                  onclick="window.location.href='clube-tdee.html'">
-            Ver detalhes da meta
-          </button>
         </article>
 
-        <!-- Minhas medidas corporais -->
-        <article class="card" id="card-medidas">
-          <h2>Minhas medidas corporais</h2>
-          <p class="card-subtitle">Acompanhe as principais medidas do seu corpo.</p>
+        <!-- MEDIDAS CORPORAIS -->
+        <article class="card">
+          <header class="card-header">
+            <div>
+              <h2 class="card-title">Minhas medidas corporais</h2>
+              <p class="card-subtitle">
+                Acompanhe as principais medidas do seu corpo.
+              </p>
+            </div>
+          </header>
 
-          <div class="tags-grid" id="medidas-resumo">
-            <div class="tag-pill">
-              <span>Pescoço</span>
-              <strong id="medida-pescoco">-- cm</strong>
+          <div class="card-content">
+            <div class="badge-medidas">
+              <div class="badge-medida">
+                <strong>Pescoço</strong>
+                <span class="valor" id="medida-pescoco">-- cm</span>
+              </div>
+              <div class="badge-medida">
+                <strong>Ombro</strong>
+                <span class="valor" id="medida-ombro">-- cm</span>
+              </div>
+              <div class="badge-medida">
+                <strong>Peito</strong>
+                <span class="valor" id="medida-peito">-- cm</span>
+              </div>
+              <div class="badge-medida">
+                <strong>Cintura</strong>
+                <span class="valor" id="medida-cintura">-- cm</span>
+              </div>
+              <div class="badge-medida">
+                <strong>Abd. sup.</strong>
+                <span class="valor" id="medida-abd-sup">-- cm</span>
+              </div>
+              <div class="badge-medida">
+                <strong>Abd. inf.</strong>
+                <span class="valor" id="medida-abd-inf">-- cm</span>
+              </div>
+              <div class="badge-medida">
+                <strong>Braço esq.</strong>
+                <span class="valor" id="medida-braco-e">-- cm</span>
+              </div>
+              <div class="badge-medida">
+                <strong>Braço dir.</strong>
+                <span class="valor" id="medida-braco-d">-- cm</span>
+              </div>
+              <div class="badge-medida">
+                <strong>Antebraço esq.</strong>
+                <span class="valor" id="medida-antebraco-e">-- cm</span>
+              </div>
+              <div class="badge-medida">
+                <strong>Antebraço dir.</strong>
+                <span class="valor" id="medida-antebraco-d">-- cm</span>
+              </div>
+              <div class="badge-medida">
+                <strong>Coxa esq.</strong>
+                <span class="valor" id="medida-coxa-e">-- cm</span>
+              </div>
+              <div class="badge-medida">
+                <strong>Coxa dir.</strong>
+                <span class="valor" id="medida-coxa-d">-- cm</span>
+              </div>
+              <div class="badge-medida">
+                <strong>Pant. esq.</strong>
+                <span class="valor" id="medida-pant-e">-- cm</span>
+              </div>
+              <div class="badge-medida">
+                <strong>Pant. dir.</strong>
+                <span class="valor" id="medida-pant-d">-- cm</span>
+              </div>
+              <div class="badge-medida">
+                <strong>Quadril</strong>
+                <span class="valor" id="medida-quadril">-- cm</span>
+              </div>
             </div>
-            <div class="tag-pill">
-              <span>Ombro</span>
-              <strong id="medida-ombro">-- cm</strong>
-            </div>
-            <div class="tag-pill">
-              <span>Peito</span>
-              <strong id="medida-peito">-- cm</strong>
-            </div>
-            <div class="tag-pill">
-              <span>Cintura</span>
-              <strong id="medida-cintura">-- cm</strong>
-            </div>
-            <div class="tag-pill">
-              <span>Abd. sup.</span>
-              <strong id="medida-abd-sup">-- cm</strong>
-            </div>
-            <div class="tag-pill">
-              <span>Abd. inf.</span>
-              <strong id="medida-abd-inf">-- cm</strong>
-            </div>
-            <div class="tag-pill">
-              <span>Braço esq.</span>
-              <strong id="medida-braco-e">-- cm</strong>
-            </div>
-            <div class="tag-pill">
-              <span>Braço dir.</span>
-              <strong id="medida-braco-d">-- cm</strong>
-            </div>
-            <div class="tag-pill">
-              <span>Antebraço esq.</span>
-              <strong id="medida-antebraco-e">-- cm</strong>
-            </div>
-            <div class="tag-pill">
-              <span>Antebraço dir.</span>
-              <strong id="medida-antebraco-d">-- cm</strong>
-            </div>
-            <div class="tag-pill">
-              <span>Coxa esq.</span>
-              <strong id="medida-coxa-e">-- cm</strong>
-            </div>
-            <div class="tag-pill">
-              <span>Coxa dir.</span>
-              <strong id="medida-coxa-d">-- cm</strong>
-            </div>
-            <div class="tag-pill">
-              <span>Pant. esq.</span>
-              <strong id="medida-pant-e">-- cm</strong>
-            </div>
-            <div class="tag-pill">
-              <span>Pant. dir.</span>
-              <strong id="medida-pant-d">-- cm</strong>
-            </div>
-            <div class="tag-pill">
-              <span>Quadril</span>
-              <strong id="medida-quadril">-- cm</strong>
-            </div>
+
+            <p class="row-small" id="medidas-legenda">
+              Você ainda não registrou suas medidas corporais.
+            </p>
+
+            <a href="clube-medidas.html" class="btn btn-secondary">
+              Registrar / atualizar medidas
+            </a>
           </div>
-
-          <p class="help-text" id="medidas-legenda">
-            Carregando últimas medidas...
-          </p>
-
-          <button class="btn btn-primary" style="margin-top:8px;" type="button"
-                  onclick="window.location.href='clube-medidas.html'">
-            Registrar / atualizar medidas
-          </button>
         </article>
 
-        <!-- Montar prato brasileiro -->
-        <article class="card" id="card-prato">
-          <h2>Montar prato brasileiro</h2>
-          <p class="card-subtitle" id="card-prato-subtitle">(hoje)</p>
+        <!-- PRATO BRASILEIRO -->
+        <article class="card">
+          <header class="card-header">
+            <div>
+              <h2 class="card-title">Montar prato brasileiro</h2>
+              <p class="card-subtitle">
+                Você ainda não registrou um prato no Clube.
+              </p>
+            </div>
+          </header>
 
-          <div class="metrics">
-            <div class="metric-row">
-              <span class="metric-label">Último prato registrado em</span>
-              <span class="metric-value">
-                <strong id="prato-data">—</strong>
-              </span>
+          <div class="card-content">
+            <div class="lista-simples">
+              <div>
+                <strong>Último prato registrado em</strong>
+                <span id="prato-data">--/--</span>
+              </div>
+              <div>
+                <strong>Consumo total hoje</strong>
+                <span id="prato-calorias">-- kcal</span>
+              </div>
             </div>
-            <div class="metric-row">
-              <span class="metric-label">Consumo total hoje</span>
-              <span class="metric-value">
-                <strong id="prato-calorias">—</strong>
-              </span>
-            </div>
+
+            <p class="row-small" id="card-prato-subtitle">
+              Monte o prato do dia e veja a soma em kcal.
+            </p>
+
+            <a href="clube-prato.html" class="btn">
+              Montar / atualizar prato de hoje
+            </a>
           </div>
-
-          <button
-            class="btn btn-primary"
-            type="button"
-            onclick="window.location.href='clube-prato.html'"
-          >
-            Montar / atualizar prato de hoje
-          </button>
         </article>
 
-        <!-- Treino de hoje / Academia -->
-        <article class="card" id="card-treino">
-          <h2>Treino de hoje / Academia</h2>
-          <p class="card-subtitle">Últimos pesos para você lembrar na próxima sessão.</p>
+        <!-- TREINO DE HOJE -->
+        <article class="card">
+          <header class="card-header">
+            <div>
+              <h2 class="card-title">Treino de hoje / Academia</h2>
+              <p class="card-subtitle">
+                Últimos pesos para você lembrar na próxima sessão.
+              </p>
+            </div>
+          </header>
 
-          <ul class="list-simple">
-            <li id="treino-ultimo">
-              <strong>Último treino:</strong> —
-            </li>
-            <li id="treino-ex1">
-              <strong>Exercício 1:</strong> —
-            </li>
-            <li id="treino-ex2">
-              <strong>Exercício 2:</strong> —
-            </li>
-          </ul>
+          <div class="card-content">
+            <ul class="treino-resumo">
+              <li id="treino-ultimo">
+                <strong>Último treino:</strong> nenhum treino registrado ainda.
+              </li>
+              <li id="treino-ex1" style="display:none;"></li>
+              <li id="treino-ex2" style="display:none;"></li>
+            </ul>
 
-          <button class="btn btn-primary" type="button"
-                  onclick="window.location.href='clube-treino.html'">
-            Registrar treino de hoje
-          </button>
-        </article>
-
-        <!-- Relatório simples do Clube -->
-        <article class="card card-full" id="card-relatorio">
-          <h2>Relatório simples do Clube</h2>
-          <p class="card-subtitle">
-            Gere um relatório com peso, calorias, pratos e treinos para um período específico.
-          </p>
-
-          <p class="help-text">
-            Escolha um intervalo de datas e veja um PDF simples com a evolução da sua meta.
-          </p>
-
-          <div class="btn-row">
-            <button class="btn btn-primary" type="button" onclick="window.location.href='relatorio.html'">
-              Abrir relatório simples
-            </button>
-            <button class="btn-ghost" type="button">
-              Escolher período
-            </button>
+            <a href="clube-treino.html" class="btn btn-secondary">
+              Registrar treino de hoje
+            </a>
           </div>
         </article>
       </section>
@@ -607,10 +717,6 @@
     © 2025 Prato &amp; Peso – Área do Clube.
   </footer>
 
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <!-- Firebase v8 -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
@@ -630,28 +736,13 @@
     }
 
     const auth = firebase.auth();
-    const db   = firebase.firestore();
+    const db = firebase.firestore();
 
     let currentUid = null;
 
-    /* ---------- Funções utilitárias ---------- */
-    function formatarDataBR(dataISO) {
-      if (!dataISO) return "";
-      const partes = dataISO.split("-");
-      if (partes.length !== 3) return dataISO;
-      const [ano, mes, dia] = partes;
-      return `${dia}/${mes}`;
-    }
-
-    function formatarNumero(valor, casas) {
-      if (valor === null || valor === undefined || isNaN(valor)) return "—";
-      return Number(valor).toLocaleString("pt-BR", {
-        minimumFractionDigits: casas,
-        maximumFractionDigits: casas
-      });
-    }
-
     /* ---------- Referências DOM ---------- */
+    const btnLogout         = document.getElementById("btnLogout");
+
     // prato
     const pratoDataSpan     = document.getElementById("prato-data");
     const pratoCaloriasSpan = document.getElementById("prato-calorias");
@@ -665,18 +756,24 @@
     // TDEE
     const tdeeAtualSpan     = document.getElementById("tdee-atual");
     const tdeeMetaDescricao = document.getElementById("tdee-meta-descricao");
-    const tdeeConsumoResumo = document.getElementById("tdee-consumo-resumo");
-    let consumoTotalHojeFmt = "— kcal";
+    const tdeeMetaSpan      = document.getElementById("tdee-meta");
+    const tdeeConsumoHojeSpan = document.getElementById("tdee-consumo-hoje");
+
+    // resumo do dia
+    const resumoGastoSpan   = document.getElementById("resumo-gasto");
+    const resumoIngeridoSpan= document.getElementById("resumo-ingerido");
+    const resumoSaldoSpan   = document.getElementById("resumo-saldo");
+    const resumoDiaLegenda  = document.getElementById("resumo-dia-legenda");
 
     // medidas
-    const medidaPescocoSpan    = document.getElementById("medida-pescoco");
-    const medidaOmbroSpan      = document.getElementById("medida-ombro");
-    const medidaPeitoSpan      = document.getElementById("medida-peito");
-    const medidaCinturaSpan    = document.getElementById("medida-cintura");
-    const medidaAbdSupSpan     = document.getElementById("medida-abd-sup");
-    const medidaAbdInfSpan     = document.getElementById("medida-abd-inf");
-    const medidaBracoESpan     = document.getElementById("medida-braco-e");
-    const medidaBracoDSpan     = document.getElementById("medida-braco-d");
+    const medidaPescocoSpan   = document.getElementById("medida-pescoco");
+    const medidaOmbroSpan     = document.getElementById("medida-ombro");
+    const medidaPeitoSpan     = document.getElementById("medida-peito");
+    const medidaCinturaSpan   = document.getElementById("medida-cintura");
+    const medidaAbdSupSpan    = document.getElementById("medida-abd-sup");
+    const medidaAbdInfSpan    = document.getElementById("medida-abd-inf");
+    const medidaBracoESpan    = document.getElementById("medida-braco-e");
+    const medidaBracoDSpan    = document.getElementById("medida-braco-d");
     const medidaAntebracoESpan = document.getElementById("medida-antebraco-e");
     const medidaAntebracoDSpan = document.getElementById("medida-antebraco-d");
     const medidaCoxaESpan      = document.getElementById("medida-coxa-e");
@@ -691,368 +788,249 @@
     const treinoEx1Li    = document.getElementById("treino-ex1");
     const treinoEx2Li    = document.getElementById("treino-ex2");
 
-    /* ---------- Consumo / prato ---------- */
-    function atualizarTdeeConsumoResumo() {
-      if (tdeeConsumoResumo) {
-        tdeeConsumoResumo.textContent = "Consumo total hoje: " + consumoTotalHojeFmt;
-      }
+    /* ---------- Funções auxiliares ---------- */
+    function formatarDataBR(dataISO) {
+      if (!dataISO) return "--/--";
+      const [ano, mes, dia] = dataISO.split("-");
+      if (!ano || !mes || !dia) return dataISO;
+      return `${dia}/${mes}`;
     }
 
+    function formatarNumero(num, casas = 1) {
+      if (num === null || num === undefined || isNaN(num)) return "--";
+      return num.toFixed(casas).replace(".", ",");
+    }
+
+    /* ---------- Resumo prato ---------- */
     async function carregarResumoPrato(uid) {
-      if (!pratoDataSpan || !pratoCaloriasSpan) return;
-
-      pratoDataSpan.textContent = "carregando...";
-      pratoCaloriasSpan.textContent = "carregando...";
-      consumoTotalHojeFmt = "— kcal";
-      atualizarTdeeConsumoResumo();
-
       try {
-        const snapshot = await db
-          .collection("consumosDiarios")
+        const hoje = new Date();
+        const yyyy = hoje.getFullYear();
+        const mm = String(hoje.getMonth() + 1).padStart(2, "0");
+        const dd = String(hoje.getDate()).padStart(2, "0");
+        const hojeStr = `${yyyy}-${mm}-${dd}`;
+
+        const ref = await db
+          .collection("pratos")
           .where("uid", "==", uid)
+          .where("data", "==", hojeStr)
+          .limit(1)
           .get();
 
-        if (snapshot.empty) {
-          pratoDataSpan.textContent = "—";
-          pratoCaloriasSpan.textContent = "—";
-          consumoTotalHojeFmt = "— kcal";
-          atualizarTdeeConsumoResumo();
-          if (pratoSubtitle) {
-            pratoSubtitle.textContent = "Você ainda não registrou um prato no Clube.";
-          }
+        if (ref.empty) {
+          pratoDataSpan.textContent = "--/--";
+          pratoCaloriasSpan.textContent = "-- kcal";
+          pratoSubtitle.textContent = "Monte o prato do dia e veja a soma em kcal.";
           return;
         }
 
-        const docs = snapshot.docs.slice();
-        docs.sort((a, b) => {
-          const da = a.data().data || "";
-          const dbb = b.data().data || "";
-          if (da < dbb) return 1;
-          if (da > dbb) return -1;
-          return 0;
-        });
-
-        const dados = docs[0].data();
-        const dataISO = dados.data;
-        const dataBR  = formatarDataBR(dataISO);
-
-        const caloriasRaw = Number(dados.caloriasTotais || dados.calorias);
-        const caloriasFmt =
-          !isNaN(caloriasRaw) && caloriasRaw > 0
-            ? Math.round(caloriasRaw).toLocaleString("pt-BR") + " kcal"
-            : "—";
-
-        pratoDataSpan.textContent = dataBR || "—";
-        pratoCaloriasSpan.textContent = caloriasFmt;
-
-        consumoTotalHojeFmt = caloriasFmt;
-        atualizarTdeeConsumoResumo();
-
-        if (pratoSubtitle) {
-          pratoSubtitle.textContent = "Resumo do último prato registrado no Clube.";
-        }
+        const doc = ref.docs[0].data();
+        pratoDataSpan.textContent = formatarDataBR(doc.data);
+        const kcal = doc.totalKcal || 0;
+        pratoCaloriasSpan.textContent = `${kcal} kcal`;
+        pratoSubtitle.textContent = "Último prato registrado no dia de hoje.";
       } catch (err) {
-        console.error("Erro ao carregar dados de prato:", err);
-        pratoDataSpan.textContent = "—";
-        pratoCaloriasSpan.textContent = "—";
-        consumoTotalHojeFmt = "— kcal";
-        atualizarTdeeConsumoResumo();
-        if (pratoSubtitle) {
-          pratoSubtitle.textContent = "Não foi possível carregar seus pratos agora.";
-        }
+        console.error("Erro ao carregar resumo de prato:", err);
+        pratoSubtitle.textContent = "Erro ao carregar os dados do prato.";
       }
     }
 
-    /* ---------- Gráfico de peso (Chart.js) ---------- */
-    function desenharGraficoPesoMini(labels, dados) {
-      const canvas = document.getElementById("graficoPesoMini");
-      if (!canvas) return;
-      const ctx = canvas.getContext("2d");
-
-      if (graficoPesoMini) {
-        graficoPesoMini.destroy();
-        graficoPesoMini = null;
-      }
-
-      graficoPesoMini = new Chart(ctx, {
-        type: "line",
-        data: {
-          labels,
-          datasets: [
-            {
-              label: "Peso (kg)",
-              data: dados,
-              borderColor: "rgba(22,163,74,1)",
-              backgroundColor: "rgba(187,247,208,0.45)",
-              tension: 0.3,
-              borderWidth: 2,
-              pointRadius: 3,
-              pointHoverRadius: 4,
-              pointBackgroundColor: "rgba(22,163,74,1)",
-              pointBorderColor: "#ffffff",
-              fill: true
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              callbacks: {
-                label: (ctx) => {
-                  const valor = ctx.parsed.y;
-                  return `Peso: ${formatarNumero(valor, 1)} kg`;
-                }
-              }
-            }
-          },
-          scales: {
-            x: {
-              ticks: { font: { size: 9 } },
-              grid: { display: false }
-            },
-            y: {
-              ticks: { font: { size: 9 } },
-              grid: {
-                color: "rgba(209, 250, 229, 0.9)",
-                lineWidth: 0.8
-              }
-            }
-          }
-        }
-      });
-    }
-
+    /* ---------- Peso & gráfico mini ---------- */
     async function carregarPesoEProgresso(uid) {
-      if (!pesoAtualSpan || !pesoVariacao7Text) return;
-
-      pesoAtualSpan.textContent = "--,-- kg";
-      pesoVariacao7Text.textContent = "Carregando dados de peso...";
-      pesoVariacao7Text.style.color = "#6b7280";
-      desenharGraficoPesoMini([], []);
-
       try {
         const snapshot = await db
           .collection("pesos")
           .where("uid", "==", uid)
+          .orderBy("data", "desc")
+          .limit(7)
           .get();
 
         if (snapshot.empty) {
+          pesoAtualSpan.innerHTML = "--,-- <span>kg</span>";
           pesoVariacao7Text.textContent = "Você ainda não registrou seu peso no Clube.";
           return;
         }
 
-        const docs = snapshot.docs.slice();
-        docs.sort((a, b) => {
-          const da = (a.data().data || "");
-          const dbb = (b.data().data || "");
-          if (da < dbb) return -1;
-          if (da > dbb) return 1;
-          return 0;
-        });
+        const docs = snapshot.docs.slice().reverse();
+        const pesos = docs.map(d => ({
+          data: d.data().data,
+          peso: d.data().peso
+        }));
 
-        const registros = docs.map(d => {
-          const dados = d.data();
-          const peso = Number(
-            dados.pesoKg ??
-            dados.peso ??
-            dados.pesoAtual
-          );
-          return { data: dados.data, peso };
-        }).filter(r => !isNaN(r.peso));
+        const ultimo = pesos[pesos.length - 1];
+        pesoAtualSpan.innerHTML = `${formatarNumero(ultimo.peso, 1)} <span>kg</span>`;
 
-        if (!registros.length) {
-          pesoVariacao7Text.textContent = "Nenhum peso válido encontrado.";
-          return;
-        }
-
-        const ultimos7 = registros.slice(-7);
-        const ultimo = ultimos7[ultimos7.length - 1];
-
-        const pesoAtualFmt = formatarNumero(ultimo.peso, 1);
-        pesoAtualSpan.textContent = `${pesoAtualFmt} kg`;
-
-        if (ultimos7.length >= 2) {
-          const primeiro7 = ultimos7[0];
-          const diff7 = ultimo.peso - primeiro7.peso;
-          const diffAbsFmt = formatarNumero(Math.abs(diff7), 1);
-
-          if (diff7 < 0) {
-            pesoVariacao7Text.textContent =
-              `Nos últimos ${ultimos7.length} registros: — ${diffAbsFmt} kg`;
-            pesoVariacao7Text.style.color = "#16a34a";
-          } else if (diff7 > 0) {
-            pesoVariacao7Text.textContent =
-              `Nos últimos ${ultimos7.length} registros: + ${diffAbsFmt} kg`;
-            pesoVariacao7Text.style.color = "#b91c1c";
-          } else {
-            pesoVariacao7Text.textContent =
-              `Nos últimos ${ultimos7.length} registros: 0,0 kg de variação`;
-            pesoVariacao7Text.style.color = "#6b7280";
-          }
+        if (pesos.length >= 2) {
+          const primeiro = pesos[0];
+          const variacao = ultimo.peso - primeiro.peso;
+          const textoVar =
+            variacao > 0
+              ? `Subiu ${formatarNumero(variacao, 1)} kg nos últimos ${pesos.length} registros.`
+              : variacao < 0
+              ? `Desceu ${formatarNumero(Math.abs(variacao), 1)} kg nos últimos ${pesos.length} registros.`
+              : `Manteve o peso nos últimos ${pesos.length} registros.`;
+          pesoVariacao7Text.textContent = textoVar;
         } else {
           pesoVariacao7Text.textContent =
-            "Aguardando mais registros para calcular a variação.";
-          pesoVariacao7Text.style.color = "#6b7280";
+            "Aguarde mais registros para ver a tendência do peso.";
         }
 
-        const labels = ultimos7.map(r => formatarDataBR(r.data || ""));
-        const dados = ultimos7.map(r => r.peso);
+        const container = document.getElementById("peso-grafico-mini");
+        container.innerHTML = "";
 
-        desenharGraficoPesoMini(labels, dados);
+        const svgNS = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(svgNS, "svg");
+        svg.setAttribute("viewBox", "0 0 100 40");
+
+        const valores = pesos.map(p => p.peso);
+        const min = Math.min(...valores);
+        const max = Math.max(...valores);
+        const range = max - min || 1;
+
+        let pathD = "";
+        pesos.forEach((p, idx) => {
+          const x = (idx / (pesos.length - 1 || 1)) * 100;
+          const y = 35 - ((p.peso - min) / range) * 30;
+          pathD += idx === 0 ? `M ${x},${y}` : ` L ${x},${y}`;
+        });
+
+        const path = document.createElementNS(svgNS, "path");
+        path.setAttribute("d", pathD);
+        path.setAttribute("fill", "none");
+        path.setAttribute("stroke", "#16a34a");
+        path.setAttribute("stroke-width", "1.6");
+
+        const area = document.createElementNS(svgNS, "path");
+        if (pesos.length > 1) {
+          let areaD = pathD;
+          const lastX =
+            ( (pesos.length - 1) / (pesos.length - 1 || 1) ) * 100;
+          areaD += ` L ${lastX},38 L 0,38 Z`;
+          area.setAttribute("d", areaD);
+          area.setAttribute("fill", "rgba(34, 197, 94, 0.15)");
+        }
+
+        svg.appendChild(area);
+        svg.appendChild(path);
+        container.appendChild(svg);
       } catch (err) {
-        console.error("Erro ao carregar pesos:", err);
-        pesoVariacao7Text.textContent =
-          "Não foi possível carregar seus pesos agora.";
-        pesoVariacao7Text.style.color = "#b91c1c";
+        console.error("Erro ao carregar peso/progresso:", err);
+        pesoVariacao7Text.textContent = "Erro ao carregar dados de peso.";
       }
     }
 
-    /* ---------- TDEE ---------- */
+    /* ---------- TDEE & meta ---------- */
     async function carregarResumoTdee(uid) {
-      if (!tdeeAtualSpan || !tdeeMetaDescricao) return;
-
-      tdeeAtualSpan.textContent     = "-- kcal/dia";
-      tdeeMetaDescricao.textContent = "Carregando dados da meta...";
-
       try {
-        const snapshot = await db
+        const ref = await db
           .collection("tdee")
           .where("uid", "==", uid)
+          .orderBy("atualizadoEm", "desc")
+          .limit(1)
           .get();
 
-        if (snapshot.empty) {
-          tdeeMetaDescricao.textContent = "Nenhum cálculo salvo ainda.";
+        if (ref.empty) {
+          tdeeAtualSpan.textContent = "-- kcal/dia";
+          tdeeMetaSpan.textContent = "Nenhum cálculo salvo ainda.";
+          tdeeMetaDescricao.textContent =
+            "Calcule seu TDEE, defina um déficit ou superávit e acompanhe aqui.";
           return;
         }
 
-        const docs = snapshot.docs.slice();
-        const getMillis = (doc) => {
-          const v = doc.data().dataCalculo;
-          if (!v || typeof v.toMillis !== "function") return 0;
-          return v.toMillis();
-        };
-        docs.sort((a, b) => getMillis(b) - getMillis(a));
+        const doc = ref.docs[0].data();
+        const tdee = doc.tdeeAtual || 0;
+        const metaDescricao = doc.metaDescricao || "";
+        const consumoHoje = doc.consumoHoje || 0;
 
-        const dados = docs[0].data();
-        const tdee = Number(dados.tdee);
-        const metaCalorias = Number(dados.metaCalorias);
-        const metaTipo = dados.metaTipo || "Meta";
-
-        const tdeeFmt = !isNaN(tdee)
-          ? Math.round(tdee).toLocaleString("pt-BR") + " kcal/dia"
-          : "-- kcal/dia";
-        const metaFmt = !isNaN(metaCalorias)
-          ? Math.round(metaCalorias).toLocaleString("pt-BR") + " kcal/dia"
-          : "— kcal/dia";
-
-        tdeeAtualSpan.textContent = tdeeFmt;
-        tdeeMetaDescricao.textContent = `${metaTipo} – meta ${metaFmt}`;
+        tdeeAtualSpan.textContent = `${tdee} kcal/dia`;
+        tdeeMetaSpan.textContent = metaDescricao || "Nenhum objetivo registrado.";
+        tdeeMetaDescricao.textContent =
+          doc.legenda || "Resumo do seu TDEE com a meta aplicada.";
+        tdeeConsumoHojeSpan.textContent = `${consumoHoje} kcal`;
       } catch (err) {
-        console.error("Erro ao carregar resumo de TDEE:", err);
-        tdeeMetaDescricao.textContent = "Não foi possível carregar seu TDEE agora.";
+        console.error("Erro ao carregar resumo TDEE:", err);
+        tdeeMetaDescricao.textContent = "Erro ao carregar dados de TDEE.";
       }
     }
 
     /* ---------- Medidas corporais ---------- */
     async function carregarResumoMedidas(uid) {
-      const spans = [
-        medidaPescocoSpan, medidaOmbroSpan, medidaPeitoSpan,
-        medidaCinturaSpan, medidaAbdSupSpan, medidaAbdInfSpan,
-        medidaBracoESpan, medidaBracoDSpan,
-        medidaAntebracoESpan, medidaAntebracoDSpan,
-        medidaCoxaESpan, medidaCoxaDSpan,
-        medidaPantESpan, medidaPantDSpan,
-        medidaQuadrilSpan
-      ];
-
-      const reset = () => {
-        spans.forEach(s => { if (s) s.textContent = "-- cm"; });
-      };
-
-      reset();
-      if (medidasLegenda) {
-        medidasLegenda.textContent = "Carregando últimas medidas...";
-        medidasLegenda.style.color = "#6b7280";
-      }
-
       try {
-        const snapshot = await db
-          .collection("medidasCorporais")
+        const ref = await db
+          .collection("medidas")
           .where("uid", "==", uid)
+          .orderBy("data", "desc")
+          .limit(1)
           .get();
 
-        if (snapshot.empty) {
-          reset();
-          if (medidasLegenda) {
-            medidasLegenda.textContent = "Você ainda não registrou suas medidas corporais.";
-          }
+        if (ref.empty) {
+          [
+            medidaPescocoSpan,
+            medidaOmbroSpan,
+            medidaPeitoSpan,
+            medidaCinturaSpan,
+            medidaAbdSupSpan,
+            medidaAbdInfSpan,
+            medidaBracoESpan,
+            medidaBracoDSpan,
+            medidaAntebracoESpan,
+            medidaAntebracoDSpan,
+            medidaCoxaESpan,
+            medidaCoxaDSpan,
+            medidaPantESpan,
+            medidaPantDSpan,
+            medidaQuadrilSpan
+          ].forEach((el) => {
+            el.textContent = "-- cm";
+            el.classList.add("valor", "vazio");
+          });
+
+          medidasLegenda.textContent =
+            "Você ainda não registrou suas medidas corporais.";
           return;
         }
 
-        const docs = snapshot.docs.slice();
-        docs.sort((a, b) => {
-          const da = a.data().data || "";
-          const dbb = b.data().data || "";
-          if (da < dbb) return -1;
-          if (da > dbb) return 1;
-          return 0;
-        });
-
-        const ultimo = docs[docs.length - 1].data();
-
-        const fmtCm = (v) => {
-          if (v === undefined || v === null || isNaN(v)) return "— cm";
-          return Number(v).toLocaleString("pt-BR", {
-            minimumFractionDigits: 1,
-            maximumFractionDigits: 1
-          }) + " cm";
+        const m = ref.docs[0].data();
+        const mapa = {
+          medidaPescocoSpan: m.pescoco,
+          medidaOmbroSpan: m.ombro,
+          medidaPeitoSpan: m.peito,
+          medidaCinturaSpan: m.cintura,
+          medidaAbdSupSpan: m.abdSup,
+          medidaAbdInfSpan: m.abdInf,
+          medidaBracoESpan: m.bracoE,
+          medidaBracoDSpan: m.bracoD,
+          medidaAntebracoESpan: m.antebracoE,
+          medidaAntebracoDSpan: m.antebracoD,
+          medidaCoxaESpan: m.coxaE,
+          medidaCoxaDSpan: m.coxaD,
+          medidaPantESpan: m.pantE,
+          medidaPantDSpan: m.pantD,
+          medidaQuadrilSpan: m.quadril
         };
 
-        if (medidaPescocoSpan)    medidaPescocoSpan.textContent    = fmtCm(ultimo.pescoco);
-        if (medidaOmbroSpan)      medidaOmbroSpan.textContent      = fmtCm(ultimo.ombro);
-        if (medidaPeitoSpan)      medidaPeitoSpan.textContent      = fmtCm(ultimo.peito);
-        if (medidaCinturaSpan)    medidaCinturaSpan.textContent    = fmtCm(ultimo.cintura);
-        if (medidaAbdSupSpan)     medidaAbdSupSpan.textContent     = fmtCm(ultimo.abdomenSuperior);
-        if (medidaAbdInfSpan)     medidaAbdInfSpan.textContent     = fmtCm(ultimo.abdomenInferior);
-        if (medidaBracoESpan)     medidaBracoESpan.textContent     = fmtCm(ultimo.bracoEsquerdo);
-        if (medidaBracoDSpan)     medidaBracoDSpan.textContent     = fmtCm(ultimo.bracoDireito);
-        if (medidaAntebracoESpan) medidaAntebracoESpan.textContent = fmtCm(ultimo.antebracoEsquerdo);
-        if (medidaAntebracoDSpan) medidaAntebracoDSpan.textContent = fmtCm(ultimo.antebracoDireito);
-        if (medidaCoxaESpan)      medidaCoxaESpan.textContent      = fmtCm(ultimo.coxaEsquerda);
-        if (medidaCoxaDSpan)      medidaCoxaDSpan.textContent      = fmtCm(ultimo.coxaDireita);
-        if (medidaPantESpan)      medidaPantESpan.textContent      = fmtCm(ultimo.panturrilhaEsquerda);
-        if (medidaPantDSpan)      medidaPantDSpan.textContent      = fmtCm(ultimo.panturrilhaDireita);
-        if (medidaQuadrilSpan)    medidaQuadrilSpan.textContent    = fmtCm(ultimo.quadril);
+        Object.entries(mapa).forEach(([id, valor]) => {
+          const el = eval(id); // usar as const já criadas
+          if (valor) {
+            el.textContent = `${valor} cm`;
+            el.classList.remove("vazio");
+            el.classList.add("valor");
+          } else {
+            el.textContent = "-- cm";
+            el.classList.add("valor", "vazio");
+          }
+        });
 
-        if (medidasLegenda) {
-          const dataTxt = ultimo.data ? formatarDataBR(ultimo.data) : "";
-          medidasLegenda.textContent = dataTxt
-            ? `Última avaliação em ${dataTxt}.`
-            : "Última avaliação registrada.";
-        }
+        medidasLegenda.textContent =
+          `Última atualização em ${formatarDataBR(m.data || "")}.`;
       } catch (err) {
-        console.error("Erro ao carregar resumo de medidas:", err);
-        reset();
-        if (medidasLegenda) {
-          medidasLegenda.textContent = "Não foi possível carregar suas medidas agora.";
-          medidasLegenda.style.color = "#b91c1c";
-        }
+        console.error("Erro ao carregar medidas:", err);
+        medidasLegenda.textContent = "Erro ao carregar medidas.";
       }
     }
 
-    /* ---------- Treino – resumo ---------- */
+    /* ---------- Resumo treino ---------- */
     async function carregarResumoTreino(uid) {
-      if (!treinoUltimoLi || !treinoEx1Li || !treinoEx2Li) return;
-
-      treinoUltimoLi.innerHTML = "<strong>Último treino:</strong> —";
-      treinoEx1Li.innerHTML    = "<strong>Exercício 1:</strong> —";
-      treinoEx2Li.innerHTML    = "<strong>Exercício 2:</strong> —";
-      treinoEx1Li.style.display = "";
-      treinoEx2Li.style.display = "";
-
       try {
         const snapshot = await db
           .collection("treinos")
@@ -1061,7 +1039,7 @@
 
         if (snapshot.empty) {
           treinoUltimoLi.innerHTML =
-            "<strong>Último treino:</strong> você ainda não cadastrou treinos.";
+            "<strong>Último treino:</strong> nenhum treino registrado ainda.";
           treinoEx1Li.style.display = "none";
           treinoEx2Li.style.display = "none";
           return;
@@ -1085,21 +1063,16 @@
           `<strong>Último treino:</strong> ${dataBR} – ${nomeTreino}`;
 
         const exs = Array.isArray(ultimo.exercicios) ? ultimo.exercicios : [];
-
         if (exs.length > 0) {
-          const ex1 = exs[0];
-          treinoEx1Li.innerHTML =
-            `<strong>${ex1.nome}:</strong> ${formatarNumero(ex1.pesoKg, 1)} kg`;
-          treinoEx1Li.style.display = "";
+          treinoEx1Li.style.display = "list-item";
+          treinoEx1Li.textContent = `${exs[0].nome} – ${exs[0].pesoKg} kg`;
         } else {
           treinoEx1Li.style.display = "none";
         }
 
         if (exs.length > 1) {
-          const ex2 = exs[1];
-          treinoEx2Li.innerHTML =
-            `<strong>${ex2.nome}:</strong> ${formatarNumero(ex2.pesoKg, 1)} kg`;
-          treinoEx2Li.style.display = "";
+          treinoEx2Li.style.display = "list-item";
+          treinoEx2Li.textContent = `${exs[1].nome} – ${exs[1].pesoKg} kg`;
         } else {
           treinoEx2Li.style.display = "none";
         }
@@ -1110,6 +1083,30 @@
         treinoEx1Li.style.display = "none";
         treinoEx2Li.style.display = "none";
       }
+    }
+
+    /* ---------- Logout & limpeza de cache ---------- */
+    function limparLocalStorageClube() {
+      try {
+        localStorage.removeItem("pp_user_uid");
+        localStorage.removeItem("pp_user_email");
+        localStorage.removeItem("pp_user_nome");
+        localStorage.removeItem("pp_plano_codigo");
+        localStorage.removeItem("pp_plano_nome");
+      } catch (e) {
+        console.warn("Não foi possível limpar localStorage do Clube:", e);
+      }
+    }
+
+    function fazerLogout() {
+      auth.signOut().finally(() => {
+        limparLocalStorageClube();
+        window.location.href = "clube-login.html";
+      });
+    }
+
+    if (btnLogout) {
+      btnLogout.addEventListener("click", fazerLogout);
     }
 
     /* ---------- Login / inicialização ---------- */
